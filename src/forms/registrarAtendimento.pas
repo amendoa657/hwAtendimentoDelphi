@@ -66,8 +66,6 @@ type
     procedure TipoPessoaClick(Sender: TObject);
   private
     procedure LimparFormulario;
-    function NumeroSerieValido: Boolean;
-    function ValidarFormulario: Boolean;
   public
   end;
 
@@ -75,6 +73,8 @@ var
   frmRegistrarAtendimento: TfrmRegistrarAtendimento;
 
 implementation
+
+uses uValidacoes.pas;
 
 {$R *.dfm}
 
@@ -127,46 +127,6 @@ begin
   dtpTerminoHora.Time := Now;
   dtpTerminoData.Checked := False;
   memDescricao.Clear;
-end;
-
-{ ===== Funções ===== }
-
-function TfrmRegistrarAtendimento.NumeroSerieValido: Boolean;
-begin
-  // 2 letras + 9 números, ex.: AB123456789
-  Result := TRegEx.IsMatch(edtNumeroSerie.Text, '^[A-Z]{2}[0-9]{9}$');
-end;
-
-function TfrmRegistrarAtendimento.ValidarFormulario: Boolean;
-begin
-  Result := False;
-
-  if not NumeroSerieValido then
-  begin
-    lblErroSerie.Visible := True;
-    ShowMessage('Número de série inválido.');
-    Exit;
-  end;
-
-  if cbxModelo.ItemIndex = -1 then
-  begin
-    ShowMessage('Selecione o modelo.');
-    Exit;
-  end;
-
-  if edtNome.Text = '' then
-  begin
-    ShowMessage('Informe o nome do cliente.');
-    Exit;
-  end;
-
-  if memDescricao.Text = '' then
-  begin
-    ShowMessage('Informe a descrição do atendimento.');
-    Exit;
-  end;
-
-  Result := True;
 end;
 
 end.
