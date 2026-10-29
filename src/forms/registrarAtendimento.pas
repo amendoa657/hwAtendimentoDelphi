@@ -92,9 +92,13 @@ end;
 
 procedure TfrmRegistrarAtendimento.btnSalvarClick(Sender: TObject);
 begin
-  if TValidacoes.ValidarFormulario(edtNumeroSerie.Text, edtNome.Text,
-    memDescricao.Text, cbxModelo.ItemIndex) then
+  if TValidacoes.ValidarFormulario(
+      edtNumeroSerie.Text,
+      edtNome.Text,
+      memDescricao.Text,
+      cbxModelo.ItemIndex) then
     ShowMessage('Atendimento validado. (Gravação no banco ainda não implementada.)');
+
 end;
 
 procedure TfrmRegistrarAtendimento.btnCancelarClick(Sender: TObject);
