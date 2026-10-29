@@ -1,0 +1,16 @@
+build/
+lib/
+backup/
+__history/
+__recovery/
+Win32/
+Win64/
+*.dcu
+*.ppu
+*.o
+*.exe
+*.dll
+*.res
+*.local
+*.identcache
+*.stat
