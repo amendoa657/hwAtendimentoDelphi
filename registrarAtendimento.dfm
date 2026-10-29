@@ -335,7 +335,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
-      OnResize = pnlFormularioResize
       DesignSize = (
         970
         640)
@@ -549,8 +548,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         ParentFont = False
         TabOrder = 0
         TextHint = 'XX000000000'
-        OnChange = edtNumeroSerieChange
-        OnKeyPress = edtNumeroSerieKeyPress
       end
       object btnBuscar: TPanel
         Left = 862
@@ -659,7 +656,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         ParentFont = False
         TabOrder = 7
         TextHint = '(00) 00000-0000'
-        OnChange = edtTelefoneChange
       end
       object dtpInicioData: TDateTimePicker
         Left = 28
@@ -709,7 +705,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Font.Style = []
         ParentFont = False
         TabOrder = 10
-        OnChange = dtpTerminoDataChange
       end
       object dtpTerminoHora: TDateTimePicker
         Left = 862
@@ -719,7 +714,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Date = 46324.00000000000000000
         Format = 'HH:mm'
         Time = 0.50000000000000000
-        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2630431
         Font.Height = -13
