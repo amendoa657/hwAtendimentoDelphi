@@ -21,8 +21,9 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="registrarAtendimento.pas">
-            <Form>frmMain</Form>
+        <DCCReference Include="src\utils\uValidacoes.pas"/>
+        <DCCReference Include="src\forms\registrarAtendimento.pas">
+            <Form>frmRegistrarAtendimento</Form>
         </DCCReference>
     </ItemGroup>
 </Project>
