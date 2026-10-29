@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  System.RegularExpressions, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
@@ -74,7 +74,7 @@ var
 
 implementation
 
-uses uValidacoes.pas;
+uses uValidacoes;
 
 {$R *.dfm}
 
@@ -87,12 +87,13 @@ end;
 
 procedure TfrmRegistrarAtendimento.btnBuscarClick(Sender: TObject);
 begin
-  lblErroSerie.Visible := not NumeroSerieValido;
+  lblErroSerie.Visible := not TValidacoes.NumeroSerieValido(edtNumeroSerie.Text);
 end;
 
 procedure TfrmRegistrarAtendimento.btnSalvarClick(Sender: TObject);
 begin
-  if ValidarFormulario then
+  if TValidacoes.ValidarFormulario(edtNumeroSerie.Text, edtNome.Text,
+    memDescricao.Text, cbxModelo.ItemIndex) then
     ShowMessage('Atendimento validado. (Gravação no banco ainda não implementada.)');
 end;
 
