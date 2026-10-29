@@ -2,7 +2,8 @@ program HWatendimento;
 
 uses
   Vcl.Forms,
-  registrarAtendimento in 'registrarAtendimento.pas' {frmMain};
+  uValidacoes in 'src\utils\uValidacoes.pas',
+  registrarAtendimento in 'src\forms\registrarAtendimento.pas' {frmRegistrarAtendimento};
 
 {$R *.res}
 
