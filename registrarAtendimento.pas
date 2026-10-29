@@ -59,31 +59,36 @@ type
     dtpTerminoHora: TDateTimePicker;
     lblDescricao: TLabel;
     memDescricao: TMemo;
+    { Eventos do formulário }
     procedure FormCreate(Sender: TObject);
     procedure pnlFormularioResize(Sender: TObject);
+    { Eventos dos botões }
+    procedure btnBuscarClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    { Eventos dos campos }
     procedure edtNumeroSerieChange(Sender: TObject);
     procedure edtNumeroSerieKeyPress(Sender: TObject; var Key: Char);
-    procedure btnBuscarClick(Sender: TObject);
     procedure TipoPessoaClick(Sender: TObject);
     procedure edtTelefoneChange(Sender: TObject);
     procedure dtpTerminoDataChange(Sender: TObject);
-    procedure btnCancelarClick(Sender: TObject);
-    procedure btnSalvarClick(Sender: TObject);
   private
     FFormatandoTelefone: Boolean;
-    function Escala(AValor: Integer): Integer;
-    function NumeroSerieValido: Boolean;
-    function SomenteDigitos(const ATexto: string): string;
-    function FormatarTelefone(const ADigitos: string): string;
-    function InicioAtendimento: TDateTime;
-    function TerminoAtendimento: TDateTime;
-    function PossuiDadosPreenchidos: Boolean;
-    function ValidarFormulario: Boolean;
+    { Rotinas }
+    procedure LimparFormulario;
     procedure AtualizarTipoPessoa;
     procedure CarregarHistorico(const ANumeroSerie: string);
     procedure GravarAtendimento;
-    procedure LimparFormulario;
     procedure Avisar(const AMensagem: string; AControle: TWinControl);
+    { Funções }
+    function ValidarFormulario: Boolean;
+    function NumeroSerieValido: Boolean;
+    function PossuiDadosPreenchidos: Boolean;
+    function InicioAtendimento: TDateTime;
+    function TerminoAtendimento: TDateTime;
+    function SomenteDigitos(const ATexto: string): string;
+    function FormatarTelefone(const ADigitos: string): string;
+    function Escala(AValor: Integer): Integer;
   public
     { Public declarations }
   end;
@@ -101,14 +106,13 @@ const
 
 { TfrmRegistrarAtendimento }
 
+{========================================================================}
+{ EVENTOS DO FORMULÁRIO }
+{========================================================================}
+
 procedure TfrmRegistrarAtendimento.FormCreate(Sender: TObject);
 begin
   LimparFormulario;
-end;
-
-function TfrmRegistrarAtendimento.Escala(AValor: Integer): Integer;
-begin
-  Result := MulDiv(AValor, CurrentPPI, 96);
 end;
 
 procedure TfrmRegistrarAtendimento.pnlFormularioResize(Sender: TObject);
@@ -155,10 +159,41 @@ begin
   btnBuscar.SetBounds(btnBuscar.Left, edtNumeroSerie.Top, btnBuscar.Width, edtNumeroSerie.Height);
 end;
 
-function TfrmRegistrarAtendimento.NumeroSerieValido: Boolean;
+{========================================================================}
+{ EVENTOS DOS BOTÕES }
+{========================================================================}
+
+procedure TfrmRegistrarAtendimento.btnBuscarClick(Sender: TObject);
 begin
-  Result := TRegEx.IsMatch(Trim(edtNumeroSerie.Text), PADRAO_NUMERO_SERIE);
+  lblErroSerie.Visible := not NumeroSerieValido;
+  if lblErroSerie.Visible then
+  begin
+    edtNumeroSerie.SetFocus;
+    Exit;
+  end;
+
+  CarregarHistorico(Trim(edtNumeroSerie.Text));
+  cbxModelo.SetFocus;
 end;
+
+procedure TfrmRegistrarAtendimento.btnSalvarClick(Sender: TObject);
+begin
+  if ValidarFormulario then
+    GravarAtendimento;
+end;
+
+procedure TfrmRegistrarAtendimento.btnCancelarClick(Sender: TObject);
+begin
+  if PossuiDadosPreenchidos and
+    (MessageDlg('Descartar os dados preenchidos?', mtConfirmation, [mbYes, mbNo], 0) <> mrYes) then
+    Exit;
+
+  LimparFormulario;
+end;
+
+{========================================================================}
+{ EVENTOS DOS CAMPOS }
+{========================================================================}
 
 procedure TfrmRegistrarAtendimento.edtNumeroSerieChange(Sender: TObject);
 begin
@@ -174,90 +209,9 @@ begin
   end;
 end;
 
-procedure TfrmRegistrarAtendimento.btnBuscarClick(Sender: TObject);
-begin
-  lblErroSerie.Visible := not NumeroSerieValido;
-  if lblErroSerie.Visible then
-  begin
-    edtNumeroSerie.SetFocus;
-    Exit;
-  end;
-
-  CarregarHistorico(Trim(edtNumeroSerie.Text));
-  cbxModelo.SetFocus;
-end;
-
-procedure TfrmRegistrarAtendimento.CarregarHistorico(const ANumeroSerie: string);
-begin
-  lvHistorico.Items.BeginUpdate;
-  try
-    lvHistorico.Items.Clear;
-    // TODO: buscar no banco os atendimentos anteriores do equipamento ANumeroSerie
-    // e adicionar em lvHistorico (Caption = data, SubItems = cliente, descrição).
-  finally
-    lvHistorico.Items.EndUpdate;
-  end;
-
-  lvHistorico.Visible := lvHistorico.Items.Count > 0;
-  if lvHistorico.Visible then
-    lblHistoricoInfo.Caption := Format('Atendimentos anteriores do equipamento %s:', [ANumeroSerie])
-  else
-    lblHistoricoInfo.Caption := Format('Nenhum atendimento anterior encontrado para %s.', [ANumeroSerie]);
-end;
-
 procedure TfrmRegistrarAtendimento.TipoPessoaClick(Sender: TObject);
 begin
   AtualizarTipoPessoa;
-end;
-
-procedure TfrmRegistrarAtendimento.AtualizarTipoPessoa;
-begin
-  edtEmpresa.Enabled := rbPessoaJuridica.Checked;
-  if edtEmpresa.Enabled then
-  begin
-    edtEmpresa.Color := clWindow;
-    edtEmpresa.TextHint := 'Razão social da empresa';
-  end
-  else
-  begin
-    edtEmpresa.Clear;
-    edtEmpresa.Color := $00FAF8F7;
-    edtEmpresa.TextHint := 'Somente para pessoa jurídica';
-  end;
-end;
-
-function TfrmRegistrarAtendimento.SomenteDigitos(const ATexto: string): string;
-var
-  C: Char;
-begin
-  Result := '';
-  for C in ATexto do
-    if CharInSet(C, ['0'..'9']) then
-      Result := Result + C;
-end;
-
-function TfrmRegistrarAtendimento.FormatarTelefone(const ADigitos: string): string;
-var
-  Numero: string;
-  TamanhoPrefixo: Integer;
-begin
-  if ADigitos = '' then
-    Exit('');
-
-  Result := '(' + Copy(ADigitos, 1, 2);
-  if Length(ADigitos) <= 2 then
-    Exit;
-
-  Numero := Copy(ADigitos, 3, 9);
-  // Celular (9 dígitos): 00000-0000 / Fixo (8 dígitos): 0000-0000
-  if Length(Numero) = 9 then
-    TamanhoPrefixo := 5
-  else
-    TamanhoPrefixo := 4;
-
-  Result := Result + ') ' + Copy(Numero, 1, TamanhoPrefixo);
-  if Length(Numero) > TamanhoPrefixo then
-    Result := Result + '-' + Copy(Numero, TamanhoPrefixo + 1, MaxInt);
 end;
 
 procedure TfrmRegistrarAtendimento.edtTelefoneChange(Sender: TObject);
@@ -286,57 +240,9 @@ begin
   dtpTerminoHora.Enabled := dtpTerminoData.Checked;
 end;
 
-
-
-
-
-procedure TfrmRegistrarAtendimento.btnCancelarClick(Sender: TObject);
-begin
-  if PossuiDadosPreenchidos and
-    (MessageDlg('Descartar os dados preenchidos?', mtConfirmation, [mbYes, mbNo], 0) <> mrYes) then
-    Exit;
-
-  LimparFormulario;
-end;
-
-procedure TfrmRegistrarAtendimento.btnSalvarClick(Sender: TObject);
-begin
-  if ValidarFormulario then
-    GravarAtendimento;
-end;
-
-
-
-function TfrmRegistrarAtendimento.InicioAtendimento: TDateTime;
-begin
-  Result := DateOf(dtpInicioData.Date) + TimeOf(dtpInicioHora.Time);
-end;
-
-function TfrmRegistrarAtendimento.TerminoAtendimento: TDateTime;
-begin
-  Result := DateOf(dtpTerminoData.Date) + TimeOf(dtpTerminoHora.Time);
-end;
-
-procedure TfrmRegistrarAtendimento.Avisar(const AMensagem: string; AControle: TWinControl);
-begin
-  MessageDlg(AMensagem, mtWarning, [mbOK], 0);
-  if Assigned(AControle) and AControle.CanFocus then
-    AControle.SetFocus;
-end;
-
-procedure TfrmRegistrarAtendimento.GravarAtendimento;
-begin
-  // TODO: gravar no banco. Dados disponíveis:
-  //   Número de série: Trim(edtNumeroSerie.Text)
-  //   Modelo:          cbxModelo.Text
-  //   Pessoa jurídica: rbPessoaJuridica.Checked / Empresa: Trim(edtEmpresa.Text)
-  //   Nome:            Trim(edtNome.Text) / Telefone: SomenteDigitos(edtTelefone.Text)
-  //   Início:          InicioAtendimento
-  //   Término:         TerminoAtendimento (somente se dtpTerminoData.Checked; senão em aberto)
-  //   Descrição:       Trim(memDescricao.Text)
-  MessageDlg('Atendimento validado. A gravação no banco ainda não foi implementada.',
-      mtInformation, [mbOK], 0);
-end;
+{========================================================================}
+{ ROTINAS (procedures que executam ações na tela) }
+{========================================================================}
 
 procedure TfrmRegistrarAtendimento.LimparFormulario;
 var
@@ -363,11 +269,71 @@ begin
   lvHistorico.Visible := False;
   lblHistoricoInfo.Caption := 'Busque um número de série para ver os atendimentos anteriores.';
 
-  if edtNumeroSerie.CanFocus then
+  // No FormCreate a janela ainda não está visível: SetFocus geraria erro
+  if Visible and edtNumeroSerie.CanFocus then
     edtNumeroSerie.SetFocus
   else
     ActiveControl := edtNumeroSerie;
 end;
+
+procedure TfrmRegistrarAtendimento.AtualizarTipoPessoa;
+begin
+  edtEmpresa.Enabled := rbPessoaJuridica.Checked;
+  if edtEmpresa.Enabled then
+  begin
+    edtEmpresa.Color := clWindow;
+    edtEmpresa.TextHint := 'Razão social da empresa';
+  end
+  else
+  begin
+    edtEmpresa.Clear;
+    edtEmpresa.Color := $00FAF8F7;
+    edtEmpresa.TextHint := 'Somente para pessoa jurídica';
+  end;
+end;
+
+procedure TfrmRegistrarAtendimento.CarregarHistorico(const ANumeroSerie: string);
+begin
+  lvHistorico.Items.BeginUpdate;
+  try
+    lvHistorico.Items.Clear;
+    // TODO: buscar no banco os atendimentos anteriores do equipamento ANumeroSerie
+    // e adicionar em lvHistorico (Caption = data, SubItems = cliente, descrição).
+  finally
+    lvHistorico.Items.EndUpdate;
+  end;
+
+  lvHistorico.Visible := lvHistorico.Items.Count > 0;
+  if lvHistorico.Visible then
+    lblHistoricoInfo.Caption := Format('Atendimentos anteriores do equipamento %s:', [ANumeroSerie])
+  else
+    lblHistoricoInfo.Caption := Format('Nenhum atendimento anterior encontrado para %s.', [ANumeroSerie]);
+end;
+
+procedure TfrmRegistrarAtendimento.GravarAtendimento;
+begin
+  // TODO: gravar no banco. Dados disponíveis:
+  //   Número de série: Trim(edtNumeroSerie.Text)
+  //   Modelo:          cbxModelo.Text
+  //   Pessoa jurídica: rbPessoaJuridica.Checked / Empresa: Trim(edtEmpresa.Text)
+  //   Nome:            Trim(edtNome.Text) / Telefone: SomenteDigitos(edtTelefone.Text)
+  //   Início:          InicioAtendimento
+  //   Término:         TerminoAtendimento (somente se dtpTerminoData.Checked; senão em aberto)
+  //   Descrição:       Trim(memDescricao.Text)
+  MessageDlg('Atendimento validado. A gravação no banco ainda não foi implementada.',
+      mtInformation, [mbOK], 0);
+end;
+
+procedure TfrmRegistrarAtendimento.Avisar(const AMensagem: string; AControle: TWinControl);
+begin
+  MessageDlg(AMensagem, mtWarning, [mbOK], 0);
+  if Assigned(AControle) and AControle.CanFocus then
+    AControle.SetFocus;
+end;
+
+{========================================================================}
+{ FUNÇÕES (calculam e retornam um valor) }
+{========================================================================}
 
 function TfrmRegistrarAtendimento.ValidarFormulario: Boolean;
 begin
@@ -419,6 +385,11 @@ begin
   Result := True;
 end;
 
+function TfrmRegistrarAtendimento.NumeroSerieValido: Boolean;
+begin
+  Result := TRegEx.IsMatch(Trim(edtNumeroSerie.Text), PADRAO_NUMERO_SERIE);
+end;
+
 function TfrmRegistrarAtendimento.PossuiDadosPreenchidos: Boolean;
 begin
   Result := (Trim(edtNumeroSerie.Text) <> '') or (cbxModelo.ItemIndex >= 0)
@@ -426,6 +397,53 @@ begin
       or (Trim(edtTelefone.Text) <> '') or (Trim(memDescricao.Text) <> '');
 end;
 
+function TfrmRegistrarAtendimento.InicioAtendimento: TDateTime;
+begin
+  Result := DateOf(dtpInicioData.Date) + TimeOf(dtpInicioHora.Time);
+end;
+
+function TfrmRegistrarAtendimento.TerminoAtendimento: TDateTime;
+begin
+  Result := DateOf(dtpTerminoData.Date) + TimeOf(dtpTerminoHora.Time);
+end;
+
+function TfrmRegistrarAtendimento.SomenteDigitos(const ATexto: string): string;
+var
+  C: Char;
+begin
+  Result := '';
+  for C in ATexto do
+    if CharInSet(C, ['0'..'9']) then
+      Result := Result + C;
+end;
+
+function TfrmRegistrarAtendimento.FormatarTelefone(const ADigitos: string): string;
+var
+  Numero: string;
+  TamanhoPrefixo: Integer;
+begin
+  if ADigitos = '' then
+    Exit('');
+
+  Result := '(' + Copy(ADigitos, 1, 2);
+  if Length(ADigitos) <= 2 then
+    Exit;
+
+  Numero := Copy(ADigitos, 3, 9);
+  // Celular (9 dígitos): 00000-0000 / Fixo (8 dígitos): 0000-0000
+  if Length(Numero) = 9 then
+    TamanhoPrefixo := 5
+  else
+    TamanhoPrefixo := 4;
+
+  Result := Result + ') ' + Copy(Numero, 1, TamanhoPrefixo);
+  if Length(Numero) > TamanhoPrefixo then
+    Result := Result + '-' + Copy(Numero, TamanhoPrefixo + 1, MaxInt);
+end;
+
+function TfrmRegistrarAtendimento.Escala(AValor: Integer): Integer;
+begin
+  Result := MulDiv(AValor, CurrentPPI, 96);
+end;
+
 end.
-
-
