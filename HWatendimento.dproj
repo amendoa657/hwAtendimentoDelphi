@@ -125,11 +125,7 @@
         <DCCReference Include="src\forms\registrarAtendimento.pas">
             <Form>frmRegistrarAtendimento</Form>
         </DCCReference>
-        <DCCReference Include="src\data\uDmConexao.pas">
-            <Form>DataModule1</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
+        <DCCReference Include="src\data\uConexao.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

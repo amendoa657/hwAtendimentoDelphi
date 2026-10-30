@@ -12,7 +12,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
   Font.Height = -12
   Font.Name = 'Comfortaa'
   Font.Style = []
-  Position = poScreenCenter
+  Position = poDesigned
   WindowState = wsMaximized
   OnCreate = FormCreate
   TextHeight = 19
@@ -143,6 +143,8 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 3
+    ExplicitLeft = -8
+    ExplicitTop = 688
     DesignSize = (
       1280
       64)
@@ -211,6 +213,18 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       TabOrder = 1
       OnClick = btnSalvarClick
     end
+    object DBGrid1: TDBGrid
+      Left = 28
+      Top = -22
+      Width = 361
+      Height = 120
+      TabOrder = 2
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = 2630431
+      TitleFont.Height = -12
+      TitleFont.Name = 'Comfortaa'
+      TitleFont.Style = []
+    end
   end
   object pnlHistorico: TPanel
     Left = 970
@@ -223,7 +237,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    ExplicitTop = 62
     DesignSize = (
       310
       640)
@@ -335,6 +348,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
+      ExplicitLeft = 1
       DesignSize = (
         970
         640)
@@ -739,5 +753,28 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         TabOrder = 12
       end
     end
+  end
+  object ConexaoSql: TFDConnection
+    Left = 840
+    Top = 712
+  end
+  object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
+    Left = 744
+    Top = 712
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 640
+    Top = 712
+  end
+  object QuerySql: TFDQuery
+    Connection = ConexaoSql
+    Left = 568
+    Top = 712
+  end
+  object DataSource: TDataSource
+    DataSet = QuerySql
+    Left = 496
+    Top = 712
   end
 end
