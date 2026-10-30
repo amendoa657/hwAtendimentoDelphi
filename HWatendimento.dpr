@@ -4,7 +4,9 @@ uses
   Vcl.Forms,
   uValidacoes in 'src\utils\uValidacoes.pas',
   registrarAtendimento in 'src\forms\registrarAtendimento.pas' {frmRegistrarAtendimento},
-  uConexao in 'src\data\uConexao.pas';
+  uConexao in 'src\data\uConexao.pas',
+  uClienteRepository in 'src\repositories\uClienteRepository.pas',
+  uCliente in 'src\models\uCliente.pas';
 
 {$R *.res}
 

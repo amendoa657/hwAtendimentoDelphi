@@ -76,8 +76,10 @@ type
     procedure btnSalvarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure TipoPessoaClick(Sender: TObject);
+    procedure edtNumeroSerieChange(Sender: TObject);
   private
     procedure LimparFormulario;
+    function verificaModelo(const texto : string): Integer;
   public
   end;
 
@@ -86,7 +88,7 @@ var
 
 implementation
 
-uses uValidacoes, uConexao;
+uses uValidacoes, uConexao, uClienteRepository, uCliente, System.StrUtils;
 
 {$R *.dfm}
 
@@ -94,7 +96,6 @@ uses uValidacoes, uConexao;
 
 procedure TfrmRegistrarAtendimento.FormCreate(Sender: TObject);
 begin
-  ShowMessage(ExtractFilePath(ParamStr(0)));
   LimparFormulario;
 
   if not ConectarSql then
@@ -107,9 +108,46 @@ begin
 
 end;
 
-procedure TfrmRegistrarAtendimento.btnBuscarClick(Sender: TObject);
+procedure TfrmRegistrarAtendimento.edtNumeroSerieChange(Sender: TObject);
 begin
-  lblErroSerie.Visible := not TValidacoes.NumeroSerieValido(edtNumeroSerie.Text);
+  cbxModelo.ItemIndex := verificaModelo(edtNumeroSerie.Text);
+end;
+
+procedure TfrmRegistrarAtendimento.btnBuscarClick(Sender: TObject);
+var
+  Cliente: TCliente;
+begin
+  lblErroSerie.Visible := false;
+  Cliente := TClienteRepository.BuscarPorNumeroSerie(edtNumeroSerie.Text);
+
+  if Cliente <> nil then
+  begin
+    Cliente := TClienteRepository.BuscarPorNumeroSerie(edtNumeroSerie.Text);
+
+    edtNome.Text := Cliente.nome;
+    edtTelefone.Text := Cliente.telefone;
+
+    if Cliente.tipo='F' then
+    begin
+      rbPessoaFisica.Checked:=true;
+      rbPessoaJuridica.Checked:=false;
+
+      edtEmpresa.Enabled:=false;
+    end
+    else
+    begin
+      rbPessoaFisica.Checked:=false;
+      rbPessoaJuridica.Checked:=true;
+
+      edtEmpresa.Text:=Cliente.nome_empresa;
+    end;
+
+
+  end
+  else begin
+    lblErroSerie.Visible := true;
+  end;
+
 end;
 
 procedure TfrmRegistrarAtendimento.btnSalvarClick(Sender: TObject);
@@ -122,6 +160,8 @@ begin
     ShowMessage('Atendimento validado. (Gravação no banco ainda não implementada.)');
 
 end;
+
+
 
 procedure TfrmRegistrarAtendimento.btnCancelarClick(Sender: TObject);
 begin
@@ -155,5 +195,31 @@ begin
   dtpTerminoData.Checked := False;
   memDescricao.Clear;
 end;
+
+
+function TfrmRegistrarAtendimento.verificaModelo(const texto : string): Integer;
+var
+  modelo, versao: string;
+begin
+  Result:=-1;
+
+  modelo := Copy(texto, 1, 2);
+  versao := Copy(texto, 3, 2);
+
+  case IndexText(modelo, ['EC','TE','TC','TP']) of
+    0: begin
+      case IndexText(versao, ['10','11']) of
+        0: Result := 0;
+        1: Result := 1;
+      end;
+    end;
+    1: Result := 2;
+    2: Result := 3;
+    3: Result := 4;
+
+  end;
+
+end;
+
 
 end.
