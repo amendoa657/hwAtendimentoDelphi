@@ -126,6 +126,8 @@
             <Form>frmRegistrarAtendimento</Form>
         </DCCReference>
         <DCCReference Include="src\data\uConexao.pas"/>
+        <DCCReference Include="src\repositories\uClienteRepository.pas"/>
+        <DCCReference Include="src\models\uCliente.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

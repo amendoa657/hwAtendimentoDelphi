@@ -562,6 +562,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         ParentFont = False
         TabOrder = 0
         TextHint = 'XX000000000'
+        OnChange = edtNumeroSerieChange
       end
       object btnBuscar: TPanel
         Left = 862
