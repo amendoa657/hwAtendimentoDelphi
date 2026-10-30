@@ -5,7 +5,13 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
+  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, FireDAC.Comp.UI, FireDAC.Phys.MySQL, Vcl.Grids,
+  Vcl.DBGrids;
 
 type
   TfrmRegistrarAtendimento = class(TForm)
@@ -59,6 +65,12 @@ type
     dtpTerminoHora: TDateTimePicker;
     lblDescricao: TLabel;
     memDescricao: TMemo;
+    ConexaoSql: TFDConnection;
+    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    QuerySql: TFDQuery;
+    DataSource: TDataSource;
+    DBGrid1: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
@@ -74,7 +86,7 @@ var
 
 implementation
 
-uses uValidacoes;
+uses uValidacoes, uConexao;
 
 {$R *.dfm}
 
@@ -82,7 +94,17 @@ uses uValidacoes;
 
 procedure TfrmRegistrarAtendimento.FormCreate(Sender: TObject);
 begin
+  ShowMessage(ExtractFilePath(ParamStr(0)));
   LimparFormulario;
+
+  if not ConectarSql then
+  begin
+    Application.Terminate;
+    Exit;
+  end;
+
+  QuerySql.Connection := Conexao;
+
 end;
 
 procedure TfrmRegistrarAtendimento.btnBuscarClick(Sender: TObject);
