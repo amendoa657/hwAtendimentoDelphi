@@ -279,11 +279,13 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       WordWrap = True
     end
     object lvHistorico: TDBGrid
-      Left = 24
+      Left = 21
       Top = 138
-      Width = 265
-      Height = 456
+      Width = 269
+      Height = 482
+      Anchors = [akLeft, akTop, akRight, akBottom]
       DataSource = DataSource
+      Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ReadOnly = True
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
@@ -294,14 +296,23 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       Columns = <
         item
           Expanded = False
+          FieldName = 'data'
+          Title.Caption = 'Data'
+          Width = 78
           Visible = True
         end
         item
           Expanded = False
+          FieldName = 'cliente'
+          Title.Caption = 'Cliente'
+          Width = 70
           Visible = True
         end
         item
           Expanded = False
+          FieldName = 'descricao'
+          Title.Caption = 'Descri'#231#227'o'
+          Width = 99
           Visible = True
         end>
     end
