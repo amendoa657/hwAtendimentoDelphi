@@ -143,8 +143,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 3
-    ExplicitLeft = -8
-    ExplicitTop = 688
     DesignSize = (
       1280
       64)
@@ -203,6 +201,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       BevelOuter = bvNone
       Caption = 'Salvar atendimento'
       Color = 12746266
+      Enabled = False
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -13
@@ -348,7 +347,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitLeft = 1
       DesignSize = (
         970
         640)
@@ -394,9 +392,9 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       object lblErroSerie: TLabel
         Left = 28
         Top = 138
-        Width = 146
+        Width = 249
         Height = 13
-        Caption = #10006' N'#250'mero de s'#233'rie inv'#225'lido!'
+        Caption = #10006' N'#250'mero de s'#233'rie inv'#225'lido ou n'#227'o encontrado!'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2631878
         Font.Height = -11
@@ -591,6 +589,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Height = 25
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2630431
         Font.Height = -13
@@ -612,6 +611,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Height = 19
         Caption = 'Pessoa f'#237'sica'
         Checked = True
+        Enabled = False
         TabOrder = 3
         TabStop = True
         OnClick = TipoPessoaClick
@@ -622,12 +622,13 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Width = 120
         Height = 19
         Caption = 'Pessoa jur'#237'dica'
+        Enabled = False
         TabOrder = 4
         OnClick = TipoPessoaClick
       end
       object edtEmpresa: TEdit
         Left = 28
-        Top = 330
+        Top = 336
         Width = 914
         Height = 25
         Anchors = [akLeft, akTop, akRight]
@@ -647,6 +648,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Top = 390
         Width = 449
         Height = 25
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2630431
         Font.Height = -13
@@ -662,6 +664,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Top = 390
         Width = 449
         Height = 25
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2630431
         Font.Height = -13
@@ -679,6 +682,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Height = 25
         Date = 46324.00000000000000000
         Time = 0.50000000000000000
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2630431
         Font.Height = -13
@@ -695,6 +699,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Date = 46324.00000000000000000
         Format = 'HH:mm'
         Time = 0.50000000000000000
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2630431
         Font.Height = -13
@@ -713,6 +718,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Time = 0.50000000000000000
         ShowCheckbox = True
         Checked = False
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2630431
         Font.Height = -13
@@ -729,6 +735,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Date = 46324.00000000000000000
         Format = 'HH:mm'
         Time = 0.50000000000000000
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2630431
         Font.Height = -13
@@ -744,6 +751,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Width = 914
         Height = 70
         Anchors = [akLeft, akTop, akRight]
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 2630431
         Font.Height = -13

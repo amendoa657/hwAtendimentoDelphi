@@ -78,6 +78,10 @@ type
     procedure TipoPessoaClick(Sender: TObject);
     procedure edtNumeroSerieChange(Sender: TObject);
   private
+    var
+      numeroSerieEncontrado : boolean;
+    procedure registroValido(const valor : boolean);
+    procedure clienteDisponivel(const valor: Boolean);
     procedure LimparFormulario;
     function verificaModelo(const texto : string): Integer;
   public
@@ -88,7 +92,7 @@ var
 
 implementation
 
-uses uValidacoes, uConexao, uClienteRepository, uCliente, System.StrUtils;
+uses uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils;
 
 {$R *.dfm}
 
@@ -97,6 +101,8 @@ uses uValidacoes, uConexao, uClienteRepository, uCliente, System.StrUtils;
 procedure TfrmRegistrarAtendimento.FormCreate(Sender: TObject);
 begin
   LimparFormulario;
+  registroValido(False);
+  numeroSerieEncontrado:=False;
 
   if not ConectarSql then
   begin
@@ -111,6 +117,10 @@ end;
 procedure TfrmRegistrarAtendimento.edtNumeroSerieChange(Sender: TObject);
 begin
   cbxModelo.ItemIndex := verificaModelo(edtNumeroSerie.Text);
+
+  if Length(edtNumeroSerie.Text)=0 then registroValido(False);
+  if Length(edtNumeroSerie.Text)<11 then registroValido(False);
+
 end;
 
 procedure TfrmRegistrarAtendimento.btnBuscarClick(Sender: TObject);
@@ -120,8 +130,12 @@ begin
   lblErroSerie.Visible := false;
   Cliente := TClienteRepository.BuscarPorNumeroSerie(edtNumeroSerie.Text);
 
+  registroValido(True);
+
   if Cliente <> nil then
   begin
+    numeroSerieEncontrado:=True;
+
     Cliente := TClienteRepository.BuscarPorNumeroSerie(edtNumeroSerie.Text);
 
     edtNome.Text := Cliente.nome;
@@ -142,22 +156,105 @@ begin
       edtEmpresa.Text:=Cliente.nome_empresa;
     end;
 
+    clienteDisponivel(false);
+
 
   end
   else begin
+    numeroSerieEncontrado :=False;
     lblErroSerie.Visible := true;
   end;
 
 end;
 
 procedure TfrmRegistrarAtendimento.btnSalvarClick(Sender: TObject);
+var
+  nome : string;
+  telefone : string;
+  tipo : string;
+  nome_empresa : string;
+  cliente_id : Integer;
+  equipamento_id : Integer;
+  descricao : string;
+  data_hora_inicio : TDateTime;
+  data_hora_fim : TDateTime;
+  numero_serie : string;
+  modelo : string;
+
+  Cliente : TCliente;
 begin
+  nome := edtNome.Text;
+  telefone := edtTelefone.Text;
+
+  if rbPessoaJuridica.Checked then
+    tipo:='J'
+  else
+    tipo:='F';
+
+  nome_empresa:=edtEmpresa.Text;
+
+  numero_serie := edtNumeroSerie.Text;
+
+  modelo := cbxModelo.Text;
+
+  data_hora_inicio := dtpInicioData.DateTime;
+
+  data_hora_fim := 0;
+
+  if dtpTerminoData.Checked then
+    data_hora_fim := dtpTerminoData.DateTime;
+
+  descricao := memDescricao.Text;
+
+
+
+
   if TValidacoes.ValidarFormulario(
       edtNumeroSerie.Text,
       edtNome.Text,
       memDescricao.Text,
       cbxModelo.ItemIndex) then
-    ShowMessage('Atendimento validado. (Gravação no banco ainda não implementada.)');
+  begin
+  //ShowMessage('Atendimento validado. (Gravação no banco ainda não implementada.)');
+    if numeroSerieEncontrado then
+    begin
+      Cliente := TClienteRepository.BuscarPorNumeroSerie(edtNumeroSerie.Text);
+
+      TAtendimentoRepository.registrarAtendimento(
+        data_hora_inicio, data_hora_fim, descricao, Cliente.id, Cliente.equipamento_id
+      );
+
+    end
+    else
+    begin
+      cliente_id := TClienteRepository.registrarCliente(
+        tipo,
+        nome,
+        telefone,
+        nome_empresa
+      );
+
+      if cliente_id<>-1 then
+      begin
+        equipamento_id := TEquipamentoRepository.registrarEquipamento(
+          modelo,
+          numero_serie,
+          cliente_id
+        )
+      end;
+      if equipamento_id<>-1 then
+      begin
+        TAtendimentoRepository.registrarAtendimento(
+          data_hora_inicio, data_hora_fim, descricao, cliente_id, equipamento_id
+        );
+      end;
+
+    end;
+
+    ShowMessage('Atendimento gravado com sucesso!');
+    limparFormulario;
+  end;
+
 
 end;
 
@@ -178,6 +275,75 @@ end;
 
 { ===== Rotinas ===== }
 
+
+procedure TfrmRegistrarAtendimento.clienteDisponivel(const valor: Boolean);
+begin
+  if(valor) then
+  begin
+    rbPessoaFisica.Enabled := True;
+    rbPessoaJuridica.Enabled := True;
+
+    edtNome.Enabled := True;
+    edtTelefone.Enabled := True;
+
+    edtEmpresa.Enabled := True;
+  end
+  else
+  begin
+    rbPessoaFisica.Enabled := False;
+    rbPessoaJuridica.Enabled := False;
+
+    edtNome.Enabled := False;
+    edtTelefone.Enabled := False;
+
+    edtEmpresa.Enabled := False;
+  end;
+end;
+
+procedure TfrmRegistrarAtendimento.registroValido(const valor: Boolean);
+begin
+  if(valor) then
+  begin
+    //cbxModelo.Enabled := True;
+
+    rbPessoaFisica.Enabled := True;
+    rbPessoaJuridica.Enabled := True;
+
+    edtNome.Enabled := True;
+    edtTelefone.Enabled := True;
+
+    dtpInicioData.Enabled := True;
+    dtpInicioHora.Enabled := True;
+
+    dtpTerminoData.Enabled := True;
+    dtpTerminoHora.Enabled := True;
+
+    memDescricao.Enabled := True;
+
+    btnSalvar.Enabled := True;
+  end
+  else
+  begin
+    cbxModelo.Enabled := False;
+
+    rbPessoaFisica.Enabled := False;
+    rbPessoaJuridica.Enabled := False;
+
+    edtNome.Enabled := False;
+    edtTelefone.Enabled := False;
+
+    dtpInicioData.Enabled := False;
+    dtpInicioHora.Enabled := False;
+
+    dtpTerminoData.Enabled := False;
+    dtpTerminoHora.Enabled := False;
+
+    memDescricao.Enabled := False;
+
+    btnSalvar.Enabled := False
+  end;
+end;
+
 procedure TfrmRegistrarAtendimento.LimparFormulario;
 begin
   edtNumeroSerie.Clear;
@@ -195,7 +361,6 @@ begin
   dtpTerminoData.Checked := False;
   memDescricao.Clear;
 end;
-
 
 function TfrmRegistrarAtendimento.verificaModelo(const texto : string): Integer;
 var

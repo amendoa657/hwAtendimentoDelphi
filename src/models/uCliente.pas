@@ -6,6 +6,7 @@ type
   TCliente = class
   public
     id: Integer;
+    equipamento_id: Integer;
     tipo: string;
     nome: string;
     nome_empresa: string;
