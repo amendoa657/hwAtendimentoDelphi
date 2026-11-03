@@ -143,6 +143,8 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 3
+    ExplicitLeft = 28
+    ExplicitTop = 736
     DesignSize = (
       1280
       64)
@@ -212,18 +214,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       TabOrder = 1
       OnClick = btnSalvarClick
     end
-    object DBGrid1: TDBGrid
-      Left = 28
-      Top = -22
-      Width = 361
-      Height = 120
-      TabOrder = 2
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = 2630431
-      TitleFont.Height = -12
-      TitleFont.Name = 'Comfortaa'
-      TitleFont.Style = []
-    end
   end
   object pnlHistorico: TPanel
     Left = 970
@@ -288,40 +278,32 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       Transparent = True
       WordWrap = True
     end
-    object lvHistorico: TListView
-      Left = 21
-      Top = 127
-      Width = 269
-      Height = 493
-      Anchors = [akLeft, akTop, akRight, akBottom]
-      BorderStyle = bsNone
-      Color = 16447735
+    object lvHistorico: TDBGrid
+      Left = 24
+      Top = 138
+      Width = 265
+      Height = 456
+      DataSource = DataSource
+      ReadOnly = True
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = 2630431
+      TitleFont.Height = -12
+      TitleFont.Name = 'Comfortaa'
+      TitleFont.Style = []
       Columns = <
         item
-          Caption = 'Data'
-          Width = 70
+          Expanded = False
+          Visible = True
         end
         item
-          Caption = 'Cliente'
-          Width = 100
+          Expanded = False
+          Visible = True
         end
         item
-          Caption = 'Descri'#231#227'o'
-          Width = 200
+          Expanded = False
+          Visible = True
         end>
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 2630431
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ReadOnly = True
-      RowSelect = True
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 0
-      ViewStyle = vsReport
-      Visible = False
     end
   end
   object sbxConteudo: TScrollBox
@@ -347,6 +329,8 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
+      ExplicitLeft = 600
+      ExplicitTop = -96
       DesignSize = (
         970
         640)

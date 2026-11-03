@@ -32,7 +32,6 @@ type
     lblHistoricoTitulo: TLabel;
     shpLinhaHistorico: TShape;
     lblHistoricoInfo: TLabel;
-    lvHistorico: TListView;
     sbxConteudo: TScrollBox;
     pnlFormulario: TPanel;
     lblNovoAtendimento: TLabel;
@@ -70,7 +69,7 @@ type
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     QuerySql: TFDQuery;
     DataSource: TDataSource;
-    DBGrid1: TDBGrid;
+    lvHistorico: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
@@ -129,6 +128,15 @@ var
 begin
   lblErroSerie.Visible := false;
   Cliente := TClienteRepository.BuscarPorNumeroSerie(edtNumeroSerie.Text);
+
+  querySql.SQL.Text := '''
+  select data, cliente, descricao
+  from atendimentosEquipamento
+  where numero_serie = :numero_serie
+  order by data desc
+  ''';
+  querySql.ParamByName('numero_serie').AsString := edtNumeroSerie.Text;
+  querySql.Open;
 
   registroValido(True);
 
@@ -299,6 +307,7 @@ begin
     edtEmpresa.Enabled := False;
   end;
 end;
+
 
 procedure TfrmRegistrarAtendimento.registroValido(const valor: Boolean);
 begin
