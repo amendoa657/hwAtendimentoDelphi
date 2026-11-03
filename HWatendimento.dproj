@@ -128,6 +128,9 @@
         <DCCReference Include="src\forms\pesquisarAtendimento.pas">
             <Form>frmPesquisarAtendimento</Form>
         </DCCReference>
+        <DCCReference Include="src\forms\usuarios.pas">
+            <Form>frmUsuarios</Form>
+        </DCCReference>
         <DCCReference Include="src\data\uConexao.pas"/>
         <DCCReference Include="src\repositories\uClienteRepository.pas"/>
         <DCCReference Include="src\models\uCliente.pas"/>
