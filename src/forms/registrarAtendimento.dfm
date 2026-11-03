@@ -94,6 +94,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
+        OnClick = btnPesquisarClick
       end
     end
     object pnlUsuariosBorda: TPanel
@@ -143,8 +144,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 3
-    ExplicitLeft = 28
-    ExplicitTop = 736
     DesignSize = (
       1280
       64)
@@ -340,8 +339,6 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitLeft = 600
-      ExplicitTop = -96
       DesignSize = (
         970
         640)

@@ -8,13 +8,13 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
   Constraints.MinHeight = 600
   Constraints.MinWidth = 960
   Font.Charset = DEFAULT_CHARSET
-  Font.Color = $0028231F
+  Font.Color = 2630431
   Font.Height = -12
   Font.Name = 'Comfortaa'
   Font.Style = []
   Position = poScreenCenter
   WindowState = wsMaximized
-  TextHeight = 15
+  TextHeight = 19
   object pnlCabecalho: TPanel
     Left = 0
     Top = 0
@@ -22,7 +22,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     Height = 56
     Align = alTop
     BevelOuter = bvNone
-    Color = $001D1916
+    Color = 1906966
     ParentBackground = False
     ShowCaption = False
     TabOrder = 0
@@ -32,8 +32,8 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblAppTitulo: TLabel
       Left = 74
       Top = 16
-      Width = 112
-      Height = 22
+      Width = 128
+      Height = 30
       Caption = 'Atendimento'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -50,14 +50,14 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Height = 32
       BevelOuter = bvNone
       Caption = 'hw'
-      Color = $00C47F1C
+      Color = 12877596
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -21
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
-      ParentFont = False
       ParentBackground = False
+      ParentFont = False
       TabOrder = 0
     end
     object pnlNovoAtendimentoBorda: TPanel
@@ -67,7 +67,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Height = 30
       Anchors = [akTop, akRight]
       BevelOuter = bvNone
-      Color = $00635A55
+      Color = 6511189
       Padding.Left = 1
       Padding.Top = 1
       Padding.Right = 1
@@ -84,15 +84,16 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Novo atendimento'
-        Color = $001D1916
+        Color = 1906966
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Height = -12
         Font.Name = 'Segoe UI'
         Font.Style = []
-        ParentFont = False
         ParentBackground = False
+        ParentFont = False
         TabOrder = 0
+        OnClick = btnNovoAtendimentoClick
       end
     end
     object pnlUsuariosBorda: TPanel
@@ -102,7 +103,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Height = 30
       Anchors = [akTop, akRight]
       BevelOuter = bvNone
-      Color = $00635A55
+      Color = 6511189
       Padding.Left = 1
       Padding.Top = 1
       Padding.Right = 1
@@ -119,14 +120,14 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Usu'#225'rios'
-        Color = $001D1916
+        Color = 1906966
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Height = -12
         Font.Name = 'Segoe UI'
         Font.Style = []
-        ParentFont = False
         ParentBackground = False
+        ParentFont = False
         TabOrder = 0
       end
     end
@@ -151,8 +152,8 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Width = 1280
       Height = 1
       Align = alTop
-      Brush.Color = $00E1DCD8
-      Pen.Color = $00E1DCD8
+      Brush.Color = 14802136
+      Pen.Color = 14802136
     end
     object pnlVoltarBorda: TPanel
       Left = 1180
@@ -161,7 +162,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Height = 36
       Anchors = [akTop, akRight]
       BevelOuter = bvNone
-      Color = $00D2CCC7
+      Color = 13814983
       Padding.Left = 1
       Padding.Top = 1
       Padding.Right = 1
@@ -180,12 +181,12 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         Caption = 'Voltar'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = $0028231F
+        Font.Color = 2630431
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
-        ParentFont = False
         ParentBackground = False
+        ParentFont = False
         TabOrder = 0
       end
     end
@@ -207,11 +208,11 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblTitulo: TLabel
       Left = 28
       Top = 20
-      Width = 230
-      Height = 26
+      Width = 263
+      Height = 34
       Caption = 'Pesquisar atendimentos'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -21
       Font.Name = 'Comfortaa'
       Font.Style = []
@@ -220,11 +221,11 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblSubtitulo: TLabel
       Left = 28
       Top = 50
-      Width = 100
-      Height = 14
+      Width = 228
+      Height = 18
       Caption = 'Deixe um filtro em branco para ignor'#225'-lo.'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
+      Font.Color = 7365467
       Font.Height = -11
       Font.Name = 'Comfortaa'
       Font.Style = []
@@ -233,8 +234,8 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblSecaoFiltros: TLabel
       Left = 28
       Top = 76
-      Width = 50
-      Height = 15
+      Width = 37
+      Height = 19
       Caption = 'Filtros'
     end
     object shpLinhaFiltros: TShape
@@ -243,17 +244,17 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Width = 1172
       Height = 1
       Anchors = [akLeft, akTop, akRight]
-      Brush.Color = $00E1DCD8
-      Pen.Color = $00E1DCD8
+      Brush.Color = 14802136
+      Pen.Color = 14802136
     end
     object lblDe: TLabel
       Left = 28
       Top = 102
-      Width = 100
-      Height = 14
+      Width = 15
+      Height = 18
       Caption = 'De'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
+      Font.Color = 7365467
       Font.Height = -11
       Font.Name = 'Comfortaa'
       Font.Style = []
@@ -262,11 +263,11 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblAte: TLabel
       Left = 648
       Top = 102
-      Width = 100
-      Height = 14
+      Width = 19
+      Height = 18
       Caption = 'At'#233
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
+      Font.Color = 7365467
       Font.Height = -11
       Font.Name = 'Comfortaa'
       Font.Style = []
@@ -275,11 +276,11 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblNomeCliente: TLabel
       Left = 28
       Top = 158
-      Width = 100
-      Height = 14
+      Width = 92
+      Height = 18
       Caption = 'Nome do cliente'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
+      Font.Color = 7365467
       Font.Height = -11
       Font.Name = 'Comfortaa'
       Font.Style = []
@@ -288,11 +289,11 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblNumeroSerie: TLabel
       Left = 648
       Top = 158
-      Width = 100
-      Height = 14
+      Width = 94
+      Height = 18
       Caption = 'N'#250'mero de s'#233'rie'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
+      Font.Color = 7365467
       Font.Height = -11
       Font.Name = 'Comfortaa'
       Font.Style = []
@@ -301,11 +302,11 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblDescricao: TLabel
       Left = 28
       Top = 214
-      Width = 100
-      Height = 14
+      Width = 102
+      Height = 18
       Caption = 'Descri'#231#227'o cont'#233'm'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
+      Font.Color = 7365467
       Font.Height = -11
       Font.Name = 'Comfortaa'
       Font.Style = []
@@ -314,11 +315,11 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblTelefone: TLabel
       Left = 648
       Top = 214
-      Width = 100
-      Height = 14
+      Width = 47
+      Height = 18
       Caption = 'Telefone'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
+      Font.Color = 7365467
       Font.Height = -11
       Font.Name = 'Comfortaa'
       Font.Style = []
@@ -327,8 +328,8 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object lblSecaoResultados: TLabel
       Left = 28
       Top = 330
-      Width = 50
-      Height = 15
+      Width = 66
+      Height = 19
       Caption = 'Resultados'
     end
     object shpLinhaResultados: TShape
@@ -337,24 +338,24 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Width = 1142
       Height = 1
       Anchors = [akLeft, akTop, akRight]
-      Brush.Color = $00E1DCD8
-      Pen.Color = $00E1DCD8
+      Brush.Color = 14802136
+      Pen.Color = 14802136
     end
     object dtpDe: TDateTimePicker
       Left = 28
       Top = 120
       Width = 604
       Height = 25
-      Date = 46324.000000000000000000
-      Time = 0.500000000000000000
+      Date = 46324.00000000000000000
+      Time = 0.50000000000000000
+      ShowCheckbox = True
       Checked = False
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ShowCheckbox = True
       TabOrder = 0
     end
     object dtpAte: TDateTimePicker
@@ -362,16 +363,16 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Top = 120
       Width = 604
       Height = 25
-      Date = 46324.000000000000000000
-      Time = 0.500000000000000000
+      Date = 46324.00000000000000000
+      Time = 0.50000000000000000
+      ShowCheckbox = True
       Checked = False
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ShowCheckbox = True
       TabOrder = 1
     end
     object edtNomeCliente: TEdit
@@ -380,12 +381,12 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Width = 604
       Height = 25
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
-      ParentFont = False
       MaxLength = 100
+      ParentFont = False
       TabOrder = 2
       TextHint = 'Nome ou parte do nome'
     end
@@ -394,14 +395,14 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Top = 176
       Width = 604
       Height = 25
+      CharCase = ecUpperCase
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
-      ParentFont = False
-      CharCase = ecUpperCase
       MaxLength = 11
+      ParentFont = False
       TabOrder = 3
       TextHint = 'XX000000000'
     end
@@ -411,7 +412,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Width = 604
       Height = 25
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
@@ -425,12 +426,12 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Width = 604
       Height = 25
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
-      ParentFont = False
       MaxLength = 15
+      ParentFont = False
       TabOrder = 5
       TextHint = '(00) 00000-0000'
     end
@@ -442,14 +443,14 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Cursor = crHandPoint
       BevelOuter = bvNone
       Caption = 'Pesquisar'
-      Color = $001D1916
+      Color = 1906966
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
-      ParentFont = False
       ParentBackground = False
+      ParentFont = False
       TabOrder = 6
     end
     object pnlLimparFiltrosBorda: TPanel
@@ -457,9 +458,8 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Top = 276
       Width = 112
       Height = 36
-      Anchors = [akLeft, akTop]
       BevelOuter = bvNone
-      Color = $00D2CCC7
+      Color = 13814983
       Padding.Left = 1
       Padding.Top = 1
       Padding.Right = 1
@@ -478,12 +478,12 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         Caption = 'Limpar filtros'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = $0028231F
+        Font.Color = 2630431
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
-        ParentFont = False
         ParentBackground = False
+        ParentFont = False
         TabOrder = 0
       end
     end
@@ -523,14 +523,14 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
           Width = 410
         end>
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -12
       Font.Name = 'Segoe UI'
       Font.Style = []
-      ParentFont = False
       GridLines = True
       ReadOnly = True
       RowSelect = True
+      ParentFont = False
       TabOrder = 8
       ViewStyle = vsReport
     end

@@ -76,6 +76,7 @@ type
     procedure btnCancelarClick(Sender: TObject);
     procedure TipoPessoaClick(Sender: TObject);
     procedure edtNumeroSerieChange(Sender: TObject);
+    procedure btnPesquisarClick(Sender: TObject);
   private
     var
       numeroSerieEncontrado : boolean;
@@ -91,7 +92,8 @@ var
 
 implementation
 
-uses uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils;
+uses uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils,
+  pesquisarAtendimento;
 
 {$R *.dfm}
 
@@ -271,6 +273,19 @@ end;
 procedure TfrmRegistrarAtendimento.btnCancelarClick(Sender: TObject);
 begin
   LimparFormulario;
+end;
+
+procedure TfrmRegistrarAtendimento.btnPesquisarClick(Sender: TObject);
+var frmPesquisar : TfrmPesquisarAtendimento;
+begin
+  frmPesquisar := TfrmPesquisarAtendimento.Create(nil);   // cria a tela
+  try
+    Hide;
+    frmPesquisar.ShowModal;                   // abre e espera ela fechar
+  finally
+    Show;
+    frmPesquisar.Free;                        // libera da memória
+  end;
 end;
 
 procedure TfrmRegistrarAtendimento.TipoPessoaClick(Sender: TObject);

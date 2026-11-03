@@ -43,6 +43,7 @@ type
     pnlLimparFiltrosBorda: TPanel;
     btnLimparFiltros: TPanel;
     lvResultados: TListView;
+    procedure btnNovoAtendimentoClick(Sender: TObject);
   private
   public
   end;
@@ -53,5 +54,13 @@ var
 implementation
 
 {$R *.dfm}
+
+uses registrarAtendimento;
+
+procedure TfrmPesquisarAtendimento.btnNovoAtendimentoClick(Sender: TObject);
+var frmRegistrar : TfrmRegistrarAtendimento;
+begin
+  Close;
+end;
 
 end.
