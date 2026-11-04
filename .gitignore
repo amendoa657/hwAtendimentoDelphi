@@ -14,3 +14,12 @@ Win64/
 *.local
 *.identcache
 *.stat
+
+# Arquivos gerados pelo Delphi (debug, desktop da IDE, backups)
+*.rsm
+*.dsk
+*.tvsconfig
+*.~*
+
+# Banco local
+*.db
