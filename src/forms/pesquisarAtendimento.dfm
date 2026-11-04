@@ -15,6 +15,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
   Position = poScreenCenter
   WindowState = wsMaximized
   OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 19
   object pnlCabecalho: TPanel
     Left = 0

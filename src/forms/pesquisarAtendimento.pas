@@ -67,6 +67,7 @@ type
     procedure btnVoltarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
   public
   end;
@@ -84,6 +85,11 @@ procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
   QuerySql.Connection := Conexao;
 
+end;
+
+procedure TfrmPesquisarAtendimento.FormShow(Sender: TObject);
+begin
+  btnPesquisarClick(Self);
 end;
 
 procedure TfrmPesquisarAtendimento.btnNovoAtendimentoClick(Sender: TObject);
