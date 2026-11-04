@@ -604,6 +604,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         ParentFont = False
         ParentBackground = False
         TabOrder = 0
+        OnClick = btnExcluirClick
       end
     end
   end

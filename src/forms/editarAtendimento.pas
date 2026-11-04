@@ -37,8 +37,12 @@ type
     btnCancelar: TPanel;
     btnSalvar: TPanel;
     procedure btnCancelarClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
   private
+    var
+      atendimento_id : Integer;
   public
+    function carregarAtendimento(const id : Integer; const numero_serie, modelo, cliente, telefone : string) : Boolean;
   end;
 
 var
@@ -48,9 +52,89 @@ implementation
 
 {$R *.dfm}
 
+uses System.DateUtils, System.UITypes, uAtendimento, uAtendimentoRepository;
+
 procedure TfrmEditarAtendimento.btnCancelarClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmEditarAtendimento.btnSalvarClick(Sender: TObject);
+var
+  data_hora_inicio : TDateTime;
+  data_hora_fim : TDateTime;
+  descricao : string;
+begin
+  data_hora_inicio := DateOf(dtpInicioData.Date) + TimeOf(dtpInicioHora.Time);
+
+  data_hora_fim := 0;
+
+  if dtpTerminoData.Checked then
+    data_hora_fim := DateOf(dtpTerminoData.Date) + TimeOf(dtpTerminoHora.Time);
+
+  descricao := Trim(memDescricao.Text);
+
+  if descricao = '' then
+  begin
+    ShowMessage('Informe a descrição do atendimento.');
+    Exit;
+  end;
+
+  if (data_hora_fim <> 0) and (data_hora_fim < data_hora_inicio) then
+  begin
+    ShowMessage('O término não pode ser antes do início.');
+    Exit;
+  end;
+
+  if TAtendimentoRepository.atualizarAtendimento(
+      atendimento_id,
+      data_hora_inicio,
+      data_hora_fim,
+      descricao) then
+  begin
+    ShowMessage('Atendimento atualizado com sucesso!');
+    ModalResult := mrOk;
+  end;
+end;
+
+function TfrmEditarAtendimento.carregarAtendimento(const id : Integer; const numero_serie, modelo, cliente, telefone : string) : Boolean;
+var
+  Atendimento : TAtendimento;
+begin
+  Result := false;
+  atendimento_id := id;
+
+  lblNumeroSerieValor.Caption := numero_serie;
+  lblModeloValor.Caption := modelo;
+  lblClienteValor.Caption := cliente;
+  lblTelefoneValor.Caption := telefone;
+
+  Atendimento := TAtendimentoRepository.buscarAtendimentoPorId(id);
+
+  if Atendimento = nil then
+  begin
+    ShowMessage('Atendimento não encontrado.');
+    Exit;
+  end;
+
+  try
+    dtpInicioData.Date := DateOf(Atendimento.data_hora_inicio);
+    dtpInicioHora.Time := TimeOf(Atendimento.data_hora_inicio);
+
+    if Atendimento.data_hora_fim = 0 then
+      dtpTerminoData.Checked := false
+    else
+    begin
+      dtpTerminoData.Date := DateOf(Atendimento.data_hora_fim);
+      dtpTerminoHora.Time := TimeOf(Atendimento.data_hora_fim);
+      dtpTerminoData.Checked := true;
+    end;
+
+    memDescricao.Text := Atendimento.descricao;
+    Result := True;
+  finally
+    Atendimento.Free;
+  end;
 end;
 
 end.

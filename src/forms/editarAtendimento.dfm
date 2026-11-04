@@ -371,6 +371,7 @@ object frmEditarAtendimento: TfrmEditarAtendimento
       ParentFont = False
       ParentBackground = False
       TabOrder = 1
+      OnClick = btnSalvarClick
     end
   end
 end

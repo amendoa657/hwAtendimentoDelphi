@@ -66,6 +66,7 @@ type
     procedure btnLogClick(Sender: TObject);
     procedure btnVoltarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
   private
   public
   end;
@@ -77,7 +78,7 @@ implementation
 
 {$R *.dfm}
 
-uses uNavegacao, System.DateUtils, uConexao, uGrid, editarAtendimento;
+uses uNavegacao, System.DateUtils, System.UITypes, uConexao, uGrid, editarAtendimento, uAtendimentoRepository;
 
 procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
@@ -138,6 +139,7 @@ begin
     QuerySql.ParamByName('ate').Clear;
 
   QuerySql.Open;
+  QuerySql.FieldByName('id').Visible := false;
   AjustarGrid(lvResultados);
 
 end;
@@ -175,9 +177,47 @@ begin
   // Self como dono: o popup abre centralizado sobre a pesquisa
   Tela := TfrmEditarAtendimento.Create(Self);
   try
-    Tela.ShowModal;
+    if Tela.carregarAtendimento(
+        QuerySql.FieldByName('id').AsInteger,
+        QuerySql.FieldByName('numero_serie').AsString,
+        QuerySql.FieldByName('modelo').AsString,
+        QuerySql.FieldByName('Cliente').AsString,
+        QuerySql.FieldByName('Telefone').AsString) then
+    begin
+      if Tela.ShowModal = mrOk then
+        btnPesquisarClick(Self);
+    end;
   finally
     Tela.Free;
+  end;
+end;
+
+procedure TfrmPesquisarAtendimento.btnExcluirClick(Sender: TObject);
+var
+  id : Integer;
+  cliente : string;
+  inicio : string;
+begin
+  if not QuerySql.Active or QuerySql.IsEmpty then
+  begin
+    ShowMessage('Pesquise e selecione um atendimento para excluir.');
+    Exit;
+  end;
+
+  id := QuerySql.FieldByName('id').AsInteger;
+  cliente := QuerySql.FieldByName('Cliente').AsString;
+  inicio := FormatDateTime('dd/mm/yyyy hh:nn', QuerySql.FieldByName('inicio').AsDateTime);
+
+  if MessageDlg(
+      'Excluir o atendimento de ' + cliente + ' (' + inicio + ')?' + sLineBreak +
+      'Essa ação não pode ser desfeita.',
+      mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+    Exit;
+
+  if TAtendimentoRepository.excluirAtendimento(id) then
+  begin
+    ShowMessage('Atendimento excluído com sucesso!');
+    btnPesquisarClick(Self);
   end;
 end;
 
