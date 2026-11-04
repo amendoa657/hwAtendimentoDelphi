@@ -80,6 +80,4 @@ class function TAtendimentoRepository.registrarAtendimento(const data_hora_inici
     end;
   end;
 
-
-
 end.

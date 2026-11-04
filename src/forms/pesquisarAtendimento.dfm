@@ -143,6 +143,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
+    ExplicitTop = 702
     DesignSize = (
       1280
       64)
@@ -452,6 +453,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       ParentBackground = False
       ParentFont = False
       TabOrder = 6
+      OnClick = btnPesquisarClick
     end
     object pnlLimparFiltrosBorda: TPanel
       Left = 134
@@ -534,5 +536,28 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       TabOrder = 8
       ViewStyle = vsReport
     end
+  end
+  object ConexaoSql: TFDConnection
+    Left = 840
+    Top = 712
+  end
+  object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
+    Left = 744
+    Top = 712
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 640
+    Top = 712
+  end
+  object QuerySql: TFDQuery
+    Connection = ConexaoSql
+    Left = 568
+    Top = 712
+  end
+  object DataSource: TDataSource
+    DataSet = QuerySql
+    Left = 496
+    Top = 712
   end
 end
