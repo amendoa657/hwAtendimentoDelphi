@@ -140,7 +140,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Height = 30
       Anchors = [akTop, akRight]
       BevelOuter = bvNone
-      Color = $00635A55
+      Color = 6511189
       Padding.Left = 1
       Padding.Top = 1
       Padding.Right = 1
@@ -157,14 +157,14 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Log'
-        Color = $001D1916
+        Color = 1906966
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Height = -12
         Font.Name = 'Segoe UI'
         Font.Style = []
-        ParentFont = False
         ParentBackground = False
+        ParentFont = False
         TabOrder = 0
         OnClick = btnLogClick
       end
@@ -181,7 +181,6 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    ExplicitTop = 702
     DesignSize = (
       1280
       64)
@@ -560,14 +559,14 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Anchors = [akLeft, akBottom]
       BevelOuter = bvNone
       Caption = 'Editar'
-      Color = $001D1916
+      Color = 1906966
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
-      ParentFont = False
       ParentBackground = False
+      ParentFont = False
       TabOrder = 9
       OnClick = btnEditarClick
     end
@@ -578,7 +577,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Height = 40
       Anchors = [akLeft, akBottom]
       BevelOuter = bvNone
-      Color = $002828C6
+      Color = 2631878
       Padding.Left = 1
       Padding.Top = 1
       Padding.Right = 1
@@ -597,12 +596,12 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         Caption = 'Excluir'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = $002828C6
+        Font.Color = 2631878
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
-        ParentFont = False
         ParentBackground = False
+        ParentFont = False
         TabOrder = 0
         OnClick = btnExcluirClick
       end

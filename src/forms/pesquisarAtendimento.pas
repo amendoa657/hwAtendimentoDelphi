@@ -83,6 +83,7 @@ uses uNavegacao, System.DateUtils, System.UITypes, uConexao, uGrid, editarAtendi
 procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
   QuerySql.Connection := Conexao;
+
 end;
 
 procedure TfrmPesquisarAtendimento.btnNovoAtendimentoClick(Sender: TObject);
@@ -129,12 +130,12 @@ begin
   QuerySql.ParamByName('ate').DataType := ftDateTime;
 
   if dtpDe.Checked then
-    QuerySql.ParamByName('de').AsDateTime := DateOf(dtpDe.Date)          // 04/11 00:00
+    QuerySql.ParamByName('de').AsDateTime := DateOf(dtpDe.Date)
   else
     QuerySql.ParamByName('de').Clear;
 
   if dtpAte.Checked then
-    QuerySql.ParamByName('ate').AsDateTime := DateOf(dtpAte.Date) + 1    // 05/11 00:00
+    QuerySql.ParamByName('ate').AsDateTime := DateOf(dtpAte.Date) + 1
   else
     QuerySql.ParamByName('ate').Clear;
 
@@ -209,10 +210,7 @@ begin
 
   if MessageDlg(
     'Excluir o atendimento de ' + cliente + ' (' + inicio + ')?' + sLineBreak + 'Essa ação não pode ser desfeita.',
-    mtConfirmation,
-    [mbYes, mbNo],
-    0
-  ) <> mrYes then
+    mtConfirmation,[mbYes, mbNo],0) <> mrYes then
     Exit;
 
   if TAtendimentoRepository.excluirAtendimento(id) then
