@@ -41,6 +41,10 @@ type
     pnlLimparFiltrosBorda: TPanel;
     btnLimparFiltros: TPanel;
     lvLog: TDBGrid;
+    procedure btnPesquisarClick(Sender: TObject);
+    procedure btnUsuariosClick(Sender: TObject);
+    procedure btnNovoAtendimentoClick(Sender: TObject);
+    procedure btnVoltarClick(Sender: TObject);
   private
   public
   end;
@@ -51,5 +55,29 @@ var
 implementation
 
 {$R *.dfm}
+
+uses
+  uNavegacao;
+
+
+procedure TfrmLog.btnPesquisarClick(Sender: TObject);
+begin
+  IrPara(Self, tlPesquisar);
+end;
+
+procedure TfrmLog.btnUsuariosClick(Sender: TObject);
+begin
+  IrPara(Self, tlUsuarios);
+end;
+
+procedure TfrmLog.btnNovoAtendimentoClick(Sender: TObject);
+begin
+  IrPara(Self, tlRegistrar);
+end;
+
+procedure TfrmLog.btnVoltarClick(Sender: TObject);
+begin
+  IrPara(Self, tlRegistrar);
+end;
 
 end.

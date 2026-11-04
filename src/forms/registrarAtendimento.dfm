@@ -130,6 +130,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
+        OnClick = btnUsuariosClick
       end
     end
     object pnlLogBorda: TPanel
@@ -165,6 +166,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         ParentFont = False
         ParentBackground = False
         TabOrder = 0
+        OnClick = btnLogClick
       end
     end
   end

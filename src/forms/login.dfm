@@ -12,7 +12,9 @@ object frmLogin: TfrmLogin
   Font.Height = -12
   Font.Name = 'Comfortaa'
   Font.Style = []
+  KeyPreview = True
   Position = poScreenCenter
+  OnKeyPress = FormKeyPress
   TextHeight = 15
   object pnlTopo: TPanel
     Left = 0
@@ -169,5 +171,6 @@ object frmLogin: TfrmLogin
     ParentFont = False
     ParentBackground = False
     TabOrder = 3
+    OnClick = btnEntrarClick
   end
 end

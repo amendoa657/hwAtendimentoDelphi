@@ -37,6 +37,10 @@ type
     edtSenha: TEdit;
     chkAdministrador: TCheckBox;
     btnCadastrar: TPanel;
+    procedure btnPesquisarClick(Sender: TObject);
+    procedure btnLogClick(Sender: TObject);
+    procedure btnNovoAtendimentoClick(Sender: TObject);
+    procedure btnVoltarClick(Sender: TObject);
   private
   public
   end;
@@ -47,5 +51,29 @@ var
 implementation
 
 {$R *.dfm}
+
+uses
+  uNavegacao;
+
+
+procedure TfrmUsuarios.btnPesquisarClick(Sender: TObject);
+begin
+  IrPara(Self, tlPesquisar);
+end;
+
+procedure TfrmUsuarios.btnLogClick(Sender: TObject);
+begin
+  IrPara(Self, tlLog);
+end;
+
+procedure TfrmUsuarios.btnNovoAtendimentoClick(Sender: TObject);
+begin
+  IrPara(Self, tlRegistrar);
+end;
+
+procedure TfrmUsuarios.btnVoltarClick(Sender: TObject);
+begin
+  IrPara(Self, tlRegistrar);
+end;
 
 end.

@@ -93,6 +93,7 @@ object frmUsuarios: TfrmUsuarios
         ParentFont = False
         ParentBackground = False
         TabOrder = 0
+        OnClick = btnPesquisarClick
       end
     end
     object pnlLogBorda: TPanel
@@ -128,6 +129,7 @@ object frmUsuarios: TfrmUsuarios
         ParentFont = False
         ParentBackground = False
         TabOrder = 0
+        OnClick = btnLogClick
       end
     end
     object pnlNovoAtendimentoBorda: TPanel
@@ -163,6 +165,7 @@ object frmUsuarios: TfrmUsuarios
         ParentFont = False
         ParentBackground = False
         TabOrder = 0
+        OnClick = btnNovoAtendimentoClick
       end
     end
   end
@@ -222,6 +225,7 @@ object frmUsuarios: TfrmUsuarios
         ParentFont = False
         ParentBackground = False
         TabOrder = 0
+        OnClick = btnVoltarClick
       end
     end
   end

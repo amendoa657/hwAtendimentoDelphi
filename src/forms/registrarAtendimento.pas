@@ -80,6 +80,8 @@ type
     procedure edtNumeroSerieChange(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure pnlHistoricoResize(Sender: TObject);
+    procedure btnUsuariosClick(Sender: TObject);
+    procedure btnLogClick(Sender: TObject);
   private
     var
       numeroSerieEncontrado : boolean;
@@ -96,7 +98,7 @@ var
 implementation
 
 uses uGrid, uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils,
-  pesquisarAtendimento;
+  uNavegacao;
 
 {$R *.dfm}
 
@@ -280,16 +282,8 @@ begin
 end;
 
 procedure TfrmRegistrarAtendimento.btnPesquisarClick(Sender: TObject);
-var frmPesquisar : TfrmPesquisarAtendimento;
 begin
-  frmPesquisar := TfrmPesquisarAtendimento.Create(nil);   // cria a tela
-  try
-    Hide;
-    frmPesquisar.ShowModal;                   // abre e espera ela fechar
-  finally
-    Show;
-    frmPesquisar.Free;                        // libera da memória
-  end;
+  AbrirTela(Self, tlPesquisar);
 end;
 
 procedure TfrmRegistrarAtendimento.TipoPessoaClick(Sender: TObject);
@@ -418,6 +412,16 @@ end;
 procedure TfrmRegistrarAtendimento.pnlHistoricoResize(Sender: TObject);
 begin
   AjustarGrid(lvHistorico);
+end;
+
+procedure TfrmRegistrarAtendimento.btnUsuariosClick(Sender: TObject);
+begin
+  AbrirTela(Self, tlUsuarios);
+end;
+
+procedure TfrmRegistrarAtendimento.btnLogClick(Sender: TObject);
+begin
+  AbrirTela(Self, tlLog);
 end;
 
 end.

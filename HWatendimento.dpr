@@ -2,8 +2,10 @@ program HWatendimento;
 
 uses
   Vcl.Forms,
+  System.UITypes,
   uValidacoes in 'src\utils\uValidacoes.pas',
   uGrid in 'src\utils\uGrid.pas',
+  uNavegacao in 'src\utils\uNavegacao.pas',
   registrarAtendimento in 'src\forms\registrarAtendimento.pas' {frmRegistrarAtendimento},
   pesquisarAtendimento in 'src\forms\pesquisarAtendimento.pas' {frmPesquisarAtendimento},
   usuarios in 'src\forms\usuarios.pas' {frmUsuarios},
@@ -22,6 +24,16 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+
+  // Login antes de tudo: fechou sem entrar, o programa termina
+  frmLogin := TfrmLogin.Create(nil);
+  try
+    if frmLogin.ShowModal <> mrOk then
+      Exit;
+  finally
+    frmLogin.Free;
+  end;
+
   Application.CreateForm(TfrmRegistrarAtendimento, frmRegistrarAtendimento);
   Application.Run;
 end.
