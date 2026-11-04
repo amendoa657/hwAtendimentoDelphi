@@ -23,7 +23,7 @@ begin
   Conexao.Params.Add('DriverID=MySQL');
   Conexao.Params.Add('Server=localhost');
   Conexao.Params.Add('Port=3306');
-  Conexao.Params.Add('Database=hwatendimento');
+  Conexao.Params.Add('Database=hwatendimento_v2');
   Conexao.Params.Add('User_Name=root');
   Conexao.Params.Add('Password=');
 
