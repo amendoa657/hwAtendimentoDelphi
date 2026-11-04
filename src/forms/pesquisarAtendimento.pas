@@ -9,7 +9,8 @@ uses
   FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
   FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait,
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Comp.UI, FireDAC.Phys.MySQL;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Comp.UI, FireDAC.Phys.MySQL,
+  Vcl.Grids, Vcl.DBGrids;
 
 type
   TfrmPesquisarAtendimento = class(TForm)
@@ -46,12 +47,12 @@ type
     btnPesquisar: TPanel;
     pnlLimparFiltrosBorda: TPanel;
     btnLimparFiltros: TPanel;
-    lvResultados: TListView;
-    ConexaoSql: TFDConnection;
+    lvResultados: TDBGrid;
     FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     QuerySql: TFDQuery;
     DataSource: TDataSource;
+    procedure FormCreate(Sender: TObject);
     procedure btnNovoAtendimentoClick(Sender: TObject);
     procedure buscarPorFiltro(const descricao, nome_cliente, numero_serie, telefone: string; const data_hora_inicio, data_hora_fim : TDateTime);
     procedure btnPesquisarClick(Sender: TObject);
@@ -66,7 +67,12 @@ implementation
 
 {$R *.dfm}
 
-uses registrarAtendimento, System.DateUtils;
+uses registrarAtendimento, System.DateUtils, uConexao;
+
+procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
+begin
+  QuerySql.Connection := Conexao;
+end;
 
 procedure TfrmPesquisarAtendimento.btnNovoAtendimentoClick(Sender: TObject);
 var frmRegistrar : TfrmRegistrarAtendimento;

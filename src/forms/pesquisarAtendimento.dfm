@@ -14,6 +14,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
   Font.Style = []
   Position = poScreenCenter
   WindowState = wsMaximized
+  OnCreate = FormCreate
   TextHeight = 19
   object pnlCabecalho: TPanel
     Left = 0
@@ -489,57 +490,28 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         TabOrder = 0
       end
     end
-    object lvResultados: TListView
+    object lvResultados: TDBGrid
       Left = 28
       Top = 352
       Width = 1224
       Height = 268
       Anchors = [akLeft, akTop, akRight, akBottom]
-      Columns = <
-        item
-          Caption = 'In'#237'cio'
-          Width = 140
-        end
-        item
-          Caption = 'Modelo'
-          Width = 110
-        end
-        item
-          Caption = 'N'#186' de s'#233'rie'
-          Width = 120
-        end
-        item
-          Caption = 'Cliente'
-          Width = 200
-        end
-        item
-          Caption = 'Telefone'
-          Width = 130
-        end
-        item
-          Caption = 'Dura'#231#227'o'
-          Width = 90
-        end
-        item
-          Caption = 'Descri'#231#227'o'
-          Width = 410
-        end>
+      DataSource = DataSource
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 2630431
       Font.Height = -12
       Font.Name = 'Segoe UI'
       Font.Style = []
-      GridLines = True
-      ReadOnly = True
-      RowSelect = True
+      Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ParentFont = False
+      ReadOnly = True
       TabOrder = 8
-      ViewStyle = vsReport
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = 2630431
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = [fsBold]
     end
-  end
-  object ConexaoSql: TFDConnection
-    Left = 840
-    Top = 712
   end
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
     Left = 744
@@ -551,7 +523,6 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     Top = 712
   end
   object QuerySql: TFDQuery
-    Connection = ConexaoSql
     Left = 568
     Top = 712
   end
