@@ -7,6 +7,7 @@ type
   public
     class function NumeroSerieValido(const numeroSerie: string): Boolean;
     class function ValidarFormulario(const numeroSerie, nomeCliente, descricaoAtendimento: string; const indexModelo: Integer) : Boolean;
+    class function ValidarEdicao(const descricaoAtendimento: string; const dataHoraInicio, dataHoraFim: TDateTime) : Boolean;
   end;
 
 implementation
@@ -44,6 +45,25 @@ begin
   if descricaoAtendimento = '' then
   begin
     ShowMessage('Informe a descrição do atendimento.');
+    Exit;
+  end;
+
+  Result := True;
+end;
+
+class function TValidacoes.ValidarEdicao(const descricaoAtendimento: string; const dataHoraInicio, dataHoraFim: TDateTime) : Boolean;
+begin
+  Result := False;
+
+  if descricaoAtendimento = '' then
+  begin
+    ShowMessage('Informe a descrição do atendimento.');
+    Exit;
+  end;
+
+  if (dataHoraFim <> 0) and (dataHoraFim < dataHoraInicio) then
+  begin
+    ShowMessage('O término não pode ser antes do início.');
     Exit;
   end;
 

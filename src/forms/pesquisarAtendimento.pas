@@ -165,8 +165,7 @@ begin
 end;
 
 procedure TfrmPesquisarAtendimento.btnEditarClick(Sender: TObject);
-var
-  Tela: TfrmEditarAtendimento;
+var frmEditar : TfrmEditarAtendimento;
 begin
   if not QuerySql.Active or QuerySql.IsEmpty then
   begin
@@ -174,21 +173,21 @@ begin
     Exit;
   end;
 
-  // Self como dono: o popup abre centralizado sobre a pesquisa
-  Tela := TfrmEditarAtendimento.Create(Self);
+  frmEditar := TfrmEditarAtendimento.Create(Self);
   try
-    if Tela.carregarAtendimento(
-        QuerySql.FieldByName('id').AsInteger,
-        QuerySql.FieldByName('numero_serie').AsString,
-        QuerySql.FieldByName('modelo').AsString,
-        QuerySql.FieldByName('Cliente').AsString,
-        QuerySql.FieldByName('Telefone').AsString) then
+    if frmEditar.carregarAtendimento(
+      QuerySql.FieldByName('id').AsInteger,
+      QuerySql.FieldByName('numero_serie').AsString,
+      QuerySql.FieldByName('modelo').AsString,
+      QuerySql.FieldByName('Cliente').AsString,
+      QuerySql.FieldByName('Telefone').AsString
+    ) then
     begin
-      if Tela.ShowModal = mrOk then
+      if frmEditar.ShowModal = mrOk then
         btnPesquisarClick(Self);
     end;
   finally
-    Tela.Free;
+    frmEditar.Free;
   end;
 end;
 
@@ -209,9 +208,11 @@ begin
   inicio := FormatDateTime('dd/mm/yyyy hh:nn', QuerySql.FieldByName('inicio').AsDateTime);
 
   if MessageDlg(
-      'Excluir o atendimento de ' + cliente + ' (' + inicio + ')?' + sLineBreak +
-      'Essa ação não pode ser desfeita.',
-      mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+    'Excluir o atendimento de ' + cliente + ' (' + inicio + ')?' + sLineBreak + 'Essa ação não pode ser desfeita.',
+    mtConfirmation,
+    [mbYes, mbNo],
+    0
+  ) <> mrYes then
     Exit;
 
   if TAtendimentoRepository.excluirAtendimento(id) then

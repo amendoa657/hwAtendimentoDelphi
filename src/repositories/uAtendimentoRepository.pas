@@ -143,7 +143,7 @@ class function TAtendimentoRepository.atualizarAtendimento(const id : Integer; c
       Query.ParamByName('descricao').AsString := descricao;
       try
         Query.ExecSQL;
-        Result := True;
+        Result := true;
       except
         on E: Exception do
           ShowMessage('Erro ao atualizar atendimento: ' + E.Message);
@@ -171,7 +171,7 @@ class function TAtendimentoRepository.excluirAtendimento(const id : Integer) : B
       Query.ParamByName('id').AsInteger := id;
       try
         Query.ExecSQL;
-        Result := True;
+        Result := true;
       except
         on E: Exception do
           ShowMessage('Erro ao excluir atendimento: ' + E.Message);

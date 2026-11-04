@@ -52,7 +52,7 @@ implementation
 
 {$R *.dfm}
 
-uses System.DateUtils, System.UITypes, uAtendimento, uAtendimentoRepository;
+uses System.DateUtils, System.UITypes, uAtendimento, uAtendimentoRepository, uValidacoes;
 
 procedure TfrmEditarAtendimento.btnCancelarClick(Sender: TObject);
 begin
@@ -72,28 +72,23 @@ begin
   if dtpTerminoData.Checked then
     data_hora_fim := DateOf(dtpTerminoData.Date) + TimeOf(dtpTerminoHora.Time);
 
-  descricao := Trim(memDescricao.Text);
+  descricao := memDescricao.Text;
 
-  if descricao = '' then
+  if TValidacoes.ValidarEdicao(
+      descricao,
+      data_hora_inicio,
+      data_hora_fim) then
   begin
-    ShowMessage('Informe a descrição do atendimento.');
-    Exit;
-  end;
-
-  if (data_hora_fim <> 0) and (data_hora_fim < data_hora_inicio) then
-  begin
-    ShowMessage('O término não pode ser antes do início.');
-    Exit;
-  end;
-
-  if TAtendimentoRepository.atualizarAtendimento(
+    if TAtendimentoRepository.atualizarAtendimento(
       atendimento_id,
       data_hora_inicio,
       data_hora_fim,
-      descricao) then
-  begin
-    ShowMessage('Atendimento atualizado com sucesso!');
-    ModalResult := mrOk;
+      descricao
+    ) then
+    begin
+      ShowMessage('Atendimento atualizado com sucesso!');
+      ModalResult := mrOk;
+    end;
   end;
 end;
 
@@ -131,7 +126,7 @@ begin
     end;
 
     memDescricao.Text := Atendimento.descricao;
-    Result := True;
+    Result := true;
   finally
     Atendimento.Free;
   end;
