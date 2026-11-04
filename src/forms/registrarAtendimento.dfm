@@ -62,7 +62,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       TabOrder = 0
     end
     object pnlPesquisarBorda: TPanel
-      Left = 1086
+      Left = 1024
       Top = 13
       Width = 84
       Height = 30
@@ -129,6 +129,41 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         Font.Style = []
         ParentBackground = False
         ParentFont = False
+        TabOrder = 0
+      end
+    end
+    object pnlLogBorda: TPanel
+      Left = 1118
+      Top = 13
+      Width = 52
+      Height = 30
+      Anchors = [akTop, akRight]
+      BevelOuter = bvNone
+      Color = $00635A55
+      Padding.Left = 1
+      Padding.Top = 1
+      Padding.Right = 1
+      Padding.Bottom = 1
+      ParentBackground = False
+      ShowCaption = False
+      TabOrder = 3
+      object btnLog: TPanel
+        Left = 1
+        Top = 1
+        Width = 50
+        Height = 28
+        Cursor = crHandPoint
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Log'
+        Color = $001D1916
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        ParentBackground = False
         TabOrder = 0
       end
     end

@@ -7,6 +7,8 @@ uses
   registrarAtendimento in 'src\forms\registrarAtendimento.pas' {frmRegistrarAtendimento},
   pesquisarAtendimento in 'src\forms\pesquisarAtendimento.pas' {frmPesquisarAtendimento},
   usuarios in 'src\forms\usuarios.pas' {frmUsuarios},
+  login in 'src\forms\login.pas' {frmLogin},
+  logAcoes in 'src\forms\logAcoes.pas' {frmLog},
   uConexao in 'src\data\uConexao.pas',
   uClienteRepository in 'src\repositories\uClienteRepository.pas',
   uCliente in 'src\models\uCliente.pas',

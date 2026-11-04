@@ -62,7 +62,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       TabOrder = 0
     end
     object pnlNovoAtendimentoBorda: TPanel
-      Left = 1030
+      Left = 968
       Top = 13
       Width = 140
       Height = 30
@@ -129,6 +129,41 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         Font.Style = []
         ParentBackground = False
         ParentFont = False
+        TabOrder = 0
+      end
+    end
+    object pnlLogBorda: TPanel
+      Left = 1118
+      Top = 13
+      Width = 52
+      Height = 30
+      Anchors = [akTop, akRight]
+      BevelOuter = bvNone
+      Color = $00635A55
+      Padding.Left = 1
+      Padding.Top = 1
+      Padding.Right = 1
+      Padding.Bottom = 1
+      ParentBackground = False
+      ShowCaption = False
+      TabOrder = 3
+      object btnLog: TPanel
+        Left = 1
+        Top = 1
+        Width = 50
+        Height = 28
+        Cursor = crHandPoint
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Log'
+        Color = $001D1916
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        ParentBackground = False
         TabOrder = 0
       end
     end
@@ -495,7 +530,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Left = 28
       Top = 352
       Width = 1224
-      Height = 268
+      Height = 216
       Anchors = [akLeft, akTop, akRight, akBottom]
       DataSource = DataSource
       Font.Charset = DEFAULT_CHARSET
@@ -512,6 +547,60 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       TitleFont.Height = -13
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = [fsBold]
+    end
+    object btnEditar: TPanel
+      Left = 28
+      Top = 580
+      Width = 100
+      Height = 40
+      Cursor = crHandPoint
+      Anchors = [akLeft, akBottom]
+      BevelOuter = bvNone
+      Caption = 'Editar'
+      Color = $001D1916
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      ParentBackground = False
+      TabOrder = 9
+    end
+    object pnlExcluirBorda: TPanel
+      Left = 138
+      Top = 580
+      Width = 100
+      Height = 40
+      Anchors = [akLeft, akBottom]
+      BevelOuter = bvNone
+      Color = $002828C6
+      Padding.Left = 1
+      Padding.Top = 1
+      Padding.Right = 1
+      Padding.Bottom = 1
+      ParentBackground = False
+      ShowCaption = False
+      TabOrder = 10
+      object btnExcluir: TPanel
+        Left = 1
+        Top = 1
+        Width = 98
+        Height = 38
+        Cursor = crHandPoint
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Excluir'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = $002828C6
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        ParentBackground = False
+        TabOrder = 0
+      end
     end
   end
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink

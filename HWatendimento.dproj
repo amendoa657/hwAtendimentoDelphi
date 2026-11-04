@@ -132,6 +132,12 @@
         <DCCReference Include="src\forms\usuarios.pas">
             <Form>frmUsuarios</Form>
         </DCCReference>
+        <DCCReference Include="src\forms\login.pas">
+            <Form>frmLogin</Form>
+        </DCCReference>
+        <DCCReference Include="src\forms\logAcoes.pas">
+            <Form>frmLog</Form>
+        </DCCReference>
         <DCCReference Include="src\data\uConexao.pas"/>
         <DCCReference Include="src\repositories\uClienteRepository.pas"/>
         <DCCReference Include="src\models\uCliente.pas"/>

@@ -16,8 +16,6 @@ type
     btnPesquisar: TPanel;
     pnlLogBorda: TPanel;
     btnLog: TPanel;
-    pnlImportarBorda: TPanel;
-    btnImportar: TPanel;
     pnlNovoAtendimentoBorda: TPanel;
     btnNovoAtendimento: TPanel;
     pnlRodape: TPanel;

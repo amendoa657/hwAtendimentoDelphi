@@ -22,6 +22,8 @@ type
     btnPesquisar: TPanel;
     pnlUsuariosBorda: TPanel;
     btnUsuarios: TPanel;
+    pnlLogBorda: TPanel;
+    btnLog: TPanel;
     pnlRodape: TPanel;
     shpLinhaRodape: TShape;
     pnlCancelarBorda: TPanel;

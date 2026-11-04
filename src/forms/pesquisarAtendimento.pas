@@ -21,6 +21,8 @@ type
     btnNovoAtendimento: TPanel;
     pnlUsuariosBorda: TPanel;
     btnUsuarios: TPanel;
+    pnlLogBorda: TPanel;
+    btnLog: TPanel;
     pnlRodape: TPanel;
     shpLinhaRodape: TShape;
     pnlVoltarBorda: TPanel;
@@ -48,6 +50,9 @@ type
     pnlLimparFiltrosBorda: TPanel;
     btnLimparFiltros: TPanel;
     lvResultados: TDBGrid;
+    btnEditar: TPanel;
+    pnlExcluirBorda: TPanel;
+    btnExcluir: TPanel;
     FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     QuerySql: TFDQuery;

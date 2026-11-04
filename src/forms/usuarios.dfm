@@ -61,7 +61,7 @@ object frmUsuarios: TfrmUsuarios
       TabOrder = 0
     end
     object pnlPesquisarBorda: TPanel
-      Left = 874
+      Left = 964
       Top = 13
       Width = 84
       Height = 30
@@ -96,7 +96,7 @@ object frmUsuarios: TfrmUsuarios
       end
     end
     object pnlLogBorda: TPanel
-      Left = 968
+      Left = 1058
       Top = 13
       Width = 52
       Height = 30
@@ -119,41 +119,6 @@ object frmUsuarios: TfrmUsuarios
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Log'
-        Color = $001D1916
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
-        Font.Height = -12
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        ParentBackground = False
-        TabOrder = 0
-      end
-    end
-    object pnlImportarBorda: TPanel
-      Left = 1030
-      Top = 13
-      Width = 80
-      Height = 30
-      Anchors = [akTop, akRight]
-      BevelOuter = bvNone
-      Color = $00635A55
-      Padding.Left = 1
-      Padding.Top = 1
-      Padding.Right = 1
-      Padding.Bottom = 1
-      ParentBackground = False
-      ShowCaption = False
-      TabOrder = 3
-      object btnImportar: TPanel
-        Left = 1
-        Top = 1
-        Width = 78
-        Height = 28
-        Cursor = crHandPoint
-        Align = alClient
-        BevelOuter = bvNone
-        Caption = 'Importar'
         Color = $001D1916
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
