@@ -204,6 +204,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
+    OnResize = pnlConteudoResize
     DesignSize = (
       1280
       640)
@@ -499,7 +500,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       DataSource = DataSource
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 2630431
-      Font.Height = -12
+      Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
       Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -508,7 +509,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       TabOrder = 8
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = 2630431
-      TitleFont.Height = -12
+      TitleFont.Height = -13
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = [fsBold]
     end

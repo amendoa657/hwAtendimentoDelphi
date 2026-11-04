@@ -122,6 +122,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="src\utils\uValidacoes.pas"/>
+        <DCCReference Include="src\utils\uGrid.pas"/>
         <DCCReference Include="src\forms\registrarAtendimento.pas">
             <Form>frmRegistrarAtendimento</Form>
         </DCCReference>

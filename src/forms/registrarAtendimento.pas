@@ -77,6 +77,7 @@ type
     procedure TipoPessoaClick(Sender: TObject);
     procedure edtNumeroSerieChange(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
+    procedure pnlHistoricoResize(Sender: TObject);
   private
     var
       numeroSerieEncontrado : boolean;
@@ -92,7 +93,7 @@ var
 
 implementation
 
-uses uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils,
+uses uGrid, uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils,
   pesquisarAtendimento;
 
 {$R *.dfm}
@@ -139,6 +140,7 @@ begin
   ''';
   querySql.ParamByName('numero_serie').AsString := edtNumeroSerie.Text;
   querySql.Open;
+  AjustarGrid(lvHistorico);
 
   registroValido(True);
 
@@ -410,5 +412,10 @@ begin
 
 end;
 
+
+procedure TfrmRegistrarAtendimento.pnlHistoricoResize(Sender: TObject);
+begin
+  AjustarGrid(lvHistorico);
+end;
 
 end.

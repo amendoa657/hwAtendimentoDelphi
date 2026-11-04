@@ -56,6 +56,7 @@ type
     procedure btnNovoAtendimentoClick(Sender: TObject);
     procedure buscarPorFiltro(const descricao, nome_cliente, numero_serie, telefone: string; const data_hora_inicio, data_hora_fim : TDateTime);
     procedure btnPesquisarClick(Sender: TObject);
+    procedure pnlConteudoResize(Sender: TObject);
   private
   public
   end;
@@ -67,7 +68,7 @@ implementation
 
 {$R *.dfm}
 
-uses registrarAtendimento, System.DateUtils, uConexao;
+uses registrarAtendimento, System.DateUtils, uConexao, uGrid;
 
 procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
@@ -128,8 +129,14 @@ begin
   else
     QuerySql.ParamByName('ate').Clear;
 
-  QuerySql.Open
+  QuerySql.Open;
+  AjustarGrid(lvResultados);
 
+end;
+
+procedure TfrmPesquisarAtendimento.pnlConteudoResize(Sender: TObject);
+begin
+  AjustarGrid(lvResultados);
 end;
 
 end.

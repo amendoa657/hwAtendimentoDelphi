@@ -3,6 +3,7 @@ program HWatendimento;
 uses
   Vcl.Forms,
   uValidacoes in 'src\utils\uValidacoes.pas',
+  uGrid in 'src\utils\uGrid.pas',
   registrarAtendimento in 'src\forms\registrarAtendimento.pas' {frmRegistrarAtendimento},
   pesquisarAtendimento in 'src\forms\pesquisarAtendimento.pas' {frmPesquisarAtendimento},
   usuarios in 'src\forms\usuarios.pas' {frmUsuarios},

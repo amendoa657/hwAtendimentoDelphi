@@ -225,6 +225,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
+    OnResize = pnlHistoricoResize
     DesignSize = (
       310
       640)
@@ -284,14 +285,20 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       Height = 482
       Anchors = [akLeft, akTop, akRight, akBottom]
       DataSource = DataSource
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 2630431
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
       Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      ParentFont = False
       ReadOnly = True
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = 2630431
-      TitleFont.Height = -12
-      TitleFont.Name = 'Comfortaa'
-      TitleFont.Style = []
+      TitleFont.Height = -13
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = [fsBold]
       Columns = <
         item
           Expanded = False
