@@ -10,13 +10,13 @@ uses
   FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait,
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Comp.UI, FireDAC.Phys.MySQL,
-  Vcl.Grids, Vcl.DBGrids;
+  Vcl.Grids, Vcl.DBGrids, Vcl.Imaging.pngimage;
 
 type
   TfrmPesquisarAtendimento = class(TForm)
     pnlCabecalho: TPanel;
     lblAppTitulo: TLabel;
-    pnlLogo: TPanel;
+    imgLogo: TImage;
     pnlNovoAtendimentoBorda: TPanel;
     btnNovoAtendimento: TPanel;
     pnlUsuariosBorda: TPanel;
