@@ -65,6 +65,7 @@ type
     procedure btnUsuariosClick(Sender: TObject);
     procedure btnLogClick(Sender: TObject);
     procedure btnVoltarClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
   private
   public
   end;
@@ -76,7 +77,7 @@ implementation
 
 {$R *.dfm}
 
-uses uNavegacao, System.DateUtils, uConexao, uGrid;
+uses uNavegacao, System.DateUtils, uConexao, uGrid, editarAtendimento;
 
 procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
@@ -159,6 +160,25 @@ end;
 procedure TfrmPesquisarAtendimento.btnVoltarClick(Sender: TObject);
 begin
   IrPara(Self, tlRegistrar);
+end;
+
+procedure TfrmPesquisarAtendimento.btnEditarClick(Sender: TObject);
+var
+  Tela: TfrmEditarAtendimento;
+begin
+  if not QuerySql.Active or QuerySql.IsEmpty then
+  begin
+    ShowMessage('Pesquise e selecione um atendimento para editar.');
+    Exit;
+  end;
+
+  // Self como dono: o popup abre centralizado sobre a pesquisa
+  Tela := TfrmEditarAtendimento.Create(Self);
+  try
+    Tela.ShowModal;
+  finally
+    Tela.Free;
+  end;
 end;
 
 end.

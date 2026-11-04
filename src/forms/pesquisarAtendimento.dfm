@@ -569,6 +569,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       ParentFont = False
       ParentBackground = False
       TabOrder = 9
+      OnClick = btnEditarClick
     end
     object pnlExcluirBorda: TPanel
       Left = 138

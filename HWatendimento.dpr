@@ -11,6 +11,7 @@ uses
   usuarios in 'src\forms\usuarios.pas' {frmUsuarios},
   login in 'src\forms\login.pas' {frmLogin},
   logAcoes in 'src\forms\logAcoes.pas' {frmLog},
+  editarAtendimento in 'src\forms\editarAtendimento.pas' {frmEditarAtendimento},
   uConexao in 'src\data\uConexao.pas',
   uClienteRepository in 'src\repositories\uClienteRepository.pas',
   uCliente in 'src\models\uCliente.pas',
