@@ -104,9 +104,9 @@ begin
     AND (:numero_serie = '' OR numero_serie = :numero_serie)
     AND (:descricao = '' OR descricao    LIKE CONCAT('%', :descricao, '%'))
     AND (:telefone  = '' OR telefone     LIKE CONCAT('%', :telefone, '%'))
-    AND (:de  IS NULL OR data >= :de)
-    AND (:ate IS NULL OR data <  :ate)
-  ORDER BY data DESC
+    AND (:de  IS NULL OR inicio >= :de)
+    AND (:ate IS NULL OR inicio <  :ate)
+  ORDER BY inicio DESC
   ''';
 
 
