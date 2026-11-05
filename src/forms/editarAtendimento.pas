@@ -65,6 +65,7 @@ var
   data_hora_inicio : TDateTime;
   data_hora_fim : TDateTime;
   descricao : string;
+  usuario_id : Integer;
 begin
   data_hora_inicio := DateOf(dtpInicioData.Date) + TimeOf(dtpInicioHora.Time);
 
@@ -75,6 +76,11 @@ begin
 
   descricao := memDescricao.Text;
 
+  usuario_id := 0;
+
+  if not TSessao.temPermissao('editar_atendimento') then
+    usuario_id := TSessao.usuario.id;
+
   if TValidacoes.ValidarEdicao(
       descricao,
       data_hora_inicio,
@@ -84,7 +90,8 @@ begin
       atendimento_id,
       data_hora_inicio,
       data_hora_fim,
-      descricao
+      descricao,
+      usuario_id
     ) then
     begin
       TLogRepository.registrarLog(

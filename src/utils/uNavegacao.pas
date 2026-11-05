@@ -8,8 +8,8 @@ uses
 type
   TTela = (tlNenhuma, tlRegistrar, tlPesquisar, tlUsuarios, tlLog);
 
-// Usado pela tela de registro (a principal): esconde ela e abre a tela pedida.
-// Se essa tela pedir outra com IrPara, abre a próxima, até voltar para o registro.
+// Usado pela tela de pesquisa (a principal): esconde ela e abre a tela pedida.
+// Se essa tela pedir outra com IrPara, abre a proxima, ate voltar para a pesquisa.
 procedure AbrirTela(APrincipal: TForm; ATela: TTela);
 
 // Usado pelas outras telas: fecha a tela atual e diz qual abrir em seguida.
@@ -18,7 +18,7 @@ procedure IrPara(AAtual: TForm; ATela: TTela);
 implementation
 
 uses
-  pesquisarAtendimento, usuarios, logAcoes;
+  registrarAtendimento, usuarios, logAcoes;
 
 var
   ProximaTela: TTela = tlNenhuma;
@@ -26,7 +26,7 @@ var
 function CriarTela(ATela: TTela): TForm;
 begin
   case ATela of
-    tlPesquisar: Result := TfrmPesquisarAtendimento.Create(nil);
+    tlRegistrar: Result := TfrmRegistrarAtendimento.Create(nil);
     tlUsuarios:  Result := TfrmUsuarios.Create(nil);
     tlLog:       Result := TfrmLog.Create(nil);
   else
@@ -41,7 +41,7 @@ begin
   APrincipal.Hide;
   try
     // uma tela por vez: quando uma fecha pedindo outra, abre a outra
-    while not (ATela in [tlNenhuma, tlRegistrar]) do
+    while not (ATela in [tlNenhuma, tlPesquisar]) do
     begin
       ProximaTela := tlNenhuma;
       Tela := CriarTela(ATela);

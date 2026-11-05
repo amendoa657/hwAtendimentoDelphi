@@ -64,7 +64,6 @@ type
     procedure pnlConteudoResize(Sender: TObject);
     procedure btnUsuariosClick(Sender: TObject);
     procedure btnLogClick(Sender: TObject);
-    procedure btnVoltarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -85,6 +84,10 @@ procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
   pnlUsuariosBorda.Visible := TSessao.temPermissao('ver_usuarios');
   pnlLogBorda.Visible := TSessao.temPermissao('ver_log');
+  pnlNovoAtendimentoBorda.Visible := TSessao.temPermissao('registrar_atendimento');
+
+  btnEditar.Visible := TSessao.temPermissao('editar_atendimento') or TSessao.temPermissao('editar_proprio_atendimento');
+  pnlExcluirBorda.Visible := TSessao.temPermissao('excluir_atendimento');
 
   QuerySql.Connection := Conexao;
 
@@ -97,7 +100,7 @@ end;
 
 procedure TfrmPesquisarAtendimento.btnNovoAtendimentoClick(Sender: TObject);
 begin
-  IrPara(Self, tlRegistrar);
+  AbrirTela(Self, tlRegistrar);
 end;
 
 procedure TfrmPesquisarAtendimento.btnPesquisarClick(Sender: TObject);
@@ -162,17 +165,12 @@ end;
 
 procedure TfrmPesquisarAtendimento.btnUsuariosClick(Sender: TObject);
 begin
-  IrPara(Self, tlUsuarios);
+  AbrirTela(Self, tlUsuarios);
 end;
 
 procedure TfrmPesquisarAtendimento.btnLogClick(Sender: TObject);
 begin
-  IrPara(Self, tlLog);
-end;
-
-procedure TfrmPesquisarAtendimento.btnVoltarClick(Sender: TObject);
-begin
-  IrPara(Self, tlRegistrar);
+  AbrirTela(Self, tlLog);
 end;
 
 procedure TfrmPesquisarAtendimento.btnEditarClick(Sender: TObject);
@@ -181,6 +179,13 @@ begin
   if not QuerySql.Active or QuerySql.IsEmpty then
   begin
     ShowMessage('Pesquise e selecione um atendimento para editar.');
+    Exit;
+  end;
+
+  if not TSessao.temPermissao('editar_atendimento') and
+    (QuerySql.FieldByName('usuario_id').AsInteger <> TSessao.usuario.id) then
+  begin
+    ShowMessage('Você só pode editar atendimentos registrados por você.');
     Exit;
   end;
 

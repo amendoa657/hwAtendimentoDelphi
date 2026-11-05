@@ -44,6 +44,6 @@ begin
     frmLogin.Free;
   end;
 
-  Application.CreateForm(TfrmRegistrarAtendimento, frmRegistrarAtendimento);
+  Application.CreateForm(TfrmPesquisarAtendimento, frmPesquisarAtendimento);
   Application.Run;
 end.

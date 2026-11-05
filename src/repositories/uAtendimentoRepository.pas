@@ -11,7 +11,7 @@ type
   public
     class function registrarAtendimento(const data_hora_inicio, data_hora_fim : TDateTime ; const descricao : string; const cliente_id, equipamento_id, usuario_id : Integer) : Integer;
     class function buscarAtendimentoPorId(const id : Integer) : TAtendimento;
-    class function atualizarAtendimento(const id : Integer; const data_hora_inicio, data_hora_fim : TDateTime; const descricao : string) : Boolean;
+    class function atualizarAtendimento(const id : Integer; const data_hora_inicio, data_hora_fim : TDateTime; const descricao : string; const usuario_id : Integer) : Boolean;
     class function excluirAtendimento(const id : Integer) : Boolean;
   end;
 
@@ -116,7 +116,7 @@ class function TAtendimentoRepository.buscarAtendimentoPorId(const id : Integer)
     end;
   end;
 
-class function TAtendimentoRepository.atualizarAtendimento(const id : Integer; const data_hora_inicio, data_hora_fim : TDateTime; const descricao : string) : Boolean;
+class function TAtendimentoRepository.atualizarAtendimento(const id : Integer; const data_hora_inicio, data_hora_fim : TDateTime; const descricao : string; const usuario_id : Integer) : Boolean;
   var
     Query: TFDQuery;
   begin
@@ -131,8 +131,10 @@ class function TAtendimentoRepository.atualizarAtendimento(const id : Integer; c
           descricao = :descricao
         where
           id=:id
+          and (:usuario_id = 0 or usuario_id = :usuario_id)
         ''';
       Query.ParamByName('id').AsInteger := id;
+      Query.ParamByName('usuario_id').AsInteger := usuario_id;
       Query.ParamByName('data_hora_inicio').AsDateTime := data_hora_inicio;
 
       if data_hora_fim = 0 then

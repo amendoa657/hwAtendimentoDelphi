@@ -89,11 +89,12 @@ end;
 
 procedure TfrmUsuarios.btnVoltarClick(Sender: TObject);
 begin
-  IrPara(Self, tlRegistrar);
+  IrPara(Self, tlPesquisar);
 end;
 
 procedure TfrmUsuarios.FormCreate(Sender: TObject);
 begin
+  pnlNovoAtendimentoBorda.Visible := TSessao.temPermissao('registrar_atendimento');
   pnlLogBorda.Visible := TSessao.temPermissao('ver_log');
 
   QuerySql.Connection := Conexao;

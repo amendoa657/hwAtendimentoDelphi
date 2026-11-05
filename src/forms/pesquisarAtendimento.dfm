@@ -265,6 +265,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
+    Visible = False
     DesignSize = (
       1280
       64)
@@ -310,7 +311,6 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
-        OnClick = btnVoltarClick
       end
     end
   end

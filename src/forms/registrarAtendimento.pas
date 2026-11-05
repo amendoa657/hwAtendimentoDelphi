@@ -291,7 +291,7 @@ end;
 
 procedure TfrmRegistrarAtendimento.btnPesquisarClick(Sender: TObject);
 begin
-  AbrirTela(Self, tlPesquisar);
+  IrPara(Self, tlPesquisar);
 end;
 
 procedure TfrmRegistrarAtendimento.TipoPessoaClick(Sender: TObject);
@@ -424,12 +424,12 @@ end;
 
 procedure TfrmRegistrarAtendimento.btnUsuariosClick(Sender: TObject);
 begin
-  AbrirTela(Self, tlUsuarios);
+  IrPara(Self, tlUsuarios);
 end;
 
 procedure TfrmRegistrarAtendimento.btnLogClick(Sender: TObject);
 begin
-  AbrirTela(Self, tlLog);
+  IrPara(Self, tlLog);
 end;
 
 end.
