@@ -40,7 +40,15 @@ class function TLogRepository.registrarLog(const usuario_id, cliente_id, registr
         )
         ''';
       Query.ParamByName('usuario_id').AsInteger := usuario_id;
-      Query.ParamByName('cliente_id').AsInteger := cliente_id;
+
+      if cliente_id = 0 then
+      begin
+        Query.ParamByName('cliente_id').DataType := ftInteger;
+        Query.ParamByName('cliente_id').Clear;
+      end
+      else
+        Query.ParamByName('cliente_id').AsInteger := cliente_id;
+
       Query.ParamByName('registro_id').AsInteger := registro_id;
       Query.ParamByName('acao').AsString := acao;
       Query.ParamByName('tabela').AsString := tabela;
@@ -50,7 +58,7 @@ class function TLogRepository.registrarLog(const usuario_id, cliente_id, registr
         Result := Conexao.GetLastAutoGenValue('');
       except
         on E: Exception do
-          ShowMessage('Erro ao registrar atendimento: ' + E.Message);
+          ShowMessage('Erro ao registrar log: ' + E.Message);
 
       end;
     finally

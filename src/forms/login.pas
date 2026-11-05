@@ -33,10 +33,48 @@ implementation
 
 {$R *.dfm}
 
+uses uValidacoes, uUsuario, uUsuarioRepository, uSessao, uLogRepository;
+
 procedure TfrmLogin.btnEntrarClick(Sender: TObject);
+var
+  nome : string;
+  senha : string;
+
+  Usuario : TUsuario;
 begin
-  // TODO (fase de login): validar usuário e senha antes de liberar
-  ModalResult := mrOk;
+  nome := edtUsuario.Text;
+  senha := edtSenha.Text;
+
+  lblErroLogin.Visible := false;
+
+  if TValidacoes.ValidarLogin(
+      nome,
+      senha) then
+  begin
+    Usuario := TUsuarioRepository.autenticarUsuario(nome, senha);
+
+    if Usuario <> nil then
+    begin
+      TSessao.iniciarSessao(Usuario);
+
+      TLogRepository.registrarLog(
+        Usuario.id,
+        0,
+        Usuario.id,
+        'Login',
+        'usuario',
+        'Entrou no sistema'
+      );
+
+      ModalResult := mrOk;
+    end
+    else
+    begin
+      lblErroLogin.Visible := true;
+      edtSenha.Clear;
+      edtSenha.SetFocus;
+    end;
+  end;
 end;
 
 procedure TfrmLogin.FormKeyPress(Sender: TObject; var Key: Char);

@@ -150,6 +150,10 @@
         <DCCReference Include="src\models\uAtendimento.pas"/>
         <DCCReference Include="src\repositories\uAtendimentoRepository.pas"/>
         <DCCReference Include="src\repositories\uLogRepository.pas"/>
+        <DCCReference Include="src\utils\uSenha.pas"/>
+        <DCCReference Include="src\utils\uSessao.pas"/>
+        <DCCReference Include="src\models\uUsuario.pas"/>
+        <DCCReference Include="src\repositories\uUsuarioRepository.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

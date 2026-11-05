@@ -110,12 +110,6 @@ begin
   registroValido(False);
   numeroSerieEncontrado:=False;
 
-  if not ConectarSql then
-  begin
-    Application.Terminate;
-    Exit;
-  end;
-
   QuerySql.Connection := Conexao;
 
 end;
