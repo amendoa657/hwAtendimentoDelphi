@@ -98,7 +98,7 @@ var
 implementation
 
 uses uGrid, uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils,
-  uNavegacao, uLogRepository, uSessao;
+  uNavegacao, uLogRepository, uSessao, System.DateUtils;
 
 {$R *.dfm}
 
@@ -146,8 +146,6 @@ begin
   begin
     numeroSerieEncontrado:=True;
 
-    Cliente := TClienteRepository.BuscarPorNumeroSerie(edtNumeroSerie.Text);
-
     edtNome.Text := Cliente.nome;
     edtTelefone.Text := Cliente.telefone;
 
@@ -168,7 +166,7 @@ begin
 
     clienteDisponivel(false);
 
-
+    Cliente.Free;
   end
   else begin
     numeroSerieEncontrado :=False;
@@ -208,12 +206,12 @@ begin
 
   modelo := cbxModelo.Text;
 
-  data_hora_inicio := dtpInicioData.DateTime;
+  data_hora_inicio := DateOf(dtpInicioData.Date) + TimeOf(dtpInicioHora.Time);
 
   data_hora_fim := 0;
 
   if dtpTerminoData.Checked then
-    data_hora_fim := dtpTerminoData.DateTime;
+    data_hora_fim := DateOf(dtpTerminoData.Date) + TimeOf(dtpTerminoHora.Time);
 
   descricao := memDescricao.Text;
 
@@ -236,6 +234,8 @@ begin
       atendimento_id := TAtendimentoRepository.registrarAtendimento(
         data_hora_inicio, data_hora_fim, descricao, Cliente.id, Cliente.equipamento_id, TSessao.usuario.id
       );
+
+      Cliente.Free;
 
     end
     else
