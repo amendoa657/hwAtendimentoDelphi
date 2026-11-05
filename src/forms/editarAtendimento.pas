@@ -41,6 +41,7 @@ type
   private
     var
       atendimento_id : Integer;
+      cliente_id : Integer;
   public
     function carregarAtendimento(const id : Integer; const numero_serie, modelo, cliente, telefone : string) : Boolean;
   end;
@@ -52,7 +53,7 @@ implementation
 
 {$R *.dfm}
 
-uses System.DateUtils, System.UITypes, uAtendimento, uAtendimentoRepository, uValidacoes;
+uses System.DateUtils, System.UITypes, uAtendimento, uAtendimentoRepository, uValidacoes, uLogRepository, uSessao;
 
 procedure TfrmEditarAtendimento.btnCancelarClick(Sender: TObject);
 begin
@@ -86,6 +87,15 @@ begin
       descricao
     ) then
     begin
+      TLogRepository.registrarLog(
+        TSessao.usuario.id,
+        cliente_id,
+        atendimento_id,
+        'Editou',
+        'atendimento',
+        'Editou o atendimento de ' + lblClienteValor.Caption
+      );
+
       ShowMessage('Atendimento atualizado com sucesso!');
       ModalResult := mrOk;
     end;
@@ -113,6 +123,8 @@ begin
   end;
 
   try
+    cliente_id := Atendimento.cliente_id;
+
     dtpInicioData.Date := DateOf(Atendimento.data_hora_inicio);
     dtpInicioHora.Time := TimeOf(Atendimento.data_hora_inicio);
 

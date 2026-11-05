@@ -79,7 +79,7 @@ implementation
 
 {$R *.dfm}
 
-uses uNavegacao, System.DateUtils, System.UITypes, uConexao, uGrid, editarAtendimento, uAtendimentoRepository;
+uses uNavegacao, System.DateUtils, System.UITypes, uConexao, uGrid, editarAtendimento, uAtendimentoRepository, uAtendimento, uLogRepository, uSessao;
 
 procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
@@ -202,8 +202,11 @@ end;
 procedure TfrmPesquisarAtendimento.btnExcluirClick(Sender: TObject);
 var
   id : Integer;
+  cliente_id : Integer;
   cliente : string;
   inicio : string;
+
+  Atendimento : TAtendimento;
 begin
   if not QuerySql.Active or QuerySql.IsEmpty then
   begin
@@ -220,8 +223,26 @@ begin
     mtConfirmation,[mbYes, mbNo],0) <> mrYes then
     Exit;
 
+  cliente_id := 0;
+  Atendimento := TAtendimentoRepository.buscarAtendimentoPorId(id);
+
+  if Atendimento <> nil then
+  begin
+    cliente_id := Atendimento.cliente_id;
+    Atendimento.Free;
+  end;
+
   if TAtendimentoRepository.excluirAtendimento(id) then
   begin
+    TLogRepository.registrarLog(
+      TSessao.usuario.id,
+      cliente_id,
+      id,
+      'Excluiu',
+      'atendimento',
+      'Excluiu o atendimento de ' + cliente + ' (' + inicio + ')'
+    );
+
     ShowMessage('Atendimento excluído com sucesso!');
     btnPesquisarClick(Self);
   end;

@@ -98,7 +98,7 @@ var
 implementation
 
 uses uGrid, uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils,
-  uNavegacao, uLogRepository;
+  uNavegacao, uLogRepository, uSessao;
 
 {$R *.dfm}
 
@@ -231,8 +231,10 @@ begin
     begin
       Cliente := TClienteRepository.BuscarPorNumeroSerie(edtNumeroSerie.Text);
 
-      TAtendimentoRepository.registrarAtendimento(
-        data_hora_inicio, data_hora_fim, descricao, Cliente.id, Cliente.equipamento_id
+      cliente_id := Cliente.id;
+
+      atendimento_id := TAtendimentoRepository.registrarAtendimento(
+        data_hora_inicio, data_hora_fim, descricao, Cliente.id, Cliente.equipamento_id, TSessao.usuario.id
       );
 
     end
@@ -256,13 +258,20 @@ begin
       if equipamento_id<>-1 then
       begin
         atendimento_id := TAtendimentoRepository.registrarAtendimento(
-          data_hora_inicio, data_hora_fim, descricao, cliente_id, equipamento_id
+          data_hora_inicio, data_hora_fim, descricao, cliente_id, equipamento_id, TSessao.usuario.id
         );
       end;
 
     end;
 
-    TLogRepository.registrarLog(1, cliente_id, atendimento_id, 'insert', 'atendimento', 'Registrou atendimento');
+    TLogRepository.registrarLog(
+      TSessao.usuario.id,
+      cliente_id,
+      atendimento_id,
+      'Criou',
+      'atendimento',
+      'Registrou atendimento do equipamento ' + numero_serie
+    );
     ShowMessage('Atendimento gravado com sucesso!');
     limparFormulario;
   end;

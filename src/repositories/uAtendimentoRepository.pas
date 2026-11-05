@@ -9,7 +9,7 @@ type
   private
     class function MontarAtendimento(Query: TFDQuery): TAtendimento;
   public
-    class function registrarAtendimento(const data_hora_inicio, data_hora_fim : TDateTime ; const descricao : string; const cliente_id, equipamento_id : Integer) : Integer;
+    class function registrarAtendimento(const data_hora_inicio, data_hora_fim : TDateTime ; const descricao : string; const cliente_id, equipamento_id, usuario_id : Integer) : Integer;
     class function buscarAtendimentoPorId(const id : Integer) : TAtendimento;
     class function atualizarAtendimento(const id : Integer; const data_hora_inicio, data_hora_fim : TDateTime; const descricao : string) : Boolean;
     class function excluirAtendimento(const id : Integer) : Boolean;
@@ -32,7 +32,7 @@ class function TAtendimentoRepository.MontarAtendimento(Query: TFDQuery): TAtend
   end;
 
 
-class function TAtendimentoRepository.registrarAtendimento(const data_hora_inicio, data_hora_fim : TDateTime ; const descricao : string; const cliente_id, equipamento_id : Integer) : Integer;
+class function TAtendimentoRepository.registrarAtendimento(const data_hora_inicio, data_hora_fim : TDateTime ; const descricao : string; const cliente_id, equipamento_id, usuario_id : Integer) : Integer;
   var
     Query: TFDQuery;
   begin
@@ -44,6 +44,7 @@ class function TAtendimentoRepository.registrarAtendimento(const data_hora_inici
         insert into atendimento(
           cliente_id,
           equipamento_id,
+          usuario_id,
           data_hora_inicio,
           data_hora_fim,
           descricao
@@ -51,6 +52,7 @@ class function TAtendimentoRepository.registrarAtendimento(const data_hora_inici
         values(
           :cliente_id,
           :equipamento_id,
+          :usuario_id,
           :data_hora_inicio,
           :data_hora_fim,
           :descricao
@@ -58,6 +60,7 @@ class function TAtendimentoRepository.registrarAtendimento(const data_hora_inici
         ''';
       Query.ParamByName('cliente_id').AsInteger := cliente_id;
       Query.ParamByName('equipamento_id').AsInteger := equipamento_id;
+      Query.ParamByName('usuario_id').AsInteger := usuario_id;
       Query.ParamByName('data_hora_inicio').AsDateTime := data_hora_inicio;
 
       if data_hora_fim = 0 then
