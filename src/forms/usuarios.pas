@@ -94,6 +94,8 @@ end;
 
 procedure TfrmUsuarios.FormCreate(Sender: TObject);
 begin
+  pnlLogBorda.Visible := TSessao.temPermissao('ver_log');
+
   QuerySql.Connection := Conexao;
 end;
 

@@ -74,7 +74,7 @@ implementation
 {$R *.dfm}
 
 uses
-  uNavegacao, System.DateUtils, uConexao, uGrid, uUsuarioRepository;
+  uNavegacao, System.DateUtils, uConexao, uGrid, uUsuarioRepository, uSessao;
 
 
 procedure TfrmLog.btnPesquisarClick(Sender: TObject);
@@ -99,6 +99,8 @@ end;
 
 procedure TfrmLog.FormCreate(Sender: TObject);
 begin
+  pnlUsuariosBorda.Visible := TSessao.temPermissao('ver_usuarios');
+
   QuerySql.Connection := Conexao;
 end;
 

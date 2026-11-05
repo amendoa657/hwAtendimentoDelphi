@@ -83,6 +83,9 @@ uses uNavegacao, System.DateUtils, System.UITypes, uConexao, uGrid, editarAtendi
 
 procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
+  pnlUsuariosBorda.Visible := TSessao.temPermissao('ver_usuarios');
+  pnlLogBorda.Visible := TSessao.temPermissao('ver_log');
+
   QuerySql.Connection := Conexao;
 
 end;

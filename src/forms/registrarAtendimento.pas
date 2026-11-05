@@ -106,6 +106,9 @@ uses uGrid, uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRep
 
 procedure TfrmRegistrarAtendimento.FormCreate(Sender: TObject);
 begin
+  pnlUsuariosBorda.Visible := TSessao.temPermissao('ver_usuarios');
+  pnlLogBorda.Visible := TSessao.temPermissao('ver_log');
+
   LimparFormulario;
   registroValido(False);
   numeroSerieEncontrado:=False;
