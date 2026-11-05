@@ -147,6 +147,7 @@ begin
 
   QuerySql.Open;
   QuerySql.FieldByName('id').Visible := false;
+  QuerySql.FieldByName('usuario_id').Visible := false;
   AjustarGrid(lvResultados);
 
 end;
