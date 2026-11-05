@@ -25,7 +25,7 @@ class function TUsuarioRepository.MontarUsuario(Query: TFDQuery): TUsuario;
     Result.nome      := Query.FieldByName('nome').AsString;
     Result.perfil_id := Query.FieldByName('perfil_id').AsInteger;
     Result.perfil    := Query.FieldByName('perfil').AsString;
-    Result.ativo     := Query.FieldByName('ativo').AsInteger = 1;
+    Result.ativo     := Query.FieldByName('ativo').AsBoolean;
   end;
 
 class function TUsuarioRepository.autenticarUsuario(const nome, senha : string) : TUsuario;
