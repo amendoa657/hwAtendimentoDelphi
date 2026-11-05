@@ -33,6 +33,8 @@ begin
   if SameText(ANomeCampo, 'descricao') then Exit('Descrição');
   if SameText(ANomeCampo, 'duracao') then Exit('Duração');
   if SameText(ANomeCampo, 'responsavel') then Exit('Responsável');
+  if SameText(ANomeCampo, 'usuario') then Exit('Usuário');
+  if SameText(ANomeCampo, 'acao') then Exit('Ação');
 
   // padrão: "nome_cliente" vira "Nome cliente"
   Result := StringReplace(ANomeCampo, '_', ' ', [rfReplaceAll]);

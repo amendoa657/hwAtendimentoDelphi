@@ -14,6 +14,8 @@ object frmLog: TfrmLog
   Font.Style = []
   Position = poScreenCenter
   WindowState = wsMaximized
+  OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object pnlCabecalho: TPanel
     Left = 0
@@ -308,6 +310,7 @@ object frmLog: TfrmLog
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
+    OnResize = pnlConteudoResize
     DesignSize = (
       1280
       640)
@@ -486,7 +489,6 @@ object frmLog: TfrmLog
       TabOrder = 3
       Items.Strings = (
         'Todas'
-        'Login'
         'Criou'
         'Editou'
         'Excluiu')
@@ -509,6 +511,7 @@ object frmLog: TfrmLog
       ParentFont = False
       ParentBackground = False
       TabOrder = 4
+      OnClick = btnPesquisarLogClick
     end
     object pnlLimparFiltrosBorda: TPanel
       Left = 134
@@ -543,7 +546,22 @@ object frmLog: TfrmLog
         ParentFont = False
         ParentBackground = False
         TabOrder = 0
+        OnClick = btnLimparFiltrosClick
       end
+    end
+    object chkIncluirLogins: TCheckBox
+      Left = 266
+      Top = 229
+      Width = 150
+      Height = 19
+      Caption = 'Incluir logins'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = $0028231F
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 7
     end
     object lvLog: TDBGrid
       Left = 28
@@ -551,6 +569,7 @@ object frmLog: TfrmLog
       Width = 1224
       Height = 324
       Anchors = [akLeft, akTop, akRight, akBottom]
+      DataSource = DataSource
       Font.Charset = DEFAULT_CHARSET
       Font.Color = $0028231F
       Font.Height = -13
@@ -566,5 +585,14 @@ object frmLog: TfrmLog
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = [fsBold]
     end
+  end
+  object QuerySql: TFDQuery
+    Left = 568
+    Top = 712
+  end
+  object DataSource: TDataSource
+    DataSet = QuerySql
+    Left = 496
+    Top = 712
   end
 end

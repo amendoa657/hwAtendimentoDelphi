@@ -13,6 +13,7 @@ type
     class function buscarPermissoesPorPerfil(const perfil_id : Integer) : TStringList;
     class function buscarUsuarioPorNome(const nome : string) : TUsuario;
     class function buscarPerfis : TStringList;
+    class function buscarListaUsuarios : TStringList;
     class function registrarUsuario(const nome, senha : string; const perfil_id : Integer) : Integer;
     class function alterarAtivoUsuario(const id : Integer; const ativo : Boolean) : Boolean;
   end;
@@ -225,6 +226,33 @@ class function TUsuarioRepository.alterarAtivoUsuario(const id : Integer; const 
 
       end;
 
+    finally
+      Query.Free;
+    end;
+  end;
+
+class function TUsuarioRepository.buscarListaUsuarios : TStringList;
+  var
+    Query: TFDQuery;
+  begin
+    Result := TStringList.Create;
+    Query := TFDQuery.Create(nil);
+    try
+      Query.Connection := Conexao;
+      Query.SQL.Text := '''
+        select
+          id,
+          nome
+        from usuario
+        order by nome;
+        ''';
+      Query.Open;
+
+      while not Query.Eof do
+      begin
+        Result.AddObject(Query.FieldByName('nome').AsString, TObject(Query.FieldByName('id').AsInteger));
+        Query.Next;
+      end;
     finally
       Query.Free;
     end;
