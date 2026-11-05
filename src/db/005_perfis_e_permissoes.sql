@@ -5,6 +5,10 @@
 
 USE hwatendimento_v2;
 
+-- O Safe Updates do Workbench bloqueia UPDATE/DELETE sem chave primária no WHERE.
+-- Desliga só nesta conexão, para o script rodar até o fim.
+SET SQL_SAFE_UPDATES = 0;
+
 
 -- ===== Tabelas =====
 
