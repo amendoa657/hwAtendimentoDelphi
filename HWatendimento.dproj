@@ -149,6 +149,7 @@
         <DCCReference Include="src\repositories\uEquipamentoRepository.pas"/>
         <DCCReference Include="src\models\uAtendimento.pas"/>
         <DCCReference Include="src\repositories\uAtendimentoRepository.pas"/>
+        <DCCReference Include="src\repositories\uLogRepository.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

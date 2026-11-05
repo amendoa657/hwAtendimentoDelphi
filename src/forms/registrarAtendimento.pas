@@ -98,7 +98,7 @@ var
 implementation
 
 uses uGrid, uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils,
-  uNavegacao;
+  uNavegacao, uLogRepository;
 
 {$R *.dfm}
 
@@ -191,6 +191,7 @@ var
   nome_empresa : string;
   cliente_id : Integer;
   equipamento_id : Integer;
+  atendimento_id : Integer;
   descricao : string;
   data_hora_inicio : TDateTime;
   data_hora_fim : TDateTime;
@@ -260,13 +261,14 @@ begin
       end;
       if equipamento_id<>-1 then
       begin
-        TAtendimentoRepository.registrarAtendimento(
+        atendimento_id := TAtendimentoRepository.registrarAtendimento(
           data_hora_inicio, data_hora_fim, descricao, cliente_id, equipamento_id
         );
       end;
 
     end;
 
+    TLogRepository.registrarLog(1, cliente_id, atendimento_id, 'insert', 'atendimento', 'Registrou atendimento');
     ShowMessage('Atendimento gravado com sucesso!');
     limparFormulario;
   end;
