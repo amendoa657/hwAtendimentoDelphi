@@ -14,6 +14,8 @@ object frmUsuarios: TfrmUsuarios
   Font.Style = []
   Position = poScreenCenter
   WindowState = wsMaximized
+  OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object pnlCabecalho: TPanel
     Left = 0
@@ -308,6 +310,7 @@ object frmUsuarios: TfrmUsuarios
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
+    OnResize = pnlConteudoResize
     DesignSize = (
       1280
       640)
@@ -354,81 +357,159 @@ object frmUsuarios: TfrmUsuarios
       Brush.Color = $00E1DCD8
       Pen.Color = $00E1DCD8
     end
-    object lblSecaoNovoUsuario: TLabel
-      Left = 952
-      Top = 76
-      Width = 70
-      Height = 15
-      Anchors = [akTop, akRight]
-      Caption = 'Novo usu'#225'rio'
-    end
-    object shpLinhaNovoUsuario: TShape
-      Left = 1044
-      Top = 84
-      Width = 208
-      Height = 1
-      Anchors = [akTop, akRight]
-      Brush.Color = $00E1DCD8
-      Pen.Color = $00E1DCD8
-    end
-    object lblNome: TLabel
-      Left = 952
-      Top = 102
-      Width = 100
-      Height = 14
-      Anchors = [akTop, akRight]
-      Caption = 'Nome'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
-      Font.Height = -11
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lblSenha: TLabel
-      Left = 952
-      Top = 158
-      Width = 100
-      Height = 14
-      Anchors = [akTop, akRight]
-      Caption = 'Senha'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
-      Font.Height = -11
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lvUsuarios: TListView
+    object lvUsuarios: TDBGrid
       Left = 28
       Top = 98
       Width = 900
       Height = 470
       Anchors = [akLeft, akTop, akRight, akBottom]
-      Columns = <
-        item
-          Caption = 'Nome'
-          Width = 300
-        end
-        item
-          Caption = 'Admin'
-          Width = 300
-        end
-        item
-          Caption = 'Ativo'
-          Width = 280
-        end>
+      DataSource = DataSource
       Font.Charset = DEFAULT_CHARSET
       Font.Color = $0028231F
-      Font.Height = -12
+      Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      GridLines = True
+      Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ReadOnly = True
-      RowSelect = True
       TabOrder = 0
-      ViewStyle = vsReport
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = $0028231F
+      TitleFont.Height = -13
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = [fsBold]
+    end
+    object pnlNovoUsuario: TPanel
+      Left = 952
+      Top = 76
+      Width = 300
+      Height = 240
+      Anchors = [akTop, akRight]
+      BevelOuter = bvNone
+      Color = clWhite
+      ParentBackground = False
+      ShowCaption = False
+      TabOrder = 2
+      DesignSize = (
+        300
+        240)
+      object lblSecaoNovoUsuario: TLabel
+        Left = 0
+        Top = 0
+        Width = 80
+        Height = 15
+        Caption = 'Novo usu'#225'rio'
+      end
+      object shpLinhaNovoUsuario: TShape
+        Left = 92
+        Top = 8
+        Width = 208
+        Height = 1
+        Anchors = [akLeft, akTop, akRight]
+        Brush.Color = $00E1DCD8
+        Pen.Color = $00E1DCD8
+      end
+      object lblNome: TLabel
+        Left = 0
+        Top = 26
+        Width = 100
+        Height = 14
+        Caption = 'Nome'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = $0070635B
+        Font.Height = -11
+        Font.Name = 'Comfortaa'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lblSenha: TLabel
+        Left = 0
+        Top = 82
+        Width = 100
+        Height = 14
+        Caption = 'Senha'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = $0070635B
+        Font.Height = -11
+        Font.Name = 'Comfortaa'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lblPerfil: TLabel
+        Left = 0
+        Top = 138
+        Width = 100
+        Height = 14
+        Caption = 'Perfil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = $0070635B
+        Font.Height = -11
+        Font.Name = 'Comfortaa'
+        Font.Style = []
+        ParentFont = False
+      end
+      object edtNome: TEdit
+        Left = 0
+        Top = 44
+        Width = 300
+        Height = 25
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = $0028231F
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        MaxLength = 50
+        TabOrder = 0
+      end
+      object edtSenha: TEdit
+        Left = 0
+        Top = 100
+        Width = 300
+        Height = 25
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = $0028231F
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        PasswordChar = '*'
+        TabOrder = 1
+      end
+      object cbxPerfil: TComboBox
+        Left = 0
+        Top = 156
+        Width = 300
+        Height = 25
+        Style = csDropDownList
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = $0028231F
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 2
+      end
+      object btnCadastrar: TPanel
+        Left = 0
+        Top = 196
+        Width = 300
+        Height = 38
+        Cursor = crHandPoint
+        Anchors = [akLeft, akTop]
+        BevelOuter = bvNone
+        Caption = 'Cadastrar'
+        Color = $00C27E1A
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        ParentBackground = False
+        TabOrder = 3
+        OnClick = btnCadastrarClick
+      end
     end
     object btnAtivarDesativar: TPanel
       Left = 28
@@ -448,70 +529,16 @@ object frmUsuarios: TfrmUsuarios
       ParentFont = False
       ParentBackground = False
       TabOrder = 1
+      OnClick = btnAtivarDesativarClick
     end
-    object edtNome: TEdit
-      Left = 952
-      Top = 120
-      Width = 300
-      Height = 25
-      Anchors = [akTop, akRight]
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      MaxLength = 50
-      TabOrder = 2
-    end
-    object edtSenha: TEdit
-      Left = 952
-      Top = 176
-      Width = 300
-      Height = 25
-      Anchors = [akTop, akRight]
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      PasswordChar = '*'
-      TabOrder = 3
-    end
-    object chkAdministrador: TCheckBox
-      Left = 952
-      Top = 214
-      Width = 150
-      Height = 19
-      Anchors = [akTop, akRight]
-      Caption = 'Administrador'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 4
-    end
-    object btnCadastrar: TPanel
-      Left = 952
-      Top = 244
-      Width = 300
-      Height = 38
-      Cursor = crHandPoint
-      Anchors = [akTop, akRight]
-      BevelOuter = bvNone
-      Caption = 'Cadastrar'
-      Color = $00C27E1A
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      ParentBackground = False
-      TabOrder = 5
-    end
+  end
+  object QuerySql: TFDQuery
+    Left = 568
+    Top = 712
+  end
+  object DataSource: TDataSource
+    DataSet = QuerySql
+    Left = 496
+    Top = 712
   end
 end

@@ -9,6 +9,7 @@ type
     class function ValidarFormulario(const numeroSerie, nomeCliente, descricaoAtendimento: string; const indexModelo: Integer) : Boolean;
     class function ValidarEdicao(const descricaoAtendimento: string; const dataHoraInicio, dataHoraFim: TDateTime) : Boolean;
     class function ValidarLogin(const nome, senha: string) : Boolean;
+    class function ValidarUsuario(const nome, senha: string; const indexPerfil: Integer) : Boolean;
   end;
 
 implementation
@@ -84,6 +85,31 @@ begin
   if senha = '' then
   begin
     ShowMessage('Informe a senha.');
+    Exit;
+  end;
+
+  Result := True;
+end;
+
+class function TValidacoes.ValidarUsuario(const nome, senha: string; const indexPerfil: Integer) : Boolean;
+begin
+  Result := False;
+
+  if nome = '' then
+  begin
+    ShowMessage('Informe o nome do usuário.');
+    Exit;
+  end;
+
+  if Length(senha) < 4 then
+  begin
+    ShowMessage('A senha precisa ter pelo menos 4 caracteres.');
+    Exit;
+  end;
+
+  if indexPerfil = -1 then
+  begin
+    ShowMessage('Selecione o perfil.');
     Exit;
   end;
 
