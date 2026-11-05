@@ -41,6 +41,8 @@ type
     dtpAte: TDateTimePicker;
     cbxUsuario: TComboBox;
     cbxAcao: TComboBox;
+    lblTabela: TLabel;
+    cbxTabela: TComboBox;
     btnPesquisarLog: TPanel;
     pnlLimparFiltrosBorda: TPanel;
     btnLimparFiltros: TPanel;
@@ -127,6 +129,7 @@ procedure TfrmLog.buscarLog;
 var
   usuario_id : Integer;
   acao : string;
+  tabela : string;
 begin
   usuario_id := Integer(cbxUsuario.Items.Objects[cbxUsuario.ItemIndex]);
 
@@ -135,11 +138,19 @@ begin
   if cbxAcao.ItemIndex > 0 then
     acao := cbxAcao.Text;
 
+  tabela := '';
+
+  case cbxTabela.ItemIndex of
+    1: tabela := 'atendimento';
+    2: tabela := 'usuario';
+  end;
+
   QuerySql.SQL.Text := '''
     select *
     from logcomfiltro
     where (:usuario_id = 0 or usuario_id = :usuario_id)
       and (:acao = '' or Acao = :acao)
+      and (:tabela = '' or Tabela = :tabela)
       and (:incluir_logins = 1 or Acao <> 'Login')
       and (:de is null or data >= :de)
       and (:ate is null or data < :ate)
@@ -148,6 +159,7 @@ begin
 
   QuerySql.ParamByName('usuario_id').AsInteger := usuario_id;
   QuerySql.ParamByName('acao').AsString := acao;
+  QuerySql.ParamByName('tabela').AsString := tabela;
 
   if chkIncluirLogins.Checked then
     QuerySql.ParamByName('incluir_logins').AsInteger := 1
@@ -193,6 +205,7 @@ begin
   dtpAte.Checked := false;
   cbxUsuario.ItemIndex := 0;
   cbxAcao.ItemIndex := 0;
+  cbxTabela.ItemIndex := 0;
   chkIncluirLogins.Checked := false;
 end;
 

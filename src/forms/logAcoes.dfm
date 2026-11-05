@@ -397,7 +397,7 @@ object frmLog: TfrmLog
       ParentFont = False
     end
     object lblAcao: TLabel
-      Left = 648
+      Left = 441
       Top = 158
       Width = 100
       Height = 14
@@ -463,7 +463,7 @@ object frmLog: TfrmLog
     object cbxUsuario: TComboBox
       Left = 28
       Top = 176
-      Width = 604
+      Width = 397
       Height = 25
       Style = csDropDownList
       Font.Charset = DEFAULT_CHARSET
@@ -475,9 +475,9 @@ object frmLog: TfrmLog
       TabOrder = 2
     end
     object cbxAcao: TComboBox
-      Left = 648
+      Left = 441
       Top = 176
-      Width = 604
+      Width = 397
       Height = 25
       Style = csDropDownList
       Font.Charset = DEFAULT_CHARSET
@@ -492,6 +492,37 @@ object frmLog: TfrmLog
         'Criou'
         'Editou'
         'Excluiu')
+    end
+    object lblTabela: TLabel
+      Left = 854
+      Top = 158
+      Width = 100
+      Height = 14
+      Caption = 'Tabela'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = $0070635B
+      Font.Height = -11
+      Font.Name = 'Comfortaa'
+      Font.Style = []
+      ParentFont = False
+    end
+    object cbxTabela: TComboBox
+      Left = 854
+      Top = 176
+      Width = 398
+      Height = 25
+      Style = csDropDownList
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = $0028231F
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 8
+      Items.Strings = (
+        'Todas'
+        'Atendimento'
+        'Usu'#225'rio')
     end
     object btnPesquisarLog: TPanel
       Left = 28
