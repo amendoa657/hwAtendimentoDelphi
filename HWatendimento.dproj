@@ -142,6 +142,10 @@
         <DCCReference Include="src\forms\editarAtendimento.pas">
             <Form>frmEditarAtendimento</Form>
         </DCCReference>
+        <DCCReference Include="src\forms\anexosAtendimento.pas">
+            <Form>frmAnexosAtendimento</Form>
+        </DCCReference>
+        <DCCReference Include="src\utils\uArquivo.pas"/>
         <DCCReference Include="src\data\uConexao.pas"/>
         <DCCReference Include="src\repositories\uClienteRepository.pas"/>
         <DCCReference Include="src\models\uCliente.pas"/>

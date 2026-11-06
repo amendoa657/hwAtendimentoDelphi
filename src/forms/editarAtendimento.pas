@@ -77,7 +77,7 @@ implementation
 
 {$R *.dfm}
 
-uses System.DateUtils, System.UITypes, System.IOUtils, Winapi.ShellAPI, uAtendimento, uAtendimentoRepository, uValidacoes, uLogRepository, uSessao,
+uses System.DateUtils, System.UITypes, uArquivo, uAtendimento, uAtendimentoRepository, uValidacoes, uLogRepository, uSessao,
   uConexao, uGrid, uAnexoRepository;
 
 procedure TfrmEditarAtendimento.btnCancelarClick(Sender: TObject);
@@ -231,10 +231,10 @@ begin
   end;
 
   id := QueryAnexos.FieldByName('id').AsInteger;
-  caminho := TPath.Combine(TPath.GetTempPath, IntToStr(id) + '_' + QueryAnexos.FieldByName('Arquivo').AsString);
+  caminho := TArquivo.caminhoTemporario(QueryAnexos.FieldByName('Arquivo').AsString);
 
   if TAnexoRepository.salvarAnexoEmArquivo(id, caminho) then
-    ShellExecute(Handle, 'open', PChar(caminho), nil, nil, SW_SHOWNORMAL);
+    TArquivo.abrir(caminho);
 end;
 
 procedure TfrmEditarAtendimento.btnSalvarAnexoClick(Sender: TObject);

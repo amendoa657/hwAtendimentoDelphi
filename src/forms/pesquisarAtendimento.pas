@@ -50,9 +50,12 @@ type
     pnlLimparFiltrosBorda: TPanel;
     btnLimparFiltros: TPanel;
     lvResultados: TDBGrid;
+    pnlAcoes: TPanel;
     btnEditar: TPanel;
     pnlExcluirBorda: TPanel;
     btnExcluir: TPanel;
+    pnlAnexosBorda: TPanel;
+    btnAnexos: TPanel;
     FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     QuerySql: TFDQuery;
@@ -68,6 +71,7 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnLimparFiltrosClick(Sender: TObject);
+    procedure btnAnexosClick(Sender: TObject);
   private
   public
   end;
@@ -79,7 +83,7 @@ implementation
 
 {$R *.dfm}
 
-uses uNavegacao, System.DateUtils, System.UITypes, uConexao, uGrid, editarAtendimento, uAtendimentoRepository, uAtendimento, uLogRepository, uSessao;
+uses uNavegacao, System.DateUtils, System.UITypes, uConexao, uGrid, editarAtendimento, uAtendimentoRepository, uAtendimento, uLogRepository, uSessao, anexosAtendimento;
 
 procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
@@ -267,6 +271,28 @@ begin
   edtTelefone.Clear;
 
   btnPesquisarClick(Self);
+end;
+
+procedure TfrmPesquisarAtendimento.btnAnexosClick(Sender: TObject);
+var frmAnexos : TfrmAnexosAtendimento;
+begin
+  if not QuerySql.Active or QuerySql.IsEmpty then
+  begin
+    ShowMessage('Pesquise e selecione um atendimento para ver os anexos.');
+    Exit;
+  end;
+
+  frmAnexos := TfrmAnexosAtendimento.Create(Self);
+  try
+    frmAnexos.carregarAnexos(
+      QuerySql.FieldByName('id').AsInteger,
+      QuerySql.FieldByName('Cliente').AsString,
+      FormatDateTime('dd/mm/yyyy hh:nn', QuerySql.FieldByName('inicio').AsDateTime)
+    );
+    frmAnexos.ShowModal;
+  finally
+    frmAnexos.Free;
+  end;
 end;
 
 end.

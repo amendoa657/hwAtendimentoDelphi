@@ -636,60 +636,123 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = [fsBold]
     end
-    object btnEditar: TPanel
+    object pnlAcoes: TPanel
       Left = 28
       Top = 580
-      Width = 100
-      Height = 40
-      Cursor = crHandPoint
-      Anchors = [akLeft, akBottom]
-      BevelOuter = bvNone
-      Caption = 'Editar'
-      Color = 1906966
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentBackground = False
-      ParentFont = False
-      TabOrder = 9
-      OnClick = btnEditarClick
-    end
-    object pnlExcluirBorda: TPanel
-      Left = 138
-      Top = 580
-      Width = 100
+      Width = 400
       Height = 40
       Anchors = [akLeft, akBottom]
       BevelOuter = bvNone
-      Color = 2631878
-      Padding.Left = 1
-      Padding.Top = 1
-      Padding.Right = 1
-      Padding.Bottom = 1
+      Color = clWhite
       ParentBackground = False
       ShowCaption = False
-      TabOrder = 10
-      object btnExcluir: TPanel
-        Left = 1
-        Top = 1
-        Width = 98
-        Height = 38
+      TabOrder = 9
+      object btnEditar: TPanel
+        Left = 0
+        Top = 0
+        Width = 100
+        Height = 40
         Cursor = crHandPoint
-        Align = alClient
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 10
+        Margins.Bottom = 0
+        Align = alLeft
+        AlignWithMargins = True
         BevelOuter = bvNone
-        Caption = 'Excluir'
-        Color = clWhite
+        Caption = 'Editar'
+        Color = 1906966
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = 2631878
+        Font.Color = clWhite
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
-        OnClick = btnExcluirClick
+        OnClick = btnEditarClick
+      end
+      object pnlExcluirBorda: TPanel
+        Left = 110
+        Top = 0
+        Width = 100
+        Height = 40
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 10
+        Margins.Bottom = 0
+        Align = alLeft
+        AlignWithMargins = True
+        BevelOuter = bvNone
+        Color = 2631878
+        Padding.Left = 1
+        Padding.Top = 1
+        Padding.Right = 1
+        Padding.Bottom = 1
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 1
+        object btnExcluir: TPanel
+          Left = 1
+          Top = 1
+          Width = 98
+          Height = 38
+          Cursor = crHandPoint
+          Align = alClient
+          BevelOuter = bvNone
+          Caption = 'Excluir'
+          Color = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 2631878
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 0
+          OnClick = btnExcluirClick
+        end
+      end
+      object pnlAnexosBorda: TPanel
+        Left = 220
+        Top = 0
+        Width = 100
+        Height = 40
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 10
+        Margins.Bottom = 0
+        Align = alLeft
+        AlignWithMargins = True
+        BevelOuter = bvNone
+        Color = $00D2CCC7
+        Padding.Left = 1
+        Padding.Top = 1
+        Padding.Right = 1
+        Padding.Bottom = 1
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 2
+        object btnAnexos: TPanel
+          Left = 1
+          Top = 1
+          Width = 98
+          Height = 38
+          Cursor = crHandPoint
+          Align = alClient
+          BevelOuter = bvNone
+          Caption = 'Anexos'
+          Color = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = $0028231F
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          ParentBackground = False
+          TabOrder = 0
+          OnClick = btnAnexosClick
+        end
       end
     end
   end
