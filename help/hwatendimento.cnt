@@ -12,6 +12,7 @@
 2 Número de série e modelos=IDH_NUMERO_SERIE
 2 Editar um atendimento=IDH_EDITAR
 2 Excluir um atendimento=IDH_EXCLUIR
+2 Anexar arquivos=IDH_ANEXOS
 1 Administração
 2 Gerenciar usuários=IDH_USUARIOS
 2 Consultar o log de ações=IDH_LOG

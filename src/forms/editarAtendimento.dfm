@@ -4,7 +4,7 @@ object frmEditarAtendimento: TfrmEditarAtendimento
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Editar atendimento'
-  ClientHeight = 548
+  ClientHeight = 672
   ClientWidth = 640
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
@@ -14,6 +14,7 @@ object frmEditarAtendimento: TfrmEditarAtendimento
   Font.Style = []
   Position = poOwnerFormCenter
   HelpContext = 8
+  OnShow = FormShow
   TextHeight = 15
   object lblTitulo: TLabel
     Left = 28
@@ -288,7 +289,7 @@ object frmEditarAtendimento: TfrmEditarAtendimento
     Left = 28
     Top = 308
     Width = 584
-    Height = 150
+    Height = 100
     Font.Charset = DEFAULT_CHARSET
     Font.Color = $0028231F
     Font.Height = -13
@@ -298,9 +299,175 @@ object frmEditarAtendimento: TfrmEditarAtendimento
     ScrollBars = ssVertical
     TabOrder = 4
   end
+  object lblSecaoAnexos: TLabel
+    Left = 28
+    Top = 420
+    Width = 70
+    Height = 15
+    Anchors = [akLeft, akTop]
+    Caption = 'Anexos'
+  end
+  object shpLinhaAnexos: TShape
+    Left = 90
+    Top = 428
+    Width = 522
+    Height = 1
+    Anchors = [akLeft, akTop]
+    Brush.Color = $00E1DCD8
+    Pen.Color = $00E1DCD8
+  end
+  object lvAnexos: TDBGrid
+    Left = 28
+    Top = 442
+    Width = 584
+    Height = 110
+    DataSource = dsAnexos
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = $0028231F
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    ReadOnly = True
+    TabOrder = 6
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = $0028231F
+    TitleFont.Height = -13
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = [fsBold]
+  end
+  object btnAnexar: TPanel
+    Left = 28
+    Top = 562
+    Width = 90
+    Height = 30
+    Cursor = crHandPoint
+    Anchors = [akLeft, akTop]
+    BevelOuter = bvNone
+    Caption = 'Anexar'
+    Color = $001D1916
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    ParentBackground = False
+    TabOrder = 7
+    OnClick = btnAnexarClick
+  end
+  object pnlAbrirAnexoBorda: TPanel
+    Left = 126
+    Top = 562
+    Width = 90
+    Height = 30
+    Anchors = [akLeft, akTop]
+    BevelOuter = bvNone
+    Color = $00D2CCC7
+    Padding.Left = 1
+    Padding.Top = 1
+    Padding.Right = 1
+    Padding.Bottom = 1
+    ParentBackground = False
+    ShowCaption = False
+    TabOrder = 8
+    object btnAbrirAnexo: TPanel
+      Left = 1
+      Top = 1
+      Width = 88
+      Height = 28
+      Cursor = crHandPoint
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'Abrir'
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = $0028231F
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      ParentBackground = False
+      TabOrder = 0
+      OnClick = btnAbrirAnexoClick
+    end
+  end
+  object pnlSalvarAnexoBorda: TPanel
+    Left = 224
+    Top = 562
+    Width = 110
+    Height = 30
+    Anchors = [akLeft, akTop]
+    BevelOuter = bvNone
+    Color = $00D2CCC7
+    Padding.Left = 1
+    Padding.Top = 1
+    Padding.Right = 1
+    Padding.Bottom = 1
+    ParentBackground = False
+    ShowCaption = False
+    TabOrder = 9
+    object btnSalvarAnexo: TPanel
+      Left = 1
+      Top = 1
+      Width = 108
+      Height = 28
+      Cursor = crHandPoint
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'Salvar como'
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = $0028231F
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      ParentBackground = False
+      TabOrder = 0
+      OnClick = btnSalvarAnexoClick
+    end
+  end
+  object pnlRemoverAnexoBorda: TPanel
+    Left = 342
+    Top = 562
+    Width = 100
+    Height = 30
+    Anchors = [akLeft, akTop]
+    BevelOuter = bvNone
+    Color = $002828C6
+    Padding.Left = 1
+    Padding.Top = 1
+    Padding.Right = 1
+    Padding.Bottom = 1
+    ParentBackground = False
+    ShowCaption = False
+    TabOrder = 10
+    object btnRemoverAnexo: TPanel
+      Left = 1
+      Top = 1
+      Width = 98
+      Height = 28
+      Cursor = crHandPoint
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'Remover'
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = $002828C6
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      ParentBackground = False
+      TabOrder = 0
+      OnClick = btnRemoverAnexoClick
+    end
+  end
   object pnlRodape: TPanel
     Left = 0
-    Top = 484
+    Top = 608
     Width = 640
     Height = 64
     Align = alBottom
@@ -374,5 +541,26 @@ object frmEditarAtendimento: TfrmEditarAtendimento
       TabOrder = 1
       OnClick = btnSalvarClick
     end
+  end
+  object QueryAnexos: TFDQuery
+    Left = 40
+    Top = 620
+  end
+  object dsAnexos: TDataSource
+    DataSet = QueryAnexos
+    Left = 104
+    Top = 620
+  end
+  object dlgAbrirAnexo: TOpenDialog
+    Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing]
+    Title = 'Escolha o arquivo para anexar'
+    Left = 168
+    Top = 620
+  end
+  object dlgSalvarAnexo: TSaveDialog
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
+    Title = 'Salvar anexo como'
+    Left = 232
+    Top = 620
   end
 end

@@ -146,6 +146,7 @@ begin
   case cbxTabela.ItemIndex of
     1: tabela := 'atendimento';
     2: tabela := 'usuario';
+    3: tabela := 'anexo';
   end;
 
   QuerySql.SQL.Text := '''

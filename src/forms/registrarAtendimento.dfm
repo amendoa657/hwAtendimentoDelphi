@@ -15,6 +15,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
   Position = poDesigned
   WindowState = wsMaximized
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   HelpContext = 6
   TextHeight = 19
   object pnlCabecalho: TPanel
@@ -463,7 +464,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       Left = 0
       Top = 0
       Width = 970
-      Height = 640
+      Height = 790
       Align = alTop
       BevelOuter = bvNone
       Color = clWhite
@@ -472,7 +473,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
       TabOrder = 0
       DesignSize = (
         970
-        640)
+        790)
       object lblNovoAtendimento: TLabel
         Left = 28
         Top = 24
@@ -884,6 +885,94 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
         ScrollBars = ssVertical
         TabOrder = 12
       end
+      object lblSecaoAnexos: TLabel
+        Left = 28
+        Top = 630
+        Width = 70
+        Height = 15
+        Anchors = [akLeft, akTop]
+        Caption = 'Anexos'
+      end
+      object shpLinhaAnexos: TShape
+        Left = 90
+        Top = 638
+        Width = 852
+        Height = 1
+        Anchors = [akLeft, akTop, akRight]
+        Brush.Color = $00E1DCD8
+        Pen.Color = $00E1DCD8
+      end
+      object lstAnexos: TListBox
+        Left = 28
+        Top = 652
+        Width = 914
+        Height = 76
+        Anchors = [akLeft, akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = $0028231F
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        ItemHeight = 17
+        TabOrder = 13
+      end
+      object btnAnexar: TPanel
+        Left = 28
+        Top = 740
+        Width = 100
+        Height = 32
+        Cursor = crHandPoint
+        Anchors = [akLeft, akTop]
+        BevelOuter = bvNone
+        Caption = 'Anexar'
+        Color = $001D1916
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        ParentBackground = False
+        TabOrder = 14
+        OnClick = btnAnexarClick
+      end
+      object pnlRemoverAnexoBorda: TPanel
+        Left = 138
+        Top = 740
+        Width = 150
+        Height = 32
+        Anchors = [akLeft, akTop]
+        BevelOuter = bvNone
+        Color = $002828C6
+        Padding.Left = 1
+        Padding.Top = 1
+        Padding.Right = 1
+        Padding.Bottom = 1
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 15
+        object btnRemoverAnexo: TPanel
+          Left = 1
+          Top = 1
+          Width = 148
+          Height = 30
+          Cursor = crHandPoint
+          Align = alClient
+          BevelOuter = bvNone
+          Caption = 'Remover anexo'
+          Color = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = $002828C6
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          ParentBackground = False
+          TabOrder = 0
+          OnClick = btnRemoverAnexoClick
+        end
+      end
     end
   end
   object ConexaoSql: TFDConnection
@@ -907,6 +996,12 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
   object DataSource: TDataSource
     DataSet = QuerySql
     Left = 496
+    Top = 712
+  end
+  object dlgAbrirAnexo: TOpenDialog
+    Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing]
+    Title = 'Escolha o arquivo para anexar'
+    Left = 640
     Top = 712
   end
 end

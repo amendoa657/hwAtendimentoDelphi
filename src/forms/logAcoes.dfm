@@ -538,7 +538,8 @@ object frmLog: TfrmLog
       Items.Strings = (
         'Todas'
         'Atendimento'
-        'Usu'#225'rio')
+        'Usu'#225'rio'
+        'Anexo')
     end
     object btnPesquisarLog: TPanel
       Left = 28

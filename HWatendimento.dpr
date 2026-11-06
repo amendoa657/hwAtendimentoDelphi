@@ -25,7 +25,8 @@ uses
   uEquipamentoRepository in 'src\repositories\uEquipamentoRepository.pas',
   uAtendimento in 'src\models\uAtendimento.pas',
   uAtendimentoRepository in 'src\repositories\uAtendimentoRepository.pas',
-  uLogRepository in 'src\repositories\uLogRepository.pas';
+  uLogRepository in 'src\repositories\uLogRepository.pas',
+  uAnexoRepository in 'src\repositories\uAnexoRepository.pas';
 
 {$R *.res}
 

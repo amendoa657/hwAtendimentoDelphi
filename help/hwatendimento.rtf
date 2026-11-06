@@ -103,6 +103,7 @@
 \pard\plain\f0\fs22\b\cf2\sb200\sa80 4. Salvar\par
 \pard\plain\f0\fs20\sa120 Clique em {\b Salvar atendimento}. O sistema confere se o n\'famero de s\'e9rie \'e9 v\'e1lido, se o modelo foi identificado e se o nome do cliente e a descri\'e7\'e3o foram preenchidos. Se estiver tudo certo, aparece {\b Atendimento gravado com sucesso!} e a tela \'e9 limpa para um novo registro.\par
 \pard\plain\f0\fs20\sa120 O bot\'e3o {\b Cancelar} limpa a tela sem gravar nada.\par
+\pard\plain\f0\fs20\sa120 Para anexar fotos ou documentos ao atendimento, veja {\uldb Anexar arquivos}{\v IDH_ANEXOS}.\par
 \pard\plain\f0\fs20\li240\ri240\sb120\sa120\cf3 {\b Observa\'e7\'e3o: }O atendimento fica registrado em seu nome (voc\'ea passa a ser o respons\'e1vel por ele). S\'f3 perfis com permiss\'e3o de registro veem o bot\'e3o Novo atendimento.\par
 \page
 \pard\plain\f0\fs20\sa120 {\up #}{\footnote\pard\plain\f0\fs20 {\up #} IDH_NUMERO_SERIE}
@@ -133,6 +134,7 @@
 \pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Descri\'e7\'e3o}.\par
 \pard\plain\f0\fs20\sa120 N\'famero de s\'e9rie, modelo, cliente e telefone aparecem s\'f3 para confer\'eancia e n\'e3o podem ser alterados por esta janela.\par
 \pard\plain\f0\fs20\sa120 Clique em {\b Salvar altera\'e7\'f5es}. A pesquisa \'e9 atualizada com os novos dados. {\b Cancelar} (ou o X) fecha a janela sem alterar nada.\par
+\pard\plain\f0\fs20\sa120 A se\'e7\'e3o {\b Anexos} da janela mostra e gerencia os arquivos do atendimento. Veja {\uldb Anexar arquivos}{\v IDH_ANEXOS}.\par
 \pard\plain\f0\fs22\b\cf2\sb200\sa80 Regras\par
 \pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab A descri\'e7\'e3o n\'e3o pode ficar vazia.\par
 \pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab O t\'e9rmino n\'e3o pode ser antes do in\'edcio.\par
@@ -174,12 +176,35 @@
 \pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b De} / {\b At\'e9}: per\'edodo da a\'e7\'e3o. Marque a caixinha para usar a data.\par
 \pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Usu\'e1rio}: um usu\'e1rio espec\'edfico ou {\b Todos}.\par
 \pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b A\'e7\'e3o}: {\b Criou}, {\b Editou}, {\b Excluiu} ou {\b Todas}.\par
-\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Tabela}: {\b Atendimento}, {\b Usu\'e1rio} ou {\b Todas}.\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Tabela}: {\b Atendimento}, {\b Usu\'e1rio}, {\b Anexo} ou {\b Todas}.\par
 \pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Incluir logins}: marque para ver tamb\'e9m as entradas no sistema.\par
 \pard\plain\f0\fs20\sa120 Clique em {\b Pesquisar} para aplicar. {\b Limpar filtros} volta tudo ao padr\'e3o e pesquisa de novo.\par
 \pard\plain\f0\fs22\b\cf2\sb200\sa80 Colunas\par
 \pard\plain\f0\fs20\sa120 {\b Data}, {\b Usu\'e1rio}, {\b A\'e7\'e3o}, {\b Tabela}, {\b Cliente} (quando a a\'e7\'e3o envolve um cliente) e {\b Detalhe}, que descreve a a\'e7\'e3o em texto (por exemplo, "Excluiu o atendimento de Maria Souza").\par
 \pard\plain\f0\fs20\li240\ri240\sb120\sa120\cf3 {\b Observa\'e7\'e3o: }O log \'e9 somente leitura. S\'f3 os perfis Administrador e Auditoria veem o bot\'e3o Log.\par
+\page
+\pard\plain\f0\fs20\sa120 {\up #}{\footnote\pard\plain\f0\fs20 {\up #} IDH_ANEXOS}
+{\up $}{\footnote\pard\plain\f0\fs20 {\up $} Anexar arquivos}
+{\up K}{\footnote\pard\plain\f0\fs20 {\up K} anexos;anexar arquivo;fotos;PDF;abrir anexo;remover anexo}
+{\up +}{\footnote\pard\plain\f0\fs20 {\up +} hwatendimento:130}
+\pard\plain\keepn\f0\fs28\b\cf2\sb60\sa120 Anexar arquivos\par
+\pard\plain\f0\fs20\sa120 Voc\'ea pode anexar arquivos aos atendimentos, como fotos do equipamento, laudos em PDF ou documentos. Os arquivos ficam guardados no banco de dados, junto com o atendimento.\par
+\pard\plain\f0\fs22\b\cf2\sb200\sa80 No registro de um atendimento novo\par
+\pard\plain\f0\fs20\sa120 Depois de buscar o n\'famero de s\'e9rie, use a se\'e7\'e3o {\b Anexos}, no fim da tela de {\uldb registro}{\v IDH_REGISTRAR}:\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Anexar}: escolha o arquivo. Ele entra na lista, mas s\'f3 \'e9 gravado quando voc\'ea salvar o atendimento.\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Remover anexo}: tira da lista o arquivo selecionado, antes de salvar.\par
+\pard\plain\f0\fs22\b\cf2\sb200\sa80 Em um atendimento j\'e1 registrado\par
+\pard\plain\f0\fs20\sa120 Na janela de {\uldb edi\'e7\'e3o}{\v IDH_EDITAR}, a se\'e7\'e3o {\b Anexos} mostra os arquivos do atendimento (nome, tamanho, quem anexou e quando):\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Anexar}: grava o arquivo na hora.\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Abrir}: abre o arquivo no programa padr\'e3o do Windows (visualizador de imagens, leitor de PDF etc.).\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Salvar como}: guarda uma c\'f3pia do arquivo onde voc\'ea escolher.\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab {\b Remover}: apaga o anexo (o sistema pede confirma\'e7\'e3o).\par
+\pard\plain\f0\fs22\b\cf2\sb200\sa80 Regras\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab Cada arquivo pode ter no m\'e1ximo {\b 10 MB}.\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab Programas e scripts (.exe, .bat, .cmd, .msi, .vbs, .js e similares) n\'e3o podem ser anexados, por seguran\'e7a.\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab Quem pode editar o atendimento pode anexar e remover arquivos dele.\par
+\pard\plain\f0\fs20\fi-240\li480\sa60\tx480 \'95\tab Ao excluir um atendimento, os anexos dele s\'e3o apagados junto.\par
+\pard\plain\f0\fs20\li240\ri240\sb120\sa120\cf3 {\b Observa\'e7\'e3o: }Anexar e remover arquivos fica registrado no {\uldb log}{\v IDH_LOG} (Tabela: Anexo).\par
 \page
 \pard\plain\f0\fs20\sa120 {\up #}{\footnote\pard\plain\f0\fs20 {\up #} IDH_DUVIDAS}
 {\up $}{\footnote\pard\plain\f0\fs20 {\up $} D\'favidas frequentes e mensagens}

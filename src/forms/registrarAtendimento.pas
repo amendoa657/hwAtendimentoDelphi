@@ -72,6 +72,13 @@ type
     QuerySql: TFDQuery;
     DataSource: TDataSource;
     lvHistorico: TDBGrid;
+    lblSecaoAnexos: TLabel;
+    shpLinhaAnexos: TShape;
+    lstAnexos: TListBox;
+    btnAnexar: TPanel;
+    pnlRemoverAnexoBorda: TPanel;
+    btnRemoverAnexo: TPanel;
+    dlgAbrirAnexo: TOpenDialog;
     procedure FormCreate(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
@@ -82,9 +89,13 @@ type
     procedure pnlHistoricoResize(Sender: TObject);
     procedure btnUsuariosClick(Sender: TObject);
     procedure btnLogClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure btnAnexarClick(Sender: TObject);
+    procedure btnRemoverAnexoClick(Sender: TObject);
   private
     var
       numeroSerieEncontrado : boolean;
+      anexosPendentes : TStringList;
     procedure registroValido(const valor : boolean);
     procedure clienteDisponivel(const valor: Boolean);
     procedure LimparFormulario;
@@ -98,7 +109,7 @@ var
 implementation
 
 uses uGrid, uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRepository, uEquipamento, uAtendimentoRepository, uAtendimento, System.StrUtils,
-  uNavegacao, uLogRepository, uSessao, System.DateUtils;
+  uNavegacao, uLogRepository, uSessao, System.DateUtils, uAnexoRepository;
 
 {$R *.dfm}
 
@@ -106,6 +117,8 @@ uses uGrid, uValidacoes, uConexao, uClienteRepository, uCliente, uEquipamentoRep
 
 procedure TfrmRegistrarAtendimento.FormCreate(Sender: TObject);
 begin
+  anexosPendentes := TStringList.Create;
+
   pnlUsuariosBorda.Visible := TSessao.temPermissao('ver_usuarios');
   pnlLogBorda.Visible := TSessao.temPermissao('ver_log');
 
@@ -192,6 +205,8 @@ var
   data_hora_fim : TDateTime;
   numero_serie : string;
   modelo : string;
+  caminho : string;
+  anexo_id : Integer;
 
   Cliente : TCliente;
 begin
@@ -275,6 +290,27 @@ begin
       'atendimento',
       'Registrou atendimento do equipamento ' + numero_serie
     );
+
+    if atendimento_id <> -1 then
+      for caminho in anexosPendentes do
+      begin
+        anexo_id := TAnexoRepository.registrarAnexo(
+          atendimento_id,
+          TSessao.usuario.id,
+          caminho
+        );
+
+        if anexo_id <> -1 then
+          TLogRepository.registrarLog(
+            TSessao.usuario.id,
+            cliente_id,
+            anexo_id,
+            'Criou',
+            'anexo',
+            'Anexou o arquivo ' + ExtractFileName(caminho) + ' ao atendimento do equipamento ' + numero_serie
+          );
+      end;
+
     ShowMessage('Atendimento gravado com sucesso!');
     limparFormulario;
   end;
@@ -350,6 +386,8 @@ begin
 
     memDescricao.Enabled := True;
 
+    btnAnexar.Enabled := True;
+
     btnSalvar.Enabled := True;
   end
   else
@@ -369,6 +407,8 @@ begin
     dtpTerminoHora.Enabled := False;
 
     memDescricao.Enabled := False;
+
+    btnAnexar.Enabled := False;
 
     btnSalvar.Enabled := False
   end;
@@ -390,6 +430,8 @@ begin
   dtpTerminoHora.Time := Now;
   dtpTerminoData.Checked := False;
   memDescricao.Clear;
+  anexosPendentes.Clear;
+  lstAnexos.Clear;
 end;
 
 function TfrmRegistrarAtendimento.verificaModelo(const texto : string): Integer;
@@ -430,6 +472,39 @@ end;
 procedure TfrmRegistrarAtendimento.btnLogClick(Sender: TObject);
 begin
   IrPara(Self, tlLog);
+end;
+
+procedure TfrmRegistrarAtendimento.FormDestroy(Sender: TObject);
+begin
+  anexosPendentes.Free;
+end;
+
+procedure TfrmRegistrarAtendimento.btnAnexarClick(Sender: TObject);
+var
+  caminho : string;
+begin
+  if not dlgAbrirAnexo.Execute then
+    Exit;
+
+  caminho := dlgAbrirAnexo.FileName;
+
+  if TValidacoes.ValidarAnexo(caminho) then
+  begin
+    anexosPendentes.Add(caminho);
+    lstAnexos.Items.Add(ExtractFileName(caminho));
+  end;
+end;
+
+procedure TfrmRegistrarAtendimento.btnRemoverAnexoClick(Sender: TObject);
+begin
+  if lstAnexos.ItemIndex = -1 then
+  begin
+    ShowMessage('Selecione um anexo.');
+    Exit;
+  end;
+
+  anexosPendentes.Delete(lstAnexos.ItemIndex);
+  lstAnexos.Items.Delete(lstAnexos.ItemIndex);
 end;
 
 end.

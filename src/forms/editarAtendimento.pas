@@ -5,7 +5,11 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
+  FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
+  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids;
 
 type
   TfrmEditarAtendimento = class(TForm)
@@ -31,17 +35,37 @@ type
     dtpTerminoData: TDateTimePicker;
     dtpTerminoHora: TDateTimePicker;
     memDescricao: TMemo;
+    lblSecaoAnexos: TLabel;
+    shpLinhaAnexos: TShape;
+    lvAnexos: TDBGrid;
+    btnAnexar: TPanel;
+    pnlAbrirAnexoBorda: TPanel;
+    btnAbrirAnexo: TPanel;
+    pnlSalvarAnexoBorda: TPanel;
+    btnSalvarAnexo: TPanel;
+    pnlRemoverAnexoBorda: TPanel;
+    btnRemoverAnexo: TPanel;
     pnlRodape: TPanel;
     shpLinhaRodape: TShape;
     pnlCancelarBorda: TPanel;
     btnCancelar: TPanel;
     btnSalvar: TPanel;
+    QueryAnexos: TFDQuery;
+    dsAnexos: TDataSource;
+    dlgAbrirAnexo: TOpenDialog;
+    dlgSalvarAnexo: TSaveDialog;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnAnexarClick(Sender: TObject);
+    procedure btnAbrirAnexoClick(Sender: TObject);
+    procedure btnSalvarAnexoClick(Sender: TObject);
+    procedure btnRemoverAnexoClick(Sender: TObject);
   private
     var
       atendimento_id : Integer;
       cliente_id : Integer;
+    procedure carregarAnexos;
   public
     function carregarAtendimento(const id : Integer; const numero_serie, modelo, cliente, telefone : string) : Boolean;
   end;
@@ -53,7 +77,8 @@ implementation
 
 {$R *.dfm}
 
-uses System.DateUtils, System.UITypes, uAtendimento, uAtendimentoRepository, uValidacoes, uLogRepository, uSessao;
+uses System.DateUtils, System.UITypes, System.IOUtils, Winapi.ShellAPI, uAtendimento, uAtendimentoRepository, uValidacoes, uLogRepository, uSessao,
+  uConexao, uGrid, uAnexoRepository;
 
 procedure TfrmEditarAtendimento.btnCancelarClick(Sender: TObject);
 begin
@@ -116,6 +141,8 @@ begin
   Result := false;
   atendimento_id := id;
 
+  QueryAnexos.Connection := Conexao;
+
   lblNumeroSerieValor.Caption := numero_serie;
   lblModeloValor.Caption := modelo;
   lblClienteValor.Caption := cliente;
@@ -149,6 +176,143 @@ begin
   finally
     Atendimento.Free;
   end;
+
+  carregarAnexos;
+end;
+
+procedure TfrmEditarAtendimento.FormShow(Sender: TObject);
+begin
+  AjustarGrid(lvAnexos);
+end;
+
+procedure TfrmEditarAtendimento.btnAnexarClick(Sender: TObject);
+var
+  caminho : string;
+  anexo_id : Integer;
+begin
+  if not dlgAbrirAnexo.Execute then
+    Exit;
+
+  caminho := dlgAbrirAnexo.FileName;
+
+  if TValidacoes.ValidarAnexo(caminho) then
+  begin
+    anexo_id := TAnexoRepository.registrarAnexo(
+      atendimento_id,
+      TSessao.usuario.id,
+      caminho
+    );
+
+    if anexo_id <> -1 then
+    begin
+      TLogRepository.registrarLog(
+        TSessao.usuario.id,
+        cliente_id,
+        anexo_id,
+        'Criou',
+        'anexo',
+        'Anexou o arquivo ' + ExtractFileName(caminho) + ' ao atendimento de ' + lblClienteValor.Caption
+      );
+
+      carregarAnexos;
+    end;
+  end;
+end;
+
+procedure TfrmEditarAtendimento.btnAbrirAnexoClick(Sender: TObject);
+var
+  id : Integer;
+  caminho : string;
+begin
+  if not QueryAnexos.Active or QueryAnexos.IsEmpty then
+  begin
+    ShowMessage('Selecione um anexo.');
+    Exit;
+  end;
+
+  id := QueryAnexos.FieldByName('id').AsInteger;
+  caminho := TPath.Combine(TPath.GetTempPath, IntToStr(id) + '_' + QueryAnexos.FieldByName('Arquivo').AsString);
+
+  if TAnexoRepository.salvarAnexoEmArquivo(id, caminho) then
+    ShellExecute(Handle, 'open', PChar(caminho), nil, nil, SW_SHOWNORMAL);
+end;
+
+procedure TfrmEditarAtendimento.btnSalvarAnexoClick(Sender: TObject);
+var
+  id : Integer;
+begin
+  if not QueryAnexos.Active or QueryAnexos.IsEmpty then
+  begin
+    ShowMessage('Selecione um anexo.');
+    Exit;
+  end;
+
+  id := QueryAnexos.FieldByName('id').AsInteger;
+  dlgSalvarAnexo.FileName := QueryAnexos.FieldByName('Arquivo').AsString;
+
+  if not dlgSalvarAnexo.Execute then
+    Exit;
+
+  if TAnexoRepository.salvarAnexoEmArquivo(id, dlgSalvarAnexo.FileName) then
+    ShowMessage('Arquivo salvo com sucesso!');
+end;
+
+procedure TfrmEditarAtendimento.btnRemoverAnexoClick(Sender: TObject);
+var
+  id : Integer;
+  nome_arquivo : string;
+begin
+  if not QueryAnexos.Active or QueryAnexos.IsEmpty then
+  begin
+    ShowMessage('Selecione um anexo.');
+    Exit;
+  end;
+
+  id := QueryAnexos.FieldByName('id').AsInteger;
+  nome_arquivo := QueryAnexos.FieldByName('Arquivo').AsString;
+
+  if MessageDlg(
+    'Remover o anexo ' + nome_arquivo + '?',
+    mtConfirmation,
+    [mbYes, mbNo],
+    0
+  ) <> mrYes then
+    Exit;
+
+  if TAnexoRepository.excluirAnexo(id) then
+  begin
+    TLogRepository.registrarLog(
+      TSessao.usuario.id,
+      cliente_id,
+      id,
+      'Excluiu',
+      'anexo',
+      'Removeu o arquivo ' + nome_arquivo + ' do atendimento de ' + lblClienteValor.Caption
+    );
+
+    carregarAnexos;
+  end;
+end;
+
+procedure TfrmEditarAtendimento.carregarAnexos;
+begin
+  QueryAnexos.SQL.Text := '''
+    select
+      atendimento_anexo.id as id,
+      atendimento_anexo.nome_arquivo as Arquivo,
+      concat(round(atendimento_anexo.tamanho_bytes / 1024), ' KB') as Tamanho,
+      usuario.nome as Usuario,
+      atendimento_anexo.criado_em as criado_em
+    from atendimento_anexo
+      inner join usuario on usuario.id=atendimento_anexo.usuario_id
+    where
+      atendimento_anexo.atendimento_id=:atendimento_id
+    order by atendimento_anexo.criado_em
+    ''';
+  QueryAnexos.ParamByName('atendimento_id').AsInteger := atendimento_id;
+  QueryAnexos.Open;
+  QueryAnexos.FieldByName('id').Visible := false;
+  AjustarGrid(lvAnexos);
 end;
 
 end.

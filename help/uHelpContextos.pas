@@ -17,6 +17,7 @@ const
   IDH_EXCLUIR = 9;
   IDH_USUARIOS = 10;
   IDH_LOG = 11;
+  IDH_ANEXOS = 13;
   IDH_DUVIDAS = 12;
 
 implementation

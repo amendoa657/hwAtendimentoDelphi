@@ -10,11 +10,12 @@ type
     class function ValidarEdicao(const descricaoAtendimento: string; const dataHoraInicio, dataHoraFim: TDateTime) : Boolean;
     class function ValidarLogin(const nome, senha: string) : Boolean;
     class function ValidarUsuario(const nome, senha: string; const indexPerfil: Integer) : Boolean;
+    class function ValidarAnexo(const caminho: string) : Boolean;
   end;
 
 implementation
 
-uses System.RegularExpressions, Vcl.Dialogs;
+uses System.RegularExpressions, Vcl.Dialogs, System.SysUtils, System.StrUtils;
 
 class function TValidacoes.NumeroSerieValido(const numeroSerie: string): Boolean;
 begin
@@ -110,6 +111,42 @@ begin
   if indexPerfil = -1 then
   begin
     ShowMessage('Selecione o perfil.');
+    Exit;
+  end;
+
+  Result := True;
+end;
+
+class function TValidacoes.ValidarAnexo(const caminho: string) : Boolean;
+var
+  Arquivo : TSearchRec;
+  tamanho : Int64;
+begin
+  Result := False;
+
+  if MatchText(ExtractFileExt(caminho), ['.exe', '.bat', '.cmd', '.com', '.msi', '.scr', '.vbs', '.js', '.ps1']) then
+  begin
+    ShowMessage('Esse tipo de arquivo não pode ser anexado.');
+    Exit;
+  end;
+
+  tamanho := 0;
+
+  if FindFirst(caminho, faAnyFile, Arquivo) = 0 then
+  begin
+    tamanho := Arquivo.Size;
+    FindClose(Arquivo);
+  end;
+
+  if tamanho = 0 then
+  begin
+    ShowMessage('O arquivo está vazio ou não foi encontrado.');
+    Exit;
+  end;
+
+  if tamanho > 10 * 1024 * 1024 then
+  begin
+    ShowMessage('O arquivo passa do limite de 10 MB.');
     Exit;
   end;
 
