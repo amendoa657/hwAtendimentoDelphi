@@ -1,0 +1,19 @@
+:Base hwatendimento.hlp>main
+:Title HW Atendimento - Ajuda
+:Index HW Atendimento - Ajuda=hwatendimento.hlp
+1 Primeiros passos
+2 Bem-vindo ao HW Atendimento=IDH_INTRODUCAO
+2 Entrando no sistema=IDH_LOGIN
+2 Navegação entre as telas=IDH_NAVEGACAO
+2 Perfis de usuário e permissões=IDH_PERFIS
+1 Atendimentos
+2 Pesquisar atendimentos=IDH_PESQUISAR
+2 Registrar um novo atendimento=IDH_REGISTRAR
+2 Número de série e modelos=IDH_NUMERO_SERIE
+2 Editar um atendimento=IDH_EDITAR
+2 Excluir um atendimento=IDH_EXCLUIR
+1 Administração
+2 Gerenciar usuários=IDH_USUARIOS
+2 Consultar o log de ações=IDH_LOG
+1 Ajuda
+2 Dúvidas frequentes e mensagens=IDH_DUVIDAS

@@ -1,0 +1,38 @@
+; Projeto de ajuda WinHelp do HW Atendimento.
+; Pode ser compilado pelo Microsoft Help Workshop (HCW) ou importado no HelpScribble
+; (File > Import > WinHelp project).
+
+[OPTIONS]
+HCW=0
+COMPRESS=12 Hall Zeck
+LCID=0x416 0x0 0x0 ; Português (Brasil)
+REPORT=Yes
+CONTENTS=IDH_INTRODUCAO
+TITLE=HW Atendimento - Ajuda
+COPYRIGHT=HW Atendimento
+CNT=hwatendimento.cnt
+HLP=hwatendimento.hlp
+ERRORLOG=hwatendimento.err
+
+[FILES]
+hwatendimento.rtf
+
+[MAP]
+IDH_INTRODUCAO=1
+IDH_LOGIN=2
+IDH_NAVEGACAO=3
+IDH_PERFIS=4
+IDH_PESQUISAR=5
+IDH_REGISTRAR=6
+IDH_NUMERO_SERIE=7
+IDH_EDITAR=8
+IDH_EXCLUIR=9
+IDH_USUARIOS=10
+IDH_LOG=11
+IDH_DUVIDAS=12
+
+[WINDOWS]
+main="HW Atendimento - Ajuda",,27904,(r16777215),(r15790320),f2
+
+[CONFIG]
+BrowseButtons()

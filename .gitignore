@@ -23,3 +23,9 @@ Win64/
 
 # Banco local
 *.db
+
+# Arquivos gerados pelo WinHelp ao abrir/compilar a ajuda
+*.gid
+*.fts
+*.ftg
+help/*.err
