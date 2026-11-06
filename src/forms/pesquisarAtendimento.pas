@@ -67,6 +67,7 @@ type
     procedure btnEditarClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnLimparFiltrosClick(Sender: TObject);
   private
   public
   end;
@@ -254,6 +255,18 @@ begin
     ShowMessage('Atendimento excluído com sucesso!');
     btnPesquisarClick(Self);
   end;
+end;
+
+procedure TfrmPesquisarAtendimento.btnLimparFiltrosClick(Sender: TObject);
+begin
+  dtpDe.Checked := false;
+  dtpAte.Checked := false;
+  edtNomeCliente.Clear;
+  edtNumeroSerie.Clear;
+  edtDescricao.Clear;
+  edtTelefone.Clear;
+
+  btnPesquisarClick(Self);
 end;
 
 end.

@@ -15,6 +15,7 @@ object frmRegistrarAtendimento: TfrmRegistrarAtendimento
   Position = poDesigned
   WindowState = wsMaximized
   OnCreate = FormCreate
+  HelpContext = 6
   TextHeight = 19
   object pnlCabecalho: TPanel
     Left = 0

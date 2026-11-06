@@ -16,6 +16,7 @@ object frmLog: TfrmLog
   WindowState = wsMaximized
   OnCreate = FormCreate
   OnShow = FormShow
+  HelpContext = 11
   TextHeight = 15
   object pnlCabecalho: TPanel
     Left = 0

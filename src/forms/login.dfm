@@ -15,6 +15,7 @@ object frmLogin: TfrmLogin
   KeyPreview = True
   Position = poScreenCenter
   OnKeyPress = FormKeyPress
+  HelpContext = 2
   TextHeight = 15
   object pnlTopo: TPanel
     Left = 0

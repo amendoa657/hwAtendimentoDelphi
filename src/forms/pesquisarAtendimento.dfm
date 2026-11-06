@@ -16,6 +16,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
   WindowState = wsMaximized
   OnCreate = FormCreate
   OnShow = FormShow
+  HelpContext = 5
   TextHeight = 19
   object pnlCabecalho: TPanel
     Left = 0
@@ -610,6 +611,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
+        OnClick = btnLimparFiltrosClick
       end
     end
     object lvResultados: TDBGrid

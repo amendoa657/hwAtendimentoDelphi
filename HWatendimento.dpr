@@ -3,6 +3,8 @@ program HWatendimento;
 uses
   Vcl.Forms,
   System.UITypes,
+  System.SysUtils,
+  Vcl.WinHelpViewer,
   uValidacoes in 'src\utils\uValidacoes.pas',
   uGrid in 'src\utils\uGrid.pas',
   uNavegacao in 'src\utils\uNavegacao.pas',
@@ -30,6 +32,9 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+
+  // Ajuda (F1): o hwatendimento.hlp fica na mesma pasta do .exe
+  Application.HelpFile := ExtractFilePath(Application.ExeName) + 'hwatendimento.hlp';
 
   // Conecta antes do login, que precisa consultar o banco
   if not ConectarSql then

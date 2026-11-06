@@ -13,6 +13,7 @@ object frmEditarAtendimento: TfrmEditarAtendimento
   Font.Name = 'Comfortaa'
   Font.Style = []
   Position = poOwnerFormCenter
+  HelpContext = 8
   TextHeight = 15
   object lblTitulo: TLabel
     Left = 28
