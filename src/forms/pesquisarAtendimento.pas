@@ -60,6 +60,10 @@ type
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     QuerySql: TFDQuery;
     DataSource: TDataSource;
+    cbEcg: TCheckBox;
+    cbErgo: TCheckBox;
+    CbErgoMet: TCheckBox;
+    CbErgoCp: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnNovoAtendimentoClick(Sender: TObject);
     procedure buscarPorFiltro(const descricao, nome_cliente, numero_serie, telefone: string; const data_hora_inicio, data_hora_fim : TDateTime);
@@ -72,6 +76,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnLimparFiltrosClick(Sender: TObject);
     procedure btnAnexosClick(Sender: TObject);
+    procedure lvResultadosCellClick(Column: TColumn);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure lvResultadosTitleClick(Column: TColumn);
   private
   public
   end;
@@ -83,7 +90,8 @@ implementation
 
 {$R *.dfm}
 
-uses uNavegacao, System.DateUtils, System.UITypes, uConexao, uGrid, editarAtendimento, uAtendimentoRepository, uAtendimento, uLogRepository, uSessao, anexosAtendimento;
+uses uNavegacao, System.DateUtils, System.UITypes, uConexao, uGrid, editarAtendimento,
+uAtendimentoRepository, uAtendimento, uLogRepository, uSessao, anexosAtendimento;
 
 procedure TfrmPesquisarAtendimento.FormCreate(Sender: TObject);
 begin
@@ -98,10 +106,85 @@ begin
 
 end;
 
+procedure TfrmPesquisarAtendimento.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #13 then
+  begin
+    buscarPorFiltro(
+    edtDescricao.Text,
+    edtNomeCliente.Text,
+    edtNumeroSerie.Text,
+    edtTelefone.Text,
+    dtpDe.DateTime,
+    dtpAte.DateTime
+  )
+  end;
+end;
+
 procedure TfrmPesquisarAtendimento.FormShow(Sender: TObject);
 begin
   btnPesquisarClick(Self);
 end;
+
+procedure TfrmPesquisarAtendimento.lvResultadosCellClick(Column: TColumn);
+var frmEditar : TfrmEditarAtendimento;
+begin
+  if not QuerySql.Active or QuerySql.IsEmpty then
+  begin
+    ShowMessage('Pesquise e selecione um atendimento para editar.');
+    Exit;
+  end;
+
+  if not TSessao.temPermissao('editar_atendimento') and
+    (QuerySql.FieldByName('usuario_id').AsInteger <> TSessao.usuario.id) then
+  begin
+    ShowMessage('Você só pode editar atendimentos registrados por você.');
+    Exit;
+  end;
+
+  frmEditar := TfrmEditarAtendimento.Create(Self);
+  try
+    if frmEditar.carregarAtendimento(
+      QuerySql.FieldByName('id').AsInteger,
+      QuerySql.FieldByName('numero_serie').AsString,
+      QuerySql.FieldByName('modelo').AsString,
+      QuerySql.FieldByName('Cliente').AsString,
+      QuerySql.FieldByName('Telefone').AsString
+    ) then
+    begin
+      if frmEditar.ShowModal = mrOk then
+        btnPesquisarClick(Self);
+    end;
+  finally
+    frmEditar.Free;
+  end;
+end;
+
+procedure TfrmPesquisarAtendimento.lvResultadosTitleClick(Column: TColumn);
+var
+  i: Integer;
+  TextoLimpo: string;
+begin
+  for i := 0 to lvResultados.Columns.Count - 1 do
+  begin
+    TextoLimpo := lvResultados.Columns[i].Title.Caption;
+    TextoLimpo := StringReplace(TextoLimpo, ' ▲', '', [rfReplaceAll]);
+    TextoLimpo := StringReplace(TextoLimpo, ' ▼', '', [rfReplaceAll]);
+    lvResultados.Columns[i].Title.Caption := TextoLimpo;
+  end;
+
+  if QuerySql.IndexFieldNames = Column.FieldName then
+  begin
+    QuerySql.IndexFieldNames := Column.FieldName + ':D';
+    Column.Title.Caption := Column.Title.Caption + ' ▼';
+  end
+  else
+  begin
+    QuerySql.IndexFieldNames := Column.FieldName;
+    Column.Title.Caption := Column.Title.Caption + ' ▲';
+  end;
+end;
+
 
 procedure TfrmPesquisarAtendimento.btnNovoAtendimentoClick(Sender: TObject);
 begin
@@ -129,7 +212,7 @@ begin
   SELECT *
   FROM atendimentosComFiltro
   WHERE (:cliente   = '' OR cliente      LIKE CONCAT('%', :cliente, '%'))
-    AND (:numero_serie = '' OR numero_serie = :numero_serie)
+    AND (:numero_serie = '' OR numero_serie LIKE CONCAT('%', :numero_serie, '%'))
     AND (:descricao = '' OR descricao    LIKE CONCAT('%', :descricao, '%'))
     AND (:telefone  = '' OR telefone     LIKE CONCAT('%', :telefone, '%'))
     AND (:de  IS NULL OR inicio >= :de)
