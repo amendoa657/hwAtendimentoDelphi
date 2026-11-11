@@ -60,11 +60,13 @@ type
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     QuerySql: TFDQuery;
     DataSource: TDataSource;
+    lblModelo: TLabel;
+    lblSituacao: TLabel;
     cbEcg: TCheckBox;
     cbErgo: TCheckBox;
-    CbErgoMet: TCheckBox;
-    CbErgoCp: TCheckBox;
-    Panel1: TPanel;
+    cbErgoMet: TCheckBox;
+    cbErgoCp: TCheckBox;
+    cbEmAberto: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnNovoAtendimentoClick(Sender: TObject);
     procedure buscarPorFiltro(const descricao, nome_cliente, numero_serie, telefone: string; const data_hora_inicio, data_hora_fim : TDateTime);
@@ -111,14 +113,8 @@ procedure TfrmPesquisarAtendimento.FormKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key = #13 then
   begin
-    buscarPorFiltro(
-    edtDescricao.Text,
-    edtNomeCliente.Text,
-    edtNumeroSerie.Text,
-    edtTelefone.Text,
-    dtpDe.DateTime,
-    dtpAte.DateTime
-  )
+    Key := #0;
+    btnPesquisarClick(Self);
   end;
 end;
 
@@ -128,37 +124,9 @@ begin
 end;
 
 procedure TfrmPesquisarAtendimento.lvResultadosCellClick(Column: TColumn);
-var frmEditar : TfrmEditarAtendimento;
 begin
-  if not QuerySql.Active or QuerySql.IsEmpty then
-  begin
-    ShowMessage('Pesquise e selecione um atendimento para editar.');
-    Exit;
-  end;
-
-  if not TSessao.temPermissao('editar_atendimento') and
-    (QuerySql.FieldByName('usuario_id').AsInteger <> TSessao.usuario.id) then
-  begin
-    ShowMessage('Você só pode editar atendimentos registrados por você.');
-    Exit;
-  end;
-
-  frmEditar := TfrmEditarAtendimento.Create(Self);
-  try
-    if frmEditar.carregarAtendimento(
-      QuerySql.FieldByName('id').AsInteger,
-      QuerySql.FieldByName('numero_serie').AsString,
-      QuerySql.FieldByName('modelo').AsString,
-      QuerySql.FieldByName('Cliente').AsString,
-      QuerySql.FieldByName('Telefone').AsString
-    ) then
-    begin
-      if frmEditar.ShowModal = mrOk then
-        btnPesquisarClick(Self);
-    end;
-  finally
-    frmEditar.Free;
-  end;
+  if btnEditar.Visible then
+    btnEditarClick(Self);
 end;
 
 procedure TfrmPesquisarAtendimento.lvResultadosTitleClick(Column: TColumn);
@@ -218,6 +186,14 @@ begin
     AND (:telefone  = '' OR telefone     LIKE CONCAT('%', :telefone, '%'))
     AND (:de  IS NULL OR inicio >= :de)
     AND (:ate IS NULL OR inicio <  :ate)
+    AND (
+      (:ecg = 0 AND :ergo = 0 AND :ergo_met = 0 AND :ergo_cp = 0)
+      OR (:ecg = 1 AND modelo IN ('ECGV6', 'ECGV11'))
+      OR (:ergo = 1 AND modelo = 'Ergo13')
+      OR (:ergo_met = 1 AND modelo = 'ErgoMET13')
+      OR (:ergo_cp = 1 AND modelo = 'ErgoCP')
+    )
+    AND (:em_aberto = 0 OR duracao = 'Em aberto')
   ORDER BY inicio DESC
   ''';
 
@@ -239,6 +215,13 @@ begin
     QuerySql.ParamByName('ate').AsDateTime := DateOf(dtpAte.Date) + 1
   else
     QuerySql.ParamByName('ate').Clear;
+
+  // Ord(True) = 1 e Ord(False) = 0
+  QuerySql.ParamByName('ecg').AsInteger := Ord(cbEcg.Checked);
+  QuerySql.ParamByName('ergo').AsInteger := Ord(cbErgo.Checked);
+  QuerySql.ParamByName('ergo_met').AsInteger := Ord(cbErgoMet.Checked);
+  QuerySql.ParamByName('ergo_cp').AsInteger := Ord(cbErgoCp.Checked);
+  QuerySql.ParamByName('em_aberto').AsInteger := Ord(cbEmAberto.Checked);
 
   QuerySql.Open;
   QuerySql.FieldByName('id').Visible := false;
@@ -353,6 +336,11 @@ begin
   edtNumeroSerie.Clear;
   edtDescricao.Clear;
   edtTelefone.Clear;
+  cbEcg.Checked := false;
+  cbErgo.Checked := false;
+  cbErgoMet.Checked := false;
+  cbErgoCp.Checked := false;
+  cbEmAberto.Checked := false;
 
   btnPesquisarClick(Self);
 end;
