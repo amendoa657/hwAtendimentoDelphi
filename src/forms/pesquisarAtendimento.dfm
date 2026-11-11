@@ -329,8 +329,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     ShowCaption = False
     TabOrder = 1
     OnResize = pnlConteudoResize
-    ExplicitLeft = 8
-    ExplicitTop = 59
+    ExplicitTop = 57
     DesignSize = (
       1280
       640)
@@ -462,13 +461,39 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Caption = 'Resultados'
     end
     object shpLinhaResultados: TShape
-      Left = 110
-      Top = 380
+      Left = 118
+      Top = 420
       Width = 1142
       Height = 1
       Anchors = [akLeft, akTop, akRight]
       Brush.Color = 14802136
       Pen.Color = 14802136
+    end
+    object lblModelo: TLabel
+      Left = 28
+      Top = 270
+      Width = 43
+      Height = 18
+      Caption = 'Modelo'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 7365467
+      Font.Height = -11
+      Font.Name = 'Comfortaa'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lblSituacao: TLabel
+      Left = 648
+      Top = 270
+      Width = 49
+      Height = 18
+      Caption = 'Situa'#231#227'o'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 7365467
+      Font.Height = -11
+      Font.Name = 'Comfortaa'
+      Font.Style = []
+      ParentFont = False
     end
     object dtpDe: TDateTimePicker
       Left = 28
@@ -507,7 +532,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     object edtNomeCliente: TEdit
       Left = 28
       Top = 176
-      Width = 604
+      Width = 485
       Height = 25
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 2630431
@@ -518,6 +543,7 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       ParentFont = False
       TabOrder = 2
       TextHint = 'Nome ou parte do nome'
+      OnChange = edtNomeClienteChange
     end
     object edtNumeroSerie: TEdit
       Left = 648
@@ -564,87 +590,65 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       TabOrder = 5
       TextHint = '(00) 00000-0000'
     end
-    object lblModelo: TLabel
+    object cbEcg6: TCheckBox
       Left = 28
-      Top = 270
-      Width = 100
-      Height = 14
-      Caption = 'Modelo'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
-      Font.Height = -11
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lblSituacao: TLabel
-      Left = 648
-      Top = 270
-      Width = 100
-      Height = 14
-      Caption = 'Situa'#231#227'o'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0070635B
-      Font.Height = -11
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-    end
-    object cbEcg: TCheckBox
-      Left = 28
-      Top = 290
-      Width = 130
+      Top = 293
+      Width = 66
       Height = 19
-      Caption = 'ECG (V6 e V11)'
+      Caption = 'ECGV6'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 10
+      OnClick = cbEcg6Click
+    end
+    object cbErgo: TCheckBox
+      Left = 182
+      Top = 293
+      Width = 66
+      Height = 20
+      Caption = 'Ergo13'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
       TabOrder = 11
+      OnClick = cbErgoClick
     end
-    object cbErgo: TCheckBox
-      Left = 170
-      Top = 290
-      Width = 90
+    object cbErgoMet: TCheckBox
+      Left = 262
+      Top = 293
+      Width = 110
       Height = 19
-      Caption = 'Ergo13'
+      Caption = 'ErgoMET13'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
       TabOrder = 12
-    end
-    object cbErgoMet: TCheckBox
-      Left = 272
-      Top = 290
-      Width = 110
-      Height = 19
-      Caption = 'ErgoMET13'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 13
+      OnClick = cbErgoMetClick
     end
     object cbErgoCp: TCheckBox
-      Left = 394
-      Top = 290
+      Left = 370
+      Top = 293
       Width = 90
       Height = 19
       Caption = 'ErgoCP'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
       TabOrder = 14
+      OnClick = cbErgoCpClick
     end
     object cbEmAberto: TCheckBox
       Left = 648
@@ -653,12 +657,13 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
       Height = 19
       Caption = 'Somente atendimentos em aberto'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = $0028231F
+      Font.Color = 2630431
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      TabOrder = 15
+      TabOrder = 13
+      OnClick = cbEmAbertoClick
     end
     object btnPesquisar: TPanel
       Left = 28
@@ -856,6 +861,30 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
           OnClick = btnAnexosClick
         end
       end
+    end
+    object cbEcg11: TCheckBox
+      Left = 100
+      Top = 293
+      Width = 76
+      Height = 19
+      Caption = 'ECGV11'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 2630431
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 15
+      OnClick = cbEcg11Click
+    end
+    object cbCaseSens: TCheckBox
+      Left = 519
+      Top = 177
+      Width = 113
+      Height = 23
+      Caption = 'Case Sensitivy'
+      TabOrder = 16
+      OnClick = cbCaseSensClick
     end
   end
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink

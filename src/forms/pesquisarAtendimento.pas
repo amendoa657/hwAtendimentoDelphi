@@ -62,11 +62,13 @@ type
     DataSource: TDataSource;
     lblModelo: TLabel;
     lblSituacao: TLabel;
-    cbEcg: TCheckBox;
+    cbEcg6: TCheckBox;
     cbErgo: TCheckBox;
     cbErgoMet: TCheckBox;
     cbErgoCp: TCheckBox;
     cbEmAberto: TCheckBox;
+    cbEcg11: TCheckBox;
+    cbCaseSens: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnNovoAtendimentoClick(Sender: TObject);
     procedure buscarPorFiltro(const descricao, nome_cliente, numero_serie, telefone: string; const data_hora_inicio, data_hora_fim : TDateTime);
@@ -82,6 +84,14 @@ type
     procedure lvResultadosCellClick(Column: TColumn);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure lvResultadosTitleClick(Column: TColumn);
+    procedure cbEcg6Click(Sender: TObject);
+    procedure cbEcg11Click(Sender: TObject);
+    procedure cbErgoClick(Sender: TObject);
+    procedure cbErgoMetClick(Sender: TObject);
+    procedure cbErgoCpClick(Sender: TObject);
+    procedure cbEmAbertoClick(Sender: TObject);
+    procedure edtNomeClienteChange(Sender: TObject);
+    procedure cbCaseSensClick(Sender: TObject);
   private
   public
   end;
@@ -176,19 +186,21 @@ procedure TfrmPesquisarAtendimento.buscarPorFiltro(const descricao,
   nome_cliente, numero_serie, telefone: string; const data_hora_inicio,
   data_hora_fim: TDateTime);
 begin
-
   querySql.SQL.Text := '''
   SELECT *
   FROM atendimentosComFiltro
-  WHERE (:cliente   = '' OR cliente      LIKE CONCAT('%', :cliente, '%'))
+  WHERE (:cliente   = ''
+      OR :caseSens = 1 AND BINARY cliente  LIKE CONCAT('%', :cliente, '%')
+      OR :caseSens = 0 AND cliente  LIKE CONCAT('%', :cliente, '%'))
     AND (:numero_serie = '' OR numero_serie LIKE CONCAT('%', :numero_serie, '%'))
-    AND (:descricao = '' OR descricao    LIKE CONCAT('%', :descricao, '%'))
-    AND (:telefone  = '' OR telefone     LIKE CONCAT('%', :telefone, '%'))
+    AND (:descricao = '' OR descricao       LIKE CONCAT('%', :descricao, '%'))
+    AND (:telefone  = '' OR telefone        LIKE CONCAT('%', :telefone, '%'))
     AND (:de  IS NULL OR inicio >= :de)
     AND (:ate IS NULL OR inicio <  :ate)
     AND (
-      (:ecg = 0 AND :ergo = 0 AND :ergo_met = 0 AND :ergo_cp = 0)
-      OR (:ecg = 1 AND modelo IN ('ECGV6', 'ECGV11'))
+      (:ecg6 = 0 AND :ecg11 = 0 AND :ergo = 0 AND :ergo_met = 0 AND :ergo_cp = 0)
+      OR (:ecg6 = 1 AND modelo ='ECGV6')
+      OR (:ecg11 = 1 AND modelo ='ECGV11')
       OR (:ergo = 1 AND modelo = 'Ergo13')
       OR (:ergo_met = 1 AND modelo = 'ErgoMET13')
       OR (:ergo_cp = 1 AND modelo = 'ErgoCP')
@@ -196,7 +208,7 @@ begin
     AND (:em_aberto = 0 OR duracao = 'Em aberto')
   ORDER BY inicio DESC
   ''';
-
+  QuerySql.ParamByName('caseSens').AsInteger :=Ord(cbCaseSens.Checked);
 
   QuerySql.ParamByName('cliente').AsString   := Trim(edtNomeCliente.Text);
   QuerySql.ParamByName('numero_serie').AsString     := Trim(edtNumeroSerie.Text);
@@ -217,7 +229,8 @@ begin
     QuerySql.ParamByName('ate').Clear;
 
   // Ord(True) = 1 e Ord(False) = 0
-  QuerySql.ParamByName('ecg').AsInteger := Ord(cbEcg.Checked);
+  QuerySql.ParamByName('ecg6').AsInteger := Ord(cbEcg6.Checked);
+  QuerySql.ParamByName('ecg11').AsInteger := Ord(cbEcg11.Checked);
   QuerySql.ParamByName('ergo').AsInteger := Ord(cbErgo.Checked);
   QuerySql.ParamByName('ergo_met').AsInteger := Ord(cbErgoMet.Checked);
   QuerySql.ParamByName('ergo_cp').AsInteger := Ord(cbErgoCp.Checked);
@@ -228,6 +241,49 @@ begin
   QuerySql.FieldByName('usuario_id').Visible := false;
   AjustarGrid(lvResultados);
 
+  lvResultados.Columns[0].Title.Caption := lvResultados.Columns[0].Title.Caption + ' ▼';
+
+end;
+
+
+procedure TfrmPesquisarAtendimento.cbCaseSensClick(Sender: TObject);
+begin
+  btnPesquisarClick(Self);
+end;
+
+procedure TfrmPesquisarAtendimento.cbEcg11Click(Sender: TObject);
+begin
+  btnPesquisarClick(Self);
+end;
+
+procedure TfrmPesquisarAtendimento.cbEcg6Click(Sender: TObject);
+begin
+  btnPesquisarClick(Self);
+end;
+
+procedure TfrmPesquisarAtendimento.cbEmAbertoClick(Sender: TObject);
+begin
+  btnPesquisarClick(Self);
+end;
+
+procedure TfrmPesquisarAtendimento.cbErgoClick(Sender: TObject);
+begin
+  btnPesquisarClick(Self);
+end;
+
+procedure TfrmPesquisarAtendimento.cbErgoCpClick(Sender: TObject);
+begin
+  btnPesquisarClick(Self);
+end;
+
+procedure TfrmPesquisarAtendimento.cbErgoMetClick(Sender: TObject);
+begin
+  btnPesquisarClick(Self);
+end;
+
+procedure TfrmPesquisarAtendimento.edtNomeClienteChange(Sender: TObject);
+begin
+  btnPesquisarClick(Self);
 end;
 
 procedure TfrmPesquisarAtendimento.pnlConteudoResize(Sender: TObject);
@@ -336,7 +392,8 @@ begin
   edtNumeroSerie.Clear;
   edtDescricao.Clear;
   edtTelefone.Clear;
-  cbEcg.Checked := false;
+  cbEcg6.Checked := false;
+  cbEcg11.Checked := false;
   cbErgo.Checked := false;
   cbErgoMet.Checked := false;
   cbErgoCp.Checked := false;
