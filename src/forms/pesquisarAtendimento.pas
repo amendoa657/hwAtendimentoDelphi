@@ -64,6 +64,7 @@ type
     cbErgo: TCheckBox;
     CbErgoMet: TCheckBox;
     CbErgoCp: TCheckBox;
+    Panel1: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure btnNovoAtendimentoClick(Sender: TObject);
     procedure buscarPorFiltro(const descricao, nome_cliente, numero_serie, telefone: string; const data_hora_inicio, data_hora_fim : TDateTime);

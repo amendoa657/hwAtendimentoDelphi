@@ -329,7 +329,8 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
     ShowCaption = False
     TabOrder = 1
     OnResize = pnlConteudoResize
-    ExplicitTop = 57
+    ExplicitLeft = 8
+    ExplicitTop = 59
     DesignSize = (
       1280
       640)
@@ -760,61 +761,74 @@ object frmPesquisarAtendimento: TfrmPesquisarAtendimento
         end
       end
     end
-    object cbEcg: TCheckBox
-      Left = 264
-      Top = 277
-      Width = 124
-      Height = 30
-      Caption = 'Ecg'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 2630431
-      Font.Height = -17
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
+    object Panel1: TPanel
+      Left = 252
+      Top = 271
+      Width = 168
+      Height = 61
       TabOrder = 10
-    end
-    object cbErgo: TCheckBox
-      Left = 338
-      Top = 277
-      Width = 124
-      Height = 30
-      Caption = 'Ergo'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 2630431
-      Font.Height = -17
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 11
-    end
-    object CbErgoMet: TCheckBox
-      Left = 412
-      Top = 277
-      Width = 124
-      Height = 30
-      Caption = 'ErgoMet'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 2630431
-      Font.Height = -17
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 12
-    end
-    object CbErgoCp: TCheckBox
-      Left = 520
-      Top = 277
-      Width = 124
-      Height = 30
-      Caption = 'ErgoCp'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 2630431
-      Font.Height = -17
-      Font.Name = 'Comfortaa'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 13
+      object CbErgoCp: TCheckBox
+        Left = 3
+        Top = 0
+        Width = 71
+        Height = 21
+        Caption = 'ErgoCp'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 2630431
+        Font.Height = -13
+        Font.Name = 'Comfortaa'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
+      object cbEcg: TCheckBox
+        Left = 3
+        Top = 27
+        Width = 60
+        Height = 30
+        BiDiMode = bdLeftToRight
+        Caption = 'Ecg'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 2630431
+        Font.Height = -13
+        Font.Name = 'Comfortaa'
+        Font.Style = []
+        ParentBiDiMode = False
+        ParentFont = False
+        TabOrder = 1
+      end
+      object CbErgoMet: TCheckBox
+        Left = 79
+        Top = 32
+        Width = 91
+        Height = 22
+        BiDiMode = bdLeftToRight
+        Caption = 'ErgoMet'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 2630431
+        Font.Height = -13
+        Font.Name = 'Comfortaa'
+        Font.Style = []
+        ParentBiDiMode = False
+        ParentFont = False
+        TabOrder = 2
+      end
+      object cbErgo: TCheckBox
+        Left = 79
+        Top = 1
+        Width = 70
+        Height = 21
+        BiDiMode = bdLeftToRight
+        Caption = 'Ergo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 2630431
+        Font.Height = -13
+        Font.Name = 'Comfortaa'
+        Font.Style = []
+        ParentBiDiMode = False
+        ParentFont = False
+        TabOrder = 3
+      end
     end
   end
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
